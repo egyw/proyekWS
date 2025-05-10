@@ -1,0 +1,5 @@
+# ignore .env, hanya boleh push .env.example
+.env
+
+# ignore node_modules
+node_modules/
