@@ -13,7 +13,7 @@
 **Foodify API** adalah layanan web (Web Service) yang menyediakan berbagai fitur seputar makanan, resep, dan gaya hidup sehat. Proyek ini dikembangkan untuk memenuhi tugas kuliah Web Service.
 
 ### API Eksternal yang Digunakan:
-- 🔗 [TheMealDB API](https://www.themealdb.com/)
+- 🔗 [spoonaculat API](https://spoonacular.com/)
 - 🤖 [Gemini AI Studio API](https://aistudio.google.com/)
 
 ### 🔑 Fitur Utama:
