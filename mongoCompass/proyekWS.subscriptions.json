@@ -1,0 +1,10 @@
+[{
+  "_id": {
+    "$oid": "682c737e835d470cfa75ffc1"
+  },
+  "userId": null,
+  "type": null,
+  "startDate": null,
+  "endDate": null,
+  "paymentStatus": null
+}]

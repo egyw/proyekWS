@@ -1,0 +1,12 @@
+[{
+  "_id": {
+    "$oid": "682c62a6835d470cfa75ff87"
+  },
+  "username": "egy",
+  "email": "tes123@gmail.com",
+  "password": "$2y$10$f7r16OpQKhrQXglWaywDpuU5sX2cQGb2cWBAXo40HnerOY7pAbX5K",
+  "isPremium": true,
+  "createdAt": {
+    "$date": "2025-05-20T00:00:00.000Z"
+  }
+}]

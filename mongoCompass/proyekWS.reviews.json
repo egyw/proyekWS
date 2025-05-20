@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "682c6b8c835d470cfa75ff96"
+  },
+  "recipeId": {
+    "$oid": "682c67d8835d470cfa75ff8b"
+  },
+  "username": "egy",
+  "comment": "Woiiii enak banget loooo",
+  "rating": {
+    "$numberDecimal": "5"
+  },
+  "createdAt": null
+}]

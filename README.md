@@ -36,33 +36,42 @@
 
 Berikut adalah gambaran koleksi (collections) utama dalam basis data:
 
-### `accounts`
+### `users`
 - `_id`
-- `email`
 - `username`
+- `email`
 - `password`
-- `role` (user, premium, admin)
-- `subscriptionStatus` (free / premium)
-- `preferences` (vegan, halal, dll)
-- `dietHistory` (array makanan yang pernah dilihat/dikonsumsi)
+- `isPremium` 
+- `createdAt` 
 
-### `foods`
+### `recipes`
 - `_id`
 - `title`
-- `description`
-- `category` (snack, main course, etc)
-- `dietType` (vegan, keto, etc)
-- `image` (link/file upload)
-- `ingredients` (array of strings)
-- `steps` (array of step-by-step instruction)
-- `calories` (number)
-- `createdBy` (user id)
-- `reviews` (array of user comments)
+- `servings`
+- `readyInMinutes`
+- `preparationMinutes`
+- `cookingMinutes`
+- `ingredients`
+- `dishTypes`
+- `tags`
+- `area`
+- `instructions`
+- `video`
+- `createdByUser`
+- `dateModified`
+- `image`
+- `healthScore`
+- `summary`
+- `weightWatcherSmartPoints`
+- `calories`
+- `carbs`
+- `fat`
+- `protein`
 
 ### `reviews`
 - `_id`
-- `userId`
-- `foodId`
+- `recipeId`
+- `username`
 - `comment`
 - `rating`
 - `createdAt`
@@ -70,26 +79,24 @@ Berikut adalah gambaran koleksi (collections) utama dalam basis data:
 ### `subscriptions`
 - `_id`
 - `userId`
-- `type` (monthly, yearly)
+- `type` 
 - `startDate`
 - `endDate`
 - `paymentStatus`
 
 ### `notifications`
 - `_id`
-- `userId`
 - `message`
-- `read` (boolean)
 - `createdAt`
+- `commenterId`
+- `ownerid`
 
-### `chat_sessions` (untuk fitur chatbot AI)
+### `aiQueries` 
 - `_id`
 - `userId`
-- `messages`: array of {
-  - `sender` (user/ai)
-  - `message`
-  - `timestamp`
-}
+- `prompt`
+- `response`
+- `createdAt`
 
 ---
 
