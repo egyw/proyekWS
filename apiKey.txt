@@ -11,5 +11,5 @@ yoshi ---
 6. c3598c9612bf4185bc0758603ff6f085
 
 kenji ---
-7. 
-8. 
+7. e53daa43fa784af3a27ac829908186c1
+8. 334c101b7efb4d7f9eecf7000d1deb2b
