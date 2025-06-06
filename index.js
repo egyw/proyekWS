@@ -1,13 +1,17 @@
 require('dotenv').config();
 const express = require('express');
-const router = require('./src/routes');
+const cookieParser = require('cookie-parser');
+const { userRouter } = require('./src/routes');
+const connectDB = require('./src/database/connection');
+
+connectDB();
+
 const app = express();
-
-
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api', router);
+app.use('/user', userRouter);
 
 
 // run server
