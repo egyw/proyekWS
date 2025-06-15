@@ -1,7 +1,12 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const { userRouter, RecipeRouter } = require("./src/routes");
+const {
+  userRouter,
+  RecipeRouter,
+  ReviewAiCaloryRouter,
+} = require("./src/routes");
 const connectDB = require("./src/database/connection");
 
 connectDB();
@@ -11,8 +16,12 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/user", userRouter);
-app.use("/recipes", RecipeRouter);
+// Serve static files from the cntohImage directory
+app.use("/images", express.static(path.join(__dirname, "./cntohImage")));
+
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/recipes", RecipeRouter);
+app.use("/api/v1/reviews", ReviewAiCaloryRouter);
 
 // run server
 const port = 3000;

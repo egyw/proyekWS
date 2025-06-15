@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const mongooseDelete = require("mongoose-delete");
 const recipeSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -98,6 +98,13 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+});
+
+recipeSchema.plugin(mongooseDelete, {
+  overrideMethods: "all",
+  deletedAt: true,
+  deletedBy: true,
+  validateBeforeDelete: true,
 });
 
 module.exports = mongoose.model("Recipe", recipeSchema);
