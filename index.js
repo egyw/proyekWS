@@ -15,6 +15,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 // Serve static files from the cntohImage directory
 app.use("/images", express.static(path.join(__dirname, "./cntohImage")));

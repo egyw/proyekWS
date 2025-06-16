@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
 const { sendOtpEmail } = require("../utils/mailer/mailer");
+const path = require("path");
+const fs = require("fs");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -190,7 +192,7 @@ const verifyOTP = async (req, res) => {
     };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "10h",
+      expiresIn: "24h",
     });
 
     const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
@@ -288,7 +290,7 @@ const refreshToken = async (req, res) => {
 const logoutUser = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
   if (!refreshToken) {
-    return res.status(204);
+    return res.status(200).json({ message: "Pengguna sudah logout (tidak ada token ditemukan)." });
   }
 
   const user = await User.findOne({ refreshToken: refreshToken });
@@ -303,23 +305,158 @@ const logoutUser = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   try {
-    const userProfile = req.user;
+    const userId = req.user.id;
+
+    const user = await User.findById(userId).select('-password -otp -refreshToken -otpExpiresAt');
+
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    let profilePictureUrl = null;
+    if (user.profilePicture) {
+      profilePictureUrl = `${req.protocol}://${req.get('host')}${user.profilePicture}`;
+    }
+
 
     const profileData = {
-      id: userProfile._id,
-      username: userProfile.username,
-      email: userProfile.email,
-      isPremium: userProfile.isPremium,
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      isPremium: user.isPremium,
+      profilePicture: profilePictureUrl, 
     };
 
     return res.status(200).json({
       message: "Berhasil mendapatkan profil pengguna",
       data: profileData,
     });
+
   } catch (error) {
     console.error("gagal mendatkan profil pengguna:", error);
     return res.status(500).json({
       message: "Terjadi kesalahan saat mengambil profil pengguna",
+      error: error.message,
+    });
+  }
+};
+
+const getUserProfilePicture = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId).select('profilePicture');
+
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    if (!user.profilePicture) {
+      return res.status(404).json({ message: "Gambar profil tidak ditemukan." });
+    }
+
+    const imagePath = `public/${user.profilePicture}`;
+    return res.status(200).sendFile(imagePath, { root: '.' });
+
+  } catch (error) {
+    console.error("Gagal mendapatkan gambar profil:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server saat mengambil gambar profil.",
+      error: error.message,
+    });
+  }
+}
+
+const updateProfilePicture = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "Tidak ada file yang diunggah atau format file tidak didukung." });
+    }
+
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    if (user && user.profilePicture) {
+      const oldPicturePath = path.join(__dirname, '..', '..', 'public', user.profilePicture);
+      console.log(oldPicturePath)
+      if (fs.existsSync(oldPicturePath)) {
+        fs.unlink(oldPicturePath, (err) => {
+          if (err) {
+            console.error("Gagal menghapus gambar lama:", err);
+          } else {
+            console.log("Gambar profil lama berhasil dihapus:", oldPicturePath);
+          }
+        });
+      }
+    }
+
+    const newProfilePicturePath = `/images/profiles/${req.file.filename}`;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profilePicture: newProfilePicturePath },
+      { new: true } 
+    ).select('-password -otp -refreshToken -otpExpiresAt'); 
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    return res.status(200).json({
+      message: "Gambar profil berhasil diupdate!",
+      data: {
+        profilePicture: updatedUser.profilePicture
+      }
+    });
+
+  } catch (error) {
+    console.error("Gagal update gambar profil:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server saat mengupdate gambar profil.",
+      error: error.message,
+    });
+  }
+};
+
+const deleteProfilePicture = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    if (!user.profilePicture) {
+      return res.status(400).json({ message: "Tidak ada gambar profil untuk dihapus." });
+    }
+
+    const picturePath = path.join(process.cwd(), 'public', user.profilePicture);
+
+    if (fs.existsSync(picturePath)) {
+      fs.unlink(picturePath, (err) => {
+        if (err) {
+          console.error("Gagal menghapus file fisik gambar profil:", err);
+        } else {
+          console.log("File gambar profil fisik berhasil dihapus:", picturePath);
+        }
+      });
+    } else {
+      console.log("File fisik gambar profil tidak ditemukan, hanya akan mengupdate database.");
+    }
+
+    user.profilePicture = null;
+    await user.save();
+
+    return res.status(200).json({
+      message: "Gambar profil berhasil dihapus.",
+    });
+
+  } catch (error) {
+    console.error("Gagal menghapus gambar profil:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server saat menghapus gambar profil.",
       error: error.message,
     });
   }
@@ -332,5 +469,8 @@ module.exports = {
   refreshToken,
   logoutUser,
   getUserProfile,
+  getUserProfilePicture,
   verifyOTP,
+  updateProfilePicture,
+  deleteProfilePicture,
 };
