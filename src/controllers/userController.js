@@ -1,7 +1,9 @@
 const { User } = require("../models");
-const { registerValidation, loginValidation } = require("../utils/validations");
+const { registerValidation, loginValidation, verifyOtpValidation } = require("../utils/validations");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const otpGenerator = require("otp-generator");
+const { sendOtpEmail } = require("../utils/mailer/mailer");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -108,6 +110,78 @@ const loginUser = async (req, res) => {
         .json({ message: "Username/Email atau Password salah!" });
     }
 
+    const otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      lowerCaseAlphabets: false,
+      specialChars: false,
+      digits: true,
+    });
+
+    user.otp = otp;
+    user.otpExpiresAt = Date.now() + 3 * 60 * 1000; // 3 menit
+    await user.save();
+
+    await sendOtpEmail(user.email, otp);
+
+    return res.status(200).json({
+      message: "Verifikasi berhasil. kode OTP telah dikirim ke email Anda.",
+      data: {
+        username: user.username,
+        email: user.email,
+      },
+    })
+  } catch (error) {
+    if (error.isJoi) {
+      const errorMessages = {};
+      error.details.forEach((detail) => {
+        errorMessages[detail.path[0]] = detail.message;
+      });
+
+      return res.status(400).json({
+        message: "Validasi gagal!",
+        error: errorMessages,
+      });
+    }
+
+    console.error(error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server!",
+      error: error.message,
+    });
+  }
+};
+
+const verifyOTP = async (req, res) => {
+  try{
+    const validated = await verifyOtpValidation.validateAsync(req.body, {
+      abortEarly: false,
+    });
+
+    if (!validated) {
+      return res.status(400).json({
+        message: "Validasi gagal!",
+        error: "Data tidak valid. Harap masukkan identifier dan OTP.",
+      });
+    }
+    
+    const user = await User.findOne({
+      $or: [
+        { username: validated.identifier },
+        { email: validated.identifier },
+      ],
+      otp: validated.otp,
+      otpExpiresAt: { $gt: Date.now() }, 
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "OTP tidak valid atau telah kedaluwarsa!",
+      });
+    }
+
+    user.otp = null;
+    user.otpExpiresAt = null;
+
     const payload = {
       id: user._id,
       username: user.username,
@@ -136,7 +210,7 @@ const loginUser = async (req, res) => {
       data: payload,
       accessToken: accessToken,
     });
-  } catch (error) {
+  } catch (err) {
     if (error.isJoi) {
       const errorMessages = {};
       error.details.forEach((detail) => {
@@ -155,7 +229,7 @@ const loginUser = async (req, res) => {
       error: error.message,
     });
   }
-};
+}
 
 const refreshToken = async (req, res) => {
   try {
@@ -258,4 +332,5 @@ module.exports = {
   refreshToken,
   logoutUser,
   getUserProfile,
+  verifyOTP,
 };

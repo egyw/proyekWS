@@ -81,7 +81,24 @@ const loginValidation = Joi.object({
         }),
 });
 
+const verifyOtpValidation = Joi.object({
+    identifier: Joi.string()
+        .required()
+        .messages({
+            "any.required": "Username atau Email harus diisi!",
+            "string.empty": "Username atau Email tidak boleh kosong!",
+        }),
+
+    otp: Joi.string()
+        .required()
+        .messages({
+            "any.required": "Kode OTP harus diisi!",
+            "string.empty": "Kode OTP tidak boleh kosong!",
+        }),
+});
+
 module.exports = {
     registerValidation,
     loginValidation,
+    verifyOtpValidation,
 };

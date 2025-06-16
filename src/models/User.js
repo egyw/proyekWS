@@ -22,7 +22,15 @@ const userSchema = new mongoose.Schema({
   refreshToken: {
     type: String,
     default: null,
-  }
+  },
+  otp: {
+    type: String,
+    default: null,
+  },
+  otpExpiresAt: {
+    type: Date,
+    default: null,
+  },
 }, { timestamps: true });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema, 'users');
