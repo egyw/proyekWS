@@ -113,9 +113,9 @@ const getListReview = async (req, res) => {
 };
 const foodSugestion = async (req, res) => {
   const type = {
-    cuisines: cuisines,
-    diet: diet,
-    intolarances: intolarances,
+    // cuisines: cuisines,
+    // diet: diet,
+    // intolarances: intolarances,
     meal_types: meal_types,
     // recipeTypes: recipeSortingGrouped,
   };
