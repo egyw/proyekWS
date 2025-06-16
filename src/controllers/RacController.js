@@ -1,6 +1,13 @@
 const axios = require("axios");
 const { Review, aiQueries, Recipe } = require("../models");
 const { $where } = require("../models/User");
+const {
+  cuisines,
+  diet,
+  intolarances,
+  meal_types,
+  recipeSortingGrouped,
+} = require("../utils/spoonacular/listFoodTypeSpoonacular");
 
 // kurang validation joi
 const addComentar = async (req, res) => {
@@ -105,10 +112,19 @@ const getListReview = async (req, res) => {
   }
 };
 const foodSugestion = async (req, res) => {
+  const type = {
+    cuisines: cuisines,
+    diet: diet,
+    intolarances: intolarances,
+    meal_types: meal_types,
+    // recipeTypes: recipeSortingGrouped,
+  };
   try {
     const dtUser = req.user;
     const { userInput } = req.body;
-    const aiPrompt = `Berikut input pengguna: ${userInput}`;
+    const aiPrompt = `Bedasarkan input pengguna: ${userInput}. dan untuk hasil type nya nanti harus bedasarkan ini : ${JSON.stringify(
+      type
+    )}. berikan jawaban berupa array yang dan isi nya jangan ada text. sebagai Contoh: ["ayam", "sayur", "nasi"]. sebagai hasil dalam bahasa inggris`;
     const geminiResponse = await fetch(
       "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=AIzaSyC-SFRjSVWr13J8zmXMAre5K89BzeP1yFs",
       {
@@ -124,31 +140,43 @@ const foodSugestion = async (req, res) => {
       }
     );
     const geminiResult = await geminiResponse.json();
-    // const keywords = JSON.parse(geminiResult.candidates[0].content.parts[0].text);
+    return res.status(400).json({
+      message: geminiResult,
+    });
+    let responseText = geminiResult.candidates[0].content.parts[0].text;
+    responseText = responseText
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+    const keywords = JSON.parse(responseText);
+    console.log("Keywords:", keywords);
+    const query = keywords.join(" ");
+
+    // const spoonacularResponse = await fetch(
+    //   `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=5&apiKey=${process.env.SPOONACULAR_API_KEY}`
+    // );
+    // console.log(spoonacularResponse.result);
+
+    // const recipes = await spoonacularResponse.json();
+    // if (recipes.results.length === 0) {
+    //   return res.status(404).json({
+    //     message: "Tidak ada resep yang ditemukan",
+    //   });
+    // }
+    // const recipeDetails = recipes.results.map((recipe) => ({
+    //   title: recipe.title,
+    //   image: recipe.image,
+    //   id: recipe.id,
+    // }));
+    // await aiQueries.create({
+    //   userId: dtUser.username,
+    //   prompt: userInput,
+    //   response: keywords,
+    // });
     return res.status(200).json({
       result: geminiResult,
-    });
-    const options = {
-      method: "GET",
-      url: "https://api.spoonacular.com/recipes/complexSearch",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": process.env.SPOONACULAR_API_KEY,
-      },
-      params: {
-        number: 12,
-        addRecipeInformation: true,
-        fillIngredients: true,
-        addRecipeNutrition: true,
-        sort: "popularity",
-      },
-    };
-
-    const response = await axios(options);
-    return res.status(200).json({
-      username: dtUser.username,
-      premium: dtUser.isPremium,
-      message: "You are a premium user, you can use AI Food Suggestion",
+      message: "Berhasil mendapatkan saran makanan",
+      data: recipeDetails,
     });
   } catch (error) {
     console.error("Error in food suggestion:", error);
