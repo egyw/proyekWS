@@ -6,6 +6,7 @@ const {
   userRouter,
   RecipeRouter,
   ReviewAiCaloryRouter,
+  SubscriptionRouter,
 } = require("./src/routes");
 const connectDB = require("./src/database/connection");
 
@@ -23,6 +24,7 @@ app.use("/images", express.static(path.join(__dirname, "./cntohImage")));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/recipes", RecipeRouter);
 app.use("/api/v1/reviews", ReviewAiCaloryRouter);
+app.use("/api/v1/subscribe", SubscriptionRouter);
 
 // run server
 const port = 3000;
