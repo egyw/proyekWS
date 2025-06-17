@@ -5,12 +5,16 @@ const {
   addComentar,
   getListReview,
   foodSugestion,
+  aiHistory,
+  countCalory,
 } = require("../controllers/RacController");
 const cekPremium = require("../middlewares/cekRole");
 const router = express.Router();
 
 router.post("/:title/:commentar/:rating", [verifyToken], addComentar);
 router.post("/ai/food-suggestion", [verifyToken, cekPremium], foodSugestion);
+router.get("/ai/history", [verifyToken], aiHistory);
+router.get("/ai/calory/:title", [verifyToken], countCalory);
 router.get("/:title", [verifyToken], getListReview);
 
 module.exports = router;

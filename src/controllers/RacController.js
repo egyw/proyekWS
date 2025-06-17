@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Review, aiQueries, Recipe } = require("../models");
+const { Review, aiQueries, Recipe, User } = require("../models");
 const { $where } = require("../models/User");
 const {
   cuisines,
@@ -113,18 +113,18 @@ const getListReview = async (req, res) => {
 };
 const foodSugestion = async (req, res) => {
   const type = {
-    // cuisines: cuisines,
+    cuisines: cuisines,
     // diet: diet,
     // intolarances: intolarances,
-    meal_types: meal_types,
+    // meal_types: meal_types,
     // recipeTypes: recipeSortingGrouped,
   };
+
   try {
     const dtUser = req.user;
     const { userInput } = req.body;
-    const aiPrompt = `Bedasarkan input pengguna: ${userInput}. dan untuk hasil type nya nanti harus bedasarkan ini : ${JSON.stringify(
-      type
-    )}. berikan jawaban berupa array yang dan isi nya jangan ada text. sebagai Contoh: ["ayam", "sayur", "nasi"]. sebagai hasil dalam bahasa inggris`;
+    const aiPrompt = `Bedasarkan input pengguna: ${userInput}. dan harus bedasarkan dari negara : ${JSON.stringify(type)}
+    berikan jawaban berupa nama negaranya saja dan berikan text juga, sebagai hasil dalam bahasa inggris`;
     const geminiResponse = await fetch(
       "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=AIzaSyC-SFRjSVWr13J8zmXMAre5K89BzeP1yFs",
       {
@@ -139,44 +139,50 @@ const foodSugestion = async (req, res) => {
         }),
       }
     );
+
     const geminiResult = await geminiResponse.json();
-    return res.status(400).json({
-      message: geminiResult,
+    const textResponse = geminiResult.candidates[0].content.parts[0].text;
+    const found = cuisines
+      .map((item) => {
+        console.log("Checking item:", item);
+
+        if (textResponse.toLowerCase().includes(item.toLowerCase())) {
+          return item;
+        }
+      })
+      .toString();
+    const query = found.replace(/,/g, "");
+    console.log("Found cuisine:", query);
+
+    // let responseText = geminiResult.candidates[0].content.parts[0].text;
+    // responseText = responseText
+    //   .replace(/```json/g, "")
+    //   .replace(/```/g, "")
+    //   .trim();
+    // const keywords = JSON.parse(responseText);
+    // const query = keywords.join(" ");
+
+    const spoonacularResponse = await axios.get(
+      `https://api.spoonacular.com/recipes/complexSearch?cuisine=${query}&number=5&apiKey=e53daa43fa784af3a27ac829908186c1`
+    );
+    console.log(spoonacularResponse.data);
+    const userId = await User.findOne({
+      username: dtUser.username,
     });
-    let responseText = geminiResult.candidates[0].content.parts[0].text;
-    responseText = responseText
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
-    const keywords = JSON.parse(responseText);
-    console.log("Keywords:", keywords);
-    const query = keywords.join(" ");
+    // console.log(userId._id, " ", userInput, " ", keywords);
 
-    // const spoonacularResponse = await fetch(
-    //   `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=5&apiKey=${process.env.SPOONACULAR_API_KEY}`
-    // );
-    // console.log(spoonacularResponse.result);
-
-    // const recipes = await spoonacularResponse.json();
-    // if (recipes.results.length === 0) {
-    //   return res.status(404).json({
-    //     message: "Tidak ada resep yang ditemukan",
-    //   });
-    // }
-    // const recipeDetails = recipes.results.map((recipe) => ({
-    //   title: recipe.title,
-    //   image: recipe.image,
-    //   id: recipe.id,
-    // }));
-    // await aiQueries.create({
-    //   userId: dtUser.username,
-    //   prompt: userInput,
-    //   response: keywords,
-    // });
+    await aiQueries.create({
+      userId: userId._id,
+      prompt: userInput,
+      response: textResponse,
+    });
     return res.status(200).json({
-      result: geminiResult,
       message: "Berhasil mendapatkan saran makanan",
-      data: recipeDetails,
+      data: spoonacularResponse.data.results.map((recipe) => ({
+        title: recipe.title,
+        image: recipe.image,
+        id: recipe.id,
+      })),
     });
   } catch (error) {
     console.error("Error in food suggestion:", error);
@@ -186,7 +192,36 @@ const foodSugestion = async (req, res) => {
     });
   }
 };
-const aiHistory = async (req, res) => {};
+const aiHistory = async (req, res) => {
+  const dtUser = req.user;
+  try {
+    const userId = await User.findOne({
+      username: dtUser.username,
+    });
+    const dtAiHistory = await aiQueries.find({
+      userId: userId._id,
+    });
+    if (!dtAiHistory || dtAiHistory.length === 0) {
+      return res.status(404).json({
+        message: "Riwayat AI tidak ditemukan",
+      });
+    }
+    return res.status(200).json({
+      message: "Berhasil mendapatkan riwayat AI",
+      user: dtUser.username,
+      data: dtAiHistory.map((history) => ({
+        prompt: history.prompt,
+        response: history.response,
+      })),
+    });
+  } catch (error) {
+    console.error("Error in AI history:", error);
+    return res.status(500).json({
+      message: "Gagal mendapatkan riwayat AI",
+      error: error.message,
+    });
+  }
+};
 const countCalory = async (req, res) => {};
 module.exports = {
   addComentar,
