@@ -1,6 +1,6 @@
-const userValidation = require('./userValidation');
-
-
-module.exports = {  
-    ...userValidation,
+const userValidation = require("./userValidation");
+const racValidation = require("./RacValidation");
+module.exports = {
+  ...userValidation,
+  ...racValidation,
 };

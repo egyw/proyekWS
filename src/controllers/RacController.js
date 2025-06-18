@@ -8,14 +8,20 @@ const {
   meal_types,
   recipeSortingGrouped,
 } = require("../utils/spoonacular/listFoodTypeSpoonacular");
+const {
+  commentarValidation,
+  inputUserValidation,
+} = require("../utils/validations");
 
-// kurang validation joi
 const addComentar = async (req, res) => {
-  const { title, commentar, rating } = req.params;
   try {
+    const validated = await commentarValidation.validateAsync(req.body, {
+      abortEarly: false,
+    });
+
     const dtUser = req.user;
     const dtRecipes = await Recipe.findOne({
-      title: new RegExp(`^${title}$`, "i"),
+      title: new RegExp(`^${validated.title}$`, "i"),
     });
     if (!dtRecipes) {
       return res.status(404).json({
@@ -28,20 +34,31 @@ const addComentar = async (req, res) => {
     const newReview = await new Review({
       username: dtUser.username,
       recipeId: dtRecipes.id,
-      comment: commentar,
-      rating: rating,
+      comment: validated.commentar,
+      rating: validated.rating,
     }).save();
 
     return res.status(200).json({
       message: "Berhasil menampilkan resep",
       data: {
-        title: title,
+        title: validated.title,
         image_url: "http://localhost:3000/images/tempe.jpg",
-        comments: commentar,
-        rating: rating,
+        comments: validated.commentar,
+        rating: validated.rating,
       },
     });
   } catch (error) {
+    if (error.isJoi) {
+      const errorMessages = {};
+      error.details.forEach((detail) => {
+        errorMessages[detail.path[0]] = detail.message;
+      });
+
+      return res.status(400).json({
+        message: "Validasi gagal!",
+        error: errorMessages,
+      });
+    }
     console.error("Error adding comment:", error);
     return res.status(500).json({
       message: "Gagal menambahkan komentar",
@@ -50,9 +67,13 @@ const addComentar = async (req, res) => {
   }
 };
 
-// kurang validation joi
 const getListReview = async (req, res) => {
   const { title } = req.params;
+  if (!title) {
+    return res.status(400).json({
+      message: "Title tidak boleh kosong!",
+    });
+  }
 
   try {
     const dtRecipes = await Recipe.findOne({
@@ -111,6 +132,7 @@ const getListReview = async (req, res) => {
     });
   }
 };
+
 const foodSugestion = async (req, res) => {
   const type = {
     cuisines: cuisines,
@@ -121,12 +143,15 @@ const foodSugestion = async (req, res) => {
   };
 
   try {
+    const validated = await inputUserValidation.validateAsync(req.body, {
+      abortEarly: false,
+    });
     const dtUser = req.user;
-    const { userInput } = req.body;
-    const aiPrompt = `Bedasarkan input pengguna: ${userInput}. dan harus bedasarkan dari negara : ${JSON.stringify(type)}
-    berikan jawaban berupa nama negaranya saja dan berikan text juga, sebagai hasil dalam bahasa inggris`;
+    const userInput = validated.userInput;
+    const aiPrompt = `Bedasarkan input pengguna: ${userInput}. dan harus bedasarkan dari data ini : ${JSON.stringify(type)}
+    berikan text juga, sebagai hasil dalam bahasa inggris`;
     const geminiResponse = await fetch(
-      "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=AIzaSyC-SFRjSVWr13J8zmXMAre5K89BzeP1yFs",
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -144,37 +169,31 @@ const foodSugestion = async (req, res) => {
     const textResponse = geminiResult.candidates[0].content.parts[0].text;
     const found = cuisines
       .map((item) => {
-        console.log("Checking item:", item);
-
+        // console.log("Checking item:", item);
         if (textResponse.toLowerCase().includes(item.toLowerCase())) {
           return item;
         }
       })
       .toString();
     const query = found.replace(/,/g, "");
-    console.log("Found cuisine:", query);
-
-    // let responseText = geminiResult.candidates[0].content.parts[0].text;
-    // responseText = responseText
-    //   .replace(/```json/g, "")
-    //   .replace(/```/g, "")
-    //   .trim();
-    // const keywords = JSON.parse(responseText);
-    // const query = keywords.join(" ");
-
+    const response = textResponse
+      .replace(/\*\*/g, "")
+      .replace(/\* +/g, "- ")
+      .replace(/\n{2,}/g, "\n");
+    // console.log("Found cuisine:", query);
+    console.log(response);
     const spoonacularResponse = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?cuisine=${query}&number=5&apiKey=e53daa43fa784af3a27ac829908186c1`
+      `https://api.spoonacular.com/recipes/complexSearch?cuisine=${query}&number=5&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
     console.log(spoonacularResponse.data);
     const userId = await User.findOne({
       username: dtUser.username,
     });
     // console.log(userId._id, " ", userInput, " ", keywords);
-
     await aiQueries.create({
       userId: userId._id,
       prompt: userInput,
-      response: textResponse,
+      response: response,
     });
     return res.status(200).json({
       message: "Berhasil mendapatkan saran makanan",
@@ -222,7 +241,64 @@ const aiHistory = async (req, res) => {
     });
   }
 };
-const countCalory = async (req, res) => {};
+const countCalory = async (req, res) => {
+  const { title } = req.params;
+  if (!title) {
+    return res.status(400).json({
+      message: "Title tidak boleh kosong!",
+    });
+  }
+  try {
+    const dtFood = await axios.get(
+      `https://api.spoonacular.com/recipes/complexSearch?query=${title}&number=1&apiKey=${process.env.SPOONACULAR_API_KEY}`
+    );
+    const idFood = dtFood.data.results[0].id;
+    const infFood = await axios.get(
+      `https://api.spoonacular.com/recipes/${idFood}/information?includeNutrition=true&apiKey=${process.env.SPOONACULAR_API_KEY}`
+    );
+    const nutrients = infFood.data.nutrition.nutrients.map((nutrient) => ({
+      name: nutrient.name,
+      amount: nutrient.amount,
+      unit: nutrient.unit,
+      percentOfDailyNeeds: nutrient.percentOfDailyNeeds,
+    }));
+
+    const aiPrompt = `Tolong hitung kalori yang dihasilkan
+    hitung juga karbo, nutrisi, sugar, cholestrol, alcohol, protein, vitamin yang didapakan
+    dari data ini ${JSON.stringify(nutrients)}, tambahkan kesimpulannya juga`;
+    const geminiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [{ text: aiPrompt }],
+            },
+          ],
+        }),
+      }
+    );
+
+    const geminiResult = await geminiResponse.json();
+    let textResponse = geminiResult.candidates[0].content.parts[0].text;
+    textResponse = textResponse
+      .replace(/\*\*/g, "") // hapus bold markdown
+      .replace(/\* +/g, "- ") // ganti bullet * jadi -
+      .replace(/\n{2,}/g, "\n") // hapus newline berlebih
+      .replace(/^Baik,.*?nutrisi.*?:\n/i, "") // hapus kalimat pembuka Gemini (opsional)
+      .trim();
+
+    return res.status(200).send(textResponse);
+  } catch (error) {
+    console.error("Error counting calories:", error);
+    return res.status(500).json({
+      message: "Gagal menghitung kalori",
+      error: error.message,
+    });
+  }
+};
 module.exports = {
   addComentar,
   getListReview,
