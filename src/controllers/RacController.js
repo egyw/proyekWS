@@ -88,7 +88,7 @@ const addComentar = async (req, res) => {
           rating: validated.rating,
         },
       });
-    }, 1_000);
+    }, 30_000);
   } catch (error) {
     if (error.isJoi) {
       const errorMessages = {};
