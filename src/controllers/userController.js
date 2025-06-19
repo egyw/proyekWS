@@ -1,5 +1,5 @@
 const { User } = require("../models");
-const { registerValidation, loginValidation, verifyOtpValidation } = require("../utils/validations");
+const { registerValidation, loginValidation, verifyOtpValidation, updatePasswordValidation, updateEmailValidation } = require("../utils/validations");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
@@ -123,7 +123,7 @@ const loginUser = async (req, res) => {
     user.otpExpiresAt = Date.now() + 3 * 60 * 1000; // 3 menit
     await user.save();
 
-    await sendOtpEmail(user.email, otp);
+    await sendOtpEmail(user.email, otp, "Login");
 
     return res.status(200).json({
       message: "Verifikasi berhasil. kode OTP telah dikirim ke email Anda.",
@@ -462,6 +462,168 @@ const deleteProfilePicture = async (req, res) => {
   }
 };
 
+const updatePassword = async (req, res) => {
+  try{
+    const validated = await updatePasswordValidation.validateAsync(req.body, {
+      abortEarly: false,
+    });
+
+    if (!validated) {
+      return res.status(400).json({
+        message: "Validasi gagal!",
+        error:
+          "Data tidak valid. Harap masukkan password lama, password baru, dan konfirmasi password baru.",
+      });
+    }
+
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    if(!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    const isPasswordValid = await bcrypt.compare(validated.currentPassword, user.password);
+    if(!isPasswordValid){
+      return res.status(401).json({ message: "Password saat ini salah!" });
+    }
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashedNewPassword = await bcrypt.hash(validated.newPassword, salt);
+
+    user.password = hashedNewPassword;
+    user.refreshToken = null; 
+    await user.save();
+
+    res.clearCookie("refreshToken", { httpOnly: true });
+
+    return res.status(200).json({ message: "Password berhasil diupdate!" });
+
+  } catch (error){
+    if (error.isJoi) {
+      const errorMessages = {};
+      error.details.forEach((detail) => {
+        errorMessages[detail.path[0]] = detail.message;
+      });
+
+      return res.status(400).json({
+        message: "Validasi gagal!",
+        error: errorMessages,
+      });
+    }
+
+    console.error(error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server!",
+      error: error.message,
+    });
+  }
+}
+
+const updateEmail = async (req, res) => {
+  try{
+    const validated = await updateEmailValidation.validateAsync(req.body, {
+      abortEarly: false,
+    });
+
+    if (!validated) {
+      return res.status(400).json({
+        message: "Validasi gagal!",
+        error: "Data tidak valid. Harap masukkan email baru.",
+      });
+    }
+
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    if(!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    const otp = otpGenerator.generate(6, {
+      upperCaseAlphabets: false,
+      lowerCaseAlphabets: false,
+      specialChars: false,
+      digits: true,
+    });
+    
+    user.pendingEmail = validated.newEmail;
+    user.otp = otp;
+    user.otpExpiresAt = Date.now() + 3 * 60 * 1000; // 3 menit
+    await user.save();
+
+    await sendOtpEmail(validated.newEmail, otp, "Update Email");
+
+    return res.status(200).json({
+      message: "Verifikasi berhasil. Kode OTP telah dikirim ke email baru Anda.",
+      data: {
+        newEmail: validated.newEmail,
+      },
+    });
+  } catch (error){
+    if (error.isJoi) {
+      const errorMessages = {};
+      error.details.forEach((detail) => {
+        errorMessages[detail.path[0]] = detail.message;
+      });
+
+      return res.status(400).json({
+        message: "Validasi gagal!",
+        error: errorMessages,
+      });
+    }
+
+    console.error(error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server!",
+      error: error.message,
+    });
+  }
+}
+
+const verifyEmailOTP = async (req, res) => {
+  try{
+    const { otp } = req.body;
+    if(!otp) {
+      return res.status(400).json({ message: "OTP tidak boleh kosong!" });
+    }
+    if(otp.length !== 6 || isNaN(otp)) {
+      return res.status(400).json({ message: "OTP harus berupa angka 6 digit!" });
+    }
+
+    const userId = req.user.id;
+    const user = await User.findOne({
+      _id: userId,
+      otp: otp,
+      otpExpiresAt: { $gt: Date.now() }, 
+    });
+
+    if(!user) {
+      return res.status(400).json({ message: "OTP tidak valid atau telah kedaluwarsa!" });
+    }
+
+    user.email = user.pendingEmail;
+    user.pendingEmail = null;
+    user.otp = null;
+    user.otpExpiresAt = null;
+    await user.save();
+
+    return res.status(200).json({
+      message: "Email berhasil diperbarui!",
+      data: {
+        email: user.email,
+      },
+    });
+
+  } catch (err){
+    console.error(err);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server!",
+      error: err.message,
+    });
+  }
+}
+
 module.exports = {
   getAllUsers,
   registerUser,
@@ -473,4 +635,7 @@ module.exports = {
   verifyOTP,
   updateProfilePicture,
   deleteProfilePicture,
+  updatePassword,
+  updateEmail,
+  verifyEmailOTP,
 };

@@ -2,16 +2,16 @@ const { Resend } = require('resend');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const sendOtpEmail = async (toEmail, otp) => {
+const sendOtpEmail = async (toEmail, otp, activity) => {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Foodify <noreply@egyw.tech>', 
       to: [toEmail], 
-      subject: 'Kode Verifikasi Login Anda',
+      subject: `Kode Verifikasi ${activity} Anda`,
       html: `
         <div style="font-family: sans-serif; text-align: center;">
-          <h2>Verifikasi Login</h2><br>
-          <p>Gunakan kode berikut untuk menyelesaikan proses login Anda. Kode ini berlaku selama 10 menit.</p>
+          <h2>Verifikasi ${activity}</h2><br>
+          <p>Gunakan kode berikut untuk menyelesaikan proses ${activity.toLowerCase()} Anda. Kode ini berlaku selama 3 menit.</p>
           <h1 style="letter-spacing: 5px; background-color: #f0f0f0; padding: 20px;">${otp}</h1><br>
           <p>Jika Anda tidak meminta kode ini, mohon abaikan email ini.</p>
         </div>
