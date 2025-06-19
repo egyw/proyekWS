@@ -17,12 +17,6 @@ const { sendCommentNotifier } = require("../utils/mailer/mailer");
 
 const addComentar = async (req, res) => {
   try {
-    const { recipeID } = req.params;
-
-    if (!recipeID) {
-      return res.status(400).json({ message: "ID Resep tidak boleh kosong!" });
-    }
-
     const validated = await commentarValidation.validateAsync(req.body, {
       abortEarly: false,
     });
@@ -66,9 +60,24 @@ const addComentar = async (req, res) => {
       const newReview = await new Review({
         username: dtUser.username,
         recipeId: dtRecipes.id,
+        recipeTitle: dtRecipes.title,
+        commentedBy: dtUser.id,
+        commentedByUsername: dtUser.username,
         comment: validated.commentar,
         rating: validated.rating,
       }).save();
+
+      const commenter = await User.findById(dtRecipes.createdByUser).select(
+        "email username -_id"
+      );
+      await sendCommentNotifier(
+        commenter.email,
+        commenter.username,
+        req.user.username,
+        dtRecipes.title,
+        validated.commentar,
+        validated.rating
+      );
 
       return res.status(200).json({
         message: "Berhasil menampilkan resep",
@@ -79,7 +88,7 @@ const addComentar = async (req, res) => {
           rating: validated.rating,
         },
       });
-    }, 30_000);
+    }, 1_000);
   } catch (error) {
     if (error.isJoi) {
       const errorMessages = {};
