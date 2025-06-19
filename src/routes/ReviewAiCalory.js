@@ -11,7 +11,7 @@ const {
 const cekPremium = require("../middlewares/cekRole");
 const router = express.Router();
 
-router.post("/addComentar", [verifyToken], addComentar);
+router.post("/addComentar/:id", [verifyToken], addComentar);
 router.post("/ai/food-suggestion", [verifyToken, cekPremium], foodSugestion);
 router.get("/ai/history", [verifyToken], aiHistory);
 router.get("/ai/calory/:title", [verifyToken], countCalory);

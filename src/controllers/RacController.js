@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { Review, aiQueries, Recipe, User } = require("../models");
 const { $where } = require("../models/User");
+const { ObjectId } = require("mongoose").Types;
 const {
   cuisines,
   diet,
@@ -20,33 +21,58 @@ const addComentar = async (req, res) => {
     });
 
     const dtUser = req.user;
+    const { id } = req.params;
+    // const dtRecipes = await Recipe.findOne({
+    //   title: new RegExp(`^${validated.title}$`, "i"),
+    // });
+    if (!id) {
+      return res.status(400).json({
+        message: "ID resep tidak boleh kosong!",
+      });
+    }
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({
+        message: "ID resep tidak valid!",
+      });
+    }
     const dtRecipes = await Recipe.findOne({
-      title: new RegExp(`^${validated.title}$`, "i"),
+      _id: id,
     });
     if (!dtRecipes) {
       return res.status(404).json({
         message: "Resep tidak ditemukan",
       });
     }
-    console.log("Data User:", dtUser);
-    console.log("Data Resep:", dtRecipes);
-
-    const newReview = await new Review({
-      username: dtUser.username,
-      recipeId: dtRecipes.id,
-      comment: validated.commentar,
-      rating: validated.rating,
-    }).save();
-
-    return res.status(200).json({
-      message: "Berhasil menampilkan resep",
-      data: {
-        title: validated.title,
-        image_url: "http://localhost:3000/images/tempe.jpg",
-        comments: validated.commentar,
+    // console.log("Data User:", dtUser);
+    // console.log("Data Resep:", dtRecipes);
+    let timer = 0;
+    setTimeout(async () => {
+      // timer += 1;
+      // console.log(`Timer: ${timer} detik`);
+      const komentarFilter = await validateCommentAI(validated.commentar);
+      if (komentarFilter && komentarFilter.toLowerCase() !== "tidak") {
+        return res.status(400).json({
+          message: "Komentar mengandung unsur SARA, tidak aman untuk publik!",
+          error: komentarFilter,
+        });
+      }
+      const newReview = await new Review({
+        username: dtUser.username,
+        recipeId: dtRecipes.id,
+        comment: validated.commentar,
         rating: validated.rating,
-      },
-    });
+      }).save();
+
+      return res.status(200).json({
+        message: "Berhasil menampilkan resep",
+        data: {
+          title: validated.title,
+          image_url: "http://localhost:3000/images/tempe.jpg",
+          comments: validated.commentar,
+          rating: validated.rating,
+        },
+      });
+    }, 30_000);
   } catch (error) {
     if (error.isJoi) {
       const errorMessages = {};
@@ -297,6 +323,35 @@ const countCalory = async (req, res) => {
       message: "Gagal menghitung kalori",
       error: error.message,
     });
+  }
+};
+
+const validateCommentAI = async (comment) => {
+  try {
+    const aiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                {
+                  text: `Cek apakah komentar ini mengandung unsur SARA: "${comment}". Jika ada unsur SARA, berikan penjelasan singkat mengapa komentar ini tidak aman untuk publik. Jika tidak ada, cukup jawab "tidak".`,
+                },
+              ],
+            },
+          ],
+        }),
+      }
+    );
+
+    const result = await aiResponse.json();
+    const textResponse = result.candidates[0].content.parts[0].text.trim();
+    return textResponse || "ya";
+  } catch (error) {
+    console.error("Gagal validasi komentar dengan AI:", error.message);
   }
 };
 module.exports = {
