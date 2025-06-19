@@ -3,7 +3,7 @@ const mongoose  = require("mongoose");
 const userSchema = new mongoose.Schema({
   profilePicture: {
     type: String,
-    default: 'null', // Default profile picture URL
+    default: 'null', 
   },
   username: {
     type: String,
@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   refreshToken: {
+    type: String,
+    default: null,
+  },
+  pendingEmail: {
     type: String,
     default: null,
   },

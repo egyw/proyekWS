@@ -97,8 +97,49 @@ const verifyOtpValidation = Joi.object({
         }),
 });
 
+const updatePasswordValidation = Joi.object({
+    currentPassword: Joi.string()
+        .required()
+        .messages({
+            "any.required": "Password saat ini harus diisi!",
+            "string.empty": "Password saat ini tidak boleh kosong!",
+        }),
+    newPassword: Joi.string()
+        .required()
+        .min(6)
+        .max(20)
+        .messages({
+            "any.required": "Password baru harus diisi!",
+            "string.empty": "Password baru tidak boleh kosong!",
+            "string.min": "Panjang password baru minimal 6 karakter!",
+            "string.max": "Panjang password baru maksimal 20 karakter!",
+        }),
+    confirmNewPassword: Joi.string()
+        .required()
+        .valid(Joi.ref('newPassword'))
+        .messages({
+            "any.required": "Konfirmasi password baru harus diisi!",
+            "string.empty": "Konfirmasi password baru tidak boleh kosong!",
+            "any.only": "Konfirmasi password tidak cocok dengan password baru!",
+        }),
+});
+
+const updateEmailValidation = Joi.object({
+    newEmail: Joi.string()
+        .email()
+        .required()
+        .external(isEmailExists)
+        .messages({
+            "string.email": "Format email tidak valid!",
+            "any.required": "Email baru harus diisi!",
+            "string.empty": "Email baru tidak boleh kosong!",
+        }),
+});
+
 module.exports = {
     registerValidation,
     loginValidation,
     verifyOtpValidation,
+    updatePasswordValidation,
+    updateEmailValidation,
 };

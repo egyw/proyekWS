@@ -13,9 +13,16 @@ const {
   commentarValidation,
   inputUserValidation,
 } = require("../utils/validations");
+const { sendCommentNotifier } = require("../utils/mailer/mailer");
 
 const addComentar = async (req, res) => {
   try {
+    const { recipeID } = req.params;
+
+    if (!recipeID) {
+      return res.status(400).json({ message: "ID Resep tidak boleh kosong!" });
+    }
+
     const validated = await commentarValidation.validateAsync(req.body, {
       abortEarly: false,
     });
