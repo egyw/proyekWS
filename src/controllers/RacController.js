@@ -12,37 +12,43 @@ const {
   commentarValidation,
   inputUserValidation,
 } = require("../utils/validations");
+const { sendCommentNotifier } = require("../utils/mailer/mailer");
 
 const addComentar = async (req, res) => {
   try {
+    const { recipeID } = req.params;
+
+    if (!recipeID) {
+      return res.status(400).json({ message: "ID Resep tidak boleh kosong!" });
+    }
+
     const validated = await commentarValidation.validateAsync(req.body, {
       abortEarly: false,
     });
 
-    const dtUser = req.user;
-    const dtRecipes = await Recipe.findOne({
-      title: new RegExp(`^${validated.title}$`, "i"),
-    });
-    if (!dtRecipes) {
-      return res.status(404).json({
-        message: "Resep tidak ditemukan",
-      });
+    const recipe = await Recipe.findById(recipeID);
+    if (!recipe) {
+      return res.status(404).json({ message: "Resep tidak ditemukan!" });
     }
-    console.log("Data User:", dtUser);
-    console.log("Data Resep:", dtRecipes);
 
     const newReview = await new Review({
-      username: dtUser.username,
-      recipeId: dtRecipes.id,
+      recipeId: recipe._id,
+      recipeTitle: recipe.title,
+      commentedBy: req.user.id,
+      commentedByUsername: req.user.username,
       comment: validated.commentar,
       rating: validated.rating,
     }).save();
 
+    const commenter = await User.findById(recipe.createdByUser).select("email username -_id");
+    await sendCommentNotifier(commenter.email, commenter.username, req.user.username, recipe.title, validated.commentar, validated.rating);
+
     return res.status(200).json({
-      message: "Berhasil menampilkan resep",
+      message: "Berhasil menambahkan komentar",
       data: {
-        title: validated.title,
-        image_url: "http://localhost:3000/images/tempe.jpg",
+        recipeName: recipe.title,
+        image_url: "http://localhost:3000/images/tempe.jpg", //harus diperbaiki lagi nanti
+        commenter: req.user.username,
         comments: validated.commentar,
         rating: validated.rating,
       },

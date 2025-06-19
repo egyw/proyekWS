@@ -2,10 +2,6 @@ const Joi = require("joi");
 const { Recipe } = require("../../models");
 
 const commentarValidation = Joi.object({
-  title: Joi.string().required().messages({
-    "any.required": "Judul harus diisi!",
-    "string.empty": "Judul tidak boleh kosong!",
-  }),
   commentar: Joi.string().min(10).max(500).required().messages({
     "string.min": "Panjang commentar minimal 10 karakter!",
     "string.max": "Panjang commentar maksimal 500 karakter!",

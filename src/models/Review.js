@@ -3,10 +3,19 @@ const mongoose = require("mongoose");
 const reviewSchema = new mongoose.Schema(
   {
     recipeId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
+    recipeTitle: {
       type: String,
       required: true,
     },
-    username: {
+    commentedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    commentedByUsername: {
       type: String,
       required: true,
     },
@@ -21,7 +30,6 @@ const reviewSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    versionKey: false,
   }
 );
 
