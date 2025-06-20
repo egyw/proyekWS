@@ -12,8 +12,10 @@
   "dependencies": {
     "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
+    "chartjs-node-canvas": "^5.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^16.5.0",
+    "exceljs": "^4.4.0",
     "express": "^5.1.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
@@ -22,7 +24,9 @@
     "mongoose-delete": "^1.0.2",
     "multer": "^2.0.1",
     "otp-generator": "^4.0.1",
+    "pdfkit": "^0.17.1",
     "resend": "^4.6.0",
-    "sharp": "^0.34.2"
+    "sharp": "^0.34.2",
+    "xlsx": "^0.18.5"
   }
 }

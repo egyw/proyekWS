@@ -1,4 +1,9 @@
 const axios = require("axios");
+const XLSX = require("xlsx");
+const PDFDocument = require("pdfkit");
+const fs = require("fs");
+const ExcelJS = require("exceljs");
+const { ChartJSNodeCanvas } = require("chartjs-node-canvas");
 const { Review, aiQueries, Recipe, User } = require("../models");
 const { $where } = require("../models/User");
 const { ObjectId } = require("mongoose").Types;
@@ -342,6 +347,83 @@ const countCalory = async (req, res) => {
   }
 };
 
+const exportToPDF = async (req, res) => {
+  try {
+    const dtUser = req.user;
+    const history = await aiQueries.find({
+      userId: dtUser.id,
+    });
+    const doc = new PDFDocument();
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="riwayat_ai.pdf"'
+    );
+
+    doc.pipe(res);
+    doc.fontSize(18).text("Riwayat Tanya AI", { align: "center" });
+
+    doc.moveDown();
+    history.forEach((item, i) => {
+      doc.fontSize(12).text(`Q${i + 1}: ${item.prompt}`, { bold: true });
+      doc.text(`A${i + 1}: ${item.response}`);
+      doc.moveDown();
+    });
+
+    doc.end();
+  } catch (error) {
+    console.error("Error exporting to PDF:", error);
+    return res.status(500).json({
+      message: "Gagal mengekspor ke PDF",
+      error: error.message,
+    });
+  }
+};
+
+const exportInfoToExcel = async (req, res) => {
+  const dtUser = req.user;
+  const { query, number } = req.body;
+  const { type } = req.body || "excel";
+  if (type !== "excel" && type !== "chart") {
+    return res.status(400).json({
+      message: "Type harus 'excel' atau 'chart'",
+    });
+  }
+  if (!query) {
+    return res.status(400).json({
+      message: "Query tidak boleh kosong!",
+    });
+  }
+  if (!number) {
+    return res.status(400).json({
+      message: "Number tidak boleh kosong!",
+    });
+  }
+  try {
+    const dtFood = await axios.get(
+      `https://api.spoonacular.com/recipes/complexSearch?query=${query}&number=${number}&addRecipeInformation=true&apiKey=${process.env.SPOONACULAR_API_KEY}`
+    );
+    if (dtFood.data.results === 0) {
+      return res.status(404).json({
+        message: "Tidak ada resep yang ditemukan",
+      });
+    }
+    console.log(dtFood.data.results);
+    if (type === "chart") {
+      return exportWithChart(dtFood.data.results, res);
+    }
+    if (type === "excel") {
+      return exportWithExcel(dtFood.data.results, res);
+    }
+  } catch (error) {
+    console.error("Error exporting to Excel:", error);
+    return res.status(500).json({
+      message: "Gagal mengekspor ke Excel",
+      error: error.message,
+    });
+  }
+};
+
 const validateCommentAI = async (comment) => {
   try {
     const aiResponse = await fetch(
@@ -370,10 +452,156 @@ const validateCommentAI = async (comment) => {
     console.error("Gagal validasi komentar dengan AI:", error.message);
   }
 };
+
+const exportWithExcel = async (recipes, res) => {
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet("Resep");
+
+  // 5. Tambahkan tabel resep
+  worksheet.columns = [
+    { header: "Judul", key: "title", width: 40 },
+    { header: "Spoonacular Score", key: "score", width: 10 },
+    { header: "HealthScore", key: "health", width: 10 },
+    { header: "Likes", key: "likes", width: 10 },
+    { header: "Kategori Gizi", key: "gizi" },
+    { header: "Health %", key: "percent" },
+  ];
+
+  recipes.forEach((r) => {
+    const health = r.healthScore || 0;
+    const rating = (r.spoonacularScore / 20).toFixed(1);
+    let gizi = "test";
+    if (health >= 70) gizi = "Sangat Sehat";
+    else if (health >= 50) gizi = "Sehat";
+    else if (health >= 30) gizi = "Cukup Sehat";
+    else if (health >= 10) gizi = "Kurang Sehat";
+    worksheet.addRow({
+      title: r.title,
+      score: r.spoonacularScore,
+      health: r.healthScore,
+      likes: r.aggregateLikes,
+      gizi: gizi,
+      percent: `${health}%`,
+    });
+  });
+
+  const info = workbook.addWorksheet("Informasi");
+  info.addRow([
+    "Dokumen ini berisi informasi gizi dan skor makanan dari Spoonacular",
+  ]);
+  info.addRow(["Kolom 'HealthScore' adalah skor kesehatan makanan (0-100)"]);
+  info.addRow([
+    "Kolom 'Rating' adalah hasil konversi dari spoonacularScore ke skala 5",
+  ]);
+  info.addRow([
+    "Kolom 'Kategori Gizi' memberikan penilaian tekstual berdasarkan skor",
+  ]);
+  info.addRow([
+    "Data ini cocok digunakan untuk analisis makanan dan perbandingan sehat tidaknya.",
+  ]);
+
+  const buffer = await workbook.xlsx.writeBuffer();
+
+  res.setHeader(
+    "Content-Disposition",
+    'attachment; filename="top_recipes.xlsx"'
+  );
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+  res.send(buffer);
+};
+
+const exportWithChart = async (recipes, res) => {
+  const labels = recipes.map(
+    (r) => `${r.title} ${((r.healthScore || 0) / 10).toFixed(1)}`
+  );
+  const values = recipes.map((r) => r.healthScore || 0);
+
+  // 3. Buat chart gambar (pie)
+  const chartCanvas = new ChartJSNodeCanvas({ width: 600, height: 400 });
+  const chartImage = await chartCanvas.renderToBuffer({
+    type: "pie",
+    data: {
+      labels,
+      datasets: [
+        {
+          data: values,
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB",
+            "#FFCE56",
+            "#9CCC65",
+            "#FF7043",
+          ],
+        },
+      ],
+    },
+    options: {
+      plugins: {
+        title: {
+          display: true,
+          text: "HealthScore",
+        },
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  });
+
+  // 4. Buat workbook Excel
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet("Resep");
+
+  // 5. Tambahkan tabel resep
+  worksheet.columns = [
+    { header: "Judul", key: "title", width: 40 },
+    { header: "Spoonacular Score", key: "score" },
+    { header: "HealthScore", key: "health" },
+    { header: "Likes", key: "likes" },
+  ];
+
+  recipes.forEach((r) => {
+    worksheet.addRow({
+      title: r.title,
+      score: r.spoonacularScore,
+      health: r.healthScore,
+      likes: r.aggregateLikes,
+    });
+  });
+
+  // 6. Tambahkan chart ke Excel sebagai gambar
+  const imageId = workbook.addImage({
+    buffer: chartImage,
+    extension: "png",
+  });
+
+  worksheet.addImage(imageId, {
+    tl: { col: 6, row: 1 },
+    ext: { width: 500, height: 300 },
+  });
+
+  // 7. Kirim sebagai file download
+  const buffer = await workbook.xlsx.writeBuffer();
+
+  res.setHeader(
+    "Content-Type",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  );
+  res.setHeader(
+    "Content-Disposition",
+    'attachment; filename="health_score.xlsx"'
+  );
+  res.send(buffer);
+};
 module.exports = {
   addComentar,
   getListReview,
   foodSugestion,
   aiHistory,
   countCalory,
+  exportToPDF,
+  exportInfoToExcel,
 };
