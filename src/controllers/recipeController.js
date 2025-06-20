@@ -1,4 +1,4 @@
-const { Recipe } = require("../models");
+const { Recipe, User } = require("../models");
 const { recipeValidation } = require("../utils/validations/RecipeValidation");
 const axios = require("axios");
 
@@ -105,12 +105,10 @@ const getDetailRecipe = async (req, res) => {
   const id = req.params.id;
 
   try {
-    // Validasi ID format
     if (!id || String(id).trim() === "") {
       return res.status(400).json({ message: "ID harus diisi" });
     }
 
-    // Configuration untuk API Spoonacular - Get Recipe Information
     const options = {
       method: "GET",
       url: `https://api.spoonacular.com/recipes/${id}/information`,
@@ -120,6 +118,7 @@ const getDetailRecipe = async (req, res) => {
       },
       params: {
         includeNutrition: true,
+        w,
       },
     };
     const response = await axios(options);
@@ -184,9 +183,7 @@ const getDetailRecipe = async (req, res) => {
       error.message
     );
 
-    // Jika API eksternal gagal, fallback ke database lokal
     try {
-      // Cek jika ID valid untuk MongoDB ObjectId
       if (id.match(/^[0-9a-fA-F]{24}$/)) {
         const localRecipe = await Recipe.findById(id);
 
@@ -207,6 +204,70 @@ const getDetailRecipe = async (req, res) => {
 
 // =========================================================================================================================
 
+const getRecipebyUser = async (req, res) => {
+  try {
+    let targetUser;
+
+    if (req.body.username) {
+      targetUser = await User.findOne({
+        username: req.body.username,
+      });
+
+      if (!targetUser) {
+        return res.status(404).json({
+          success: false,
+          message: "Pengguna tidak ditemukan",
+        });
+      }
+    } else {
+      targetUser = await User.findOne({
+        username: req.user.username,
+      });
+
+      if (!targetUser) {
+        return res.status(404).json({
+          success: false,
+          message: "User dari token tidak ditemukan",
+        });
+      }
+    }
+
+    const userRecipes = await Recipe.find({
+      createdByUser: targetUser._id,
+    });
+
+    if (!userRecipes || userRecipes.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: `Tidak ada resep ditemukan untuk pengguna ${targetUser.username}`,
+        data: [],
+        user: {
+          username: targetUser.username,
+          id: targetUser._id,
+        },
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `Berhasil mendapatkan ${userRecipes.length} resep dari ${targetUser.username}`,
+      data: userRecipes,
+      user: {
+        username: targetUser.username,
+        id: targetUser._id,
+      },
+    });
+  } catch (error) {
+    console.error("Error getting user recipes:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Gagal mendapatkan resep pengguna",
+      error: error.message,
+    });
+  }
+};
+
+// =========================================================================================================================
 const getRecipeByIngredients = async (req, res) => {
   try {
     const { ingredients } = req.query;
@@ -226,14 +287,13 @@ const getRecipeByIngredients = async (req, res) => {
         "x-api-key": process.env.SPOONACULAR_API_KEY,
       },
       params: {
-        ingredients: ingredients, // Contoh: "apples,flour,sugar"
-        number: 12, // Jumlah resep yang diambil
-        ranking: 1, // Maximize used ingredients (1) or minimize missing ingredients (2)
-        ignorePantry: true, // Ignore typical pantry items
+        ingredients: ingredients,
+        number: 12,
+        ranking: 1,
+        ignorePantry: true,
       },
     };
 
-    // Menggunakan axios untuk mencari recipe berdasarkan ingredients
     const response = await axios(options);
 
     if (!response.data || response.data.length === 0) {
@@ -485,6 +545,19 @@ const getRecipeByNutrients = async (req, res) => {
 
 const insertRecipe = async (req, res) => {
   try {
+    // Ambil user ID dari JWT token
+    const userId = req.user.id || req.user._id;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID tidak ditemukan dari token",
+      });
+    }
+
+    req.body.createdByUser = userId;
+
+    // Processing tags
     if (req.body.tags && typeof req.body.tags === "string") {
       req.body.tags = req.body.tags
         .split(",")
@@ -493,6 +566,21 @@ const insertRecipe = async (req, res) => {
         .join(", ");
     }
 
+    // Processing ingredients
+    if (req.body.ingredients && typeof req.body.ingredients === "string") {
+      req.body.ingredients = req.body.ingredients
+        .split(",")
+        .map((ingredient) => ingredient.trim())
+        .filter((ingredient) => ingredient.length > 0)
+        .map((ingredient) => {
+          const parts = ingredient.split(":");
+          return {
+            name: parts[0]?.trim() || ingredient,
+            measure: parts[1]?.trim() || "secukupnya",
+          };
+        });
+    }
+    // Processing ingredients
     if (req.body.ingredients && typeof req.body.ingredients === "string") {
       req.body.ingredients = req.body.ingredients
         .split(",")
@@ -513,6 +601,7 @@ const insertRecipe = async (req, res) => {
 
     if (!validated) {
       return res.status(400).json({
+        success: false,
         message: "Validation failed!",
         error: "Invalid data. Please provide valid recipe details.",
       });
@@ -522,10 +611,13 @@ const insertRecipe = async (req, res) => {
     const savedRecipe = await newRecipe.save();
 
     return res.status(201).json({
+      success: true,
       message: "Recipe created successfully!",
       data: savedRecipe,
     });
   } catch (error) {
+    console.error("Error in insertRecipe:", error);
+
     if (error.isJoi) {
       const errorMessages = {};
       error.details.forEach((detail) => {
@@ -533,12 +625,17 @@ const insertRecipe = async (req, res) => {
       });
 
       return res.status(400).json({
+        success: false,
         message: "Validation failed!",
         error: errorMessages,
       });
     }
 
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
   }
 };
 
@@ -645,6 +742,7 @@ const deleteRecipe = async (req, res) => {
 module.exports = {
   getAllRecipe,
   getDetailRecipe,
+  getRecipebyUser,
   updateRecipe,
   insertRecipe,
   deleteRecipe,
