@@ -24,7 +24,7 @@ app.use("/images", express.static(path.join(__dirname, "./cntohImage")));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/recipes", RecipeRouter);
 app.use("/api/v1/reviews", ReviewAiCaloryRouter);
-app.use("/api/v1/subscribe", SubscriptionRouter);
+app.use("/api/v1/transaction", SubscriptionRouter);
 
 // run server
 const port = 3000;

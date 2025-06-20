@@ -5,4 +5,6 @@ module.exports = {
   aiQueries: require("./aiQueries"),
   Notification: require("./notifications"),
   Subscriptions: require("./Subscriptions"),
+  Transaction: require("./Transaction"),
+  DetailTrans: require("./Detail_trans"),
 };
