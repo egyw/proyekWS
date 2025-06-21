@@ -6,6 +6,8 @@ const otpGenerator = require("otp-generator");
 const { sendOtpEmail } = require("../utils/mailer/mailer");
 const path = require("path");
 const fs = require("fs");
+const { logActivity } = require("../utils/logger/logger");
+const Log = require("../models/Log");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -46,6 +48,14 @@ const registerUser = async (req, res) => {
     });
 
     const savedUser = await newUser.save();
+
+    await logActivity({
+      userId: savedUser._id,
+      action: "REGISTER",
+      status: "BERHASIL",
+      ipAddress: req.ip,
+      details: `Pengguna ${savedUser.username} berhasil terdaftar.`,
+    });
 
     return res.status(201).json({
       message: "Registrasi berhasil!",
@@ -107,6 +117,14 @@ const loginUser = async (req, res) => {
       user.password
     );
     if (!isPasswordValid) {
+      await logActivity({
+        userId: user._id,
+        action: "LOGIN_GAGAL",
+        status: "GAGAL",
+        ipAddress: req.ip,
+        details: `Login gagal untuk pengguna ${user.username}. Password salah.`,
+      });
+
       return res
         .status(401)
         .json({ message: "Username/Email atau Password salah!" });
@@ -124,6 +142,14 @@ const loginUser = async (req, res) => {
     await user.save();
 
     await sendOtpEmail(user.email, otp, "Login");
+
+    await logActivity({
+      userId: user._id,
+      action: "LOGIN_OTP_DIKIRIM",
+      status: "BERHASIL",
+      ipAddress: req.ip,
+      details: `Kode OTP untuk login telah dikirim ke email pengguna ${user.username}.`,
+    });
 
     return res.status(200).json({
       message: "Verifikasi berhasil. kode OTP telah dikirim ke email Anda.",
@@ -176,6 +202,23 @@ const verifyOTP = async (req, res) => {
     });
 
     if (!user) {
+      const tempUser = await User.findOne({
+        $or: [
+          { username: validated.identifier },
+          { email: validated.identifier },
+        ],
+      });
+
+      if (tempUser) {
+        await logActivity({
+          userId: tempUser._id,
+          action: "LOGIN_GAGAL",
+          status: "GAGAL",
+          ipAddress: req.ip,
+          details: `Login gagal untuk pengguna ${tempUser.username}. OTP tidak valid atau telah kedaluwarsa.`,
+        });
+      }
+
       return res.status(400).json({
         message: "OTP tidak valid atau telah kedaluwarsa!",
       });
@@ -202,6 +245,14 @@ const verifyOTP = async (req, res) => {
     user.refreshToken = refreshToken;
     await user.save();
 
+    await logActivity({
+      userId: user._id,
+      action: "LOGIN_BERHASIL",
+      status: "BERHASIL",
+      ipAddress: req.ip,
+      details: `Login berhasil untuk pengguna ${user.username}.`,
+    });
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 hari
@@ -212,7 +263,7 @@ const verifyOTP = async (req, res) => {
       data: payload,
       accessToken: accessToken,
     });
-  } catch (err) {
+  } catch (error) {
     if (error.isJoi) {
       const errorMessages = {};
       error.details.forEach((detail) => {
@@ -250,8 +301,17 @@ const refreshToken = async (req, res) => {
     jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET,
-      (err, decoded) => {
+      async (err, decoded) => {
         if (err || user._id.toString() !== decoded.id) {
+
+          await logActivity({
+            userId: user._id,
+            action: "REFRESH_TOKEN",
+            status: "GAGAL",
+            ipAddress: req.ip,
+            details: `Refresh token gagal untuk pengguna ${user.username}. Token tidak valid atau tidak cocok.`,
+          });
+
           return res
             .status(403)
             .json({ message: "Verifikasi refresh token gagal!" });
@@ -271,6 +331,14 @@ const refreshToken = async (req, res) => {
             expiresIn: "15m",
           }
         );
+
+        await logActivity({
+          userId: user._id,
+          action: "REFRESH_TOKEN",
+          status: "BERHASIL",
+          ipAddress: req.ip,
+          details: `Refresh token berhasil untuk pengguna ${user.username}.`,
+        });
 
         return res.status(200).json({
           message: "Refresh token berhasil!",
@@ -297,6 +365,14 @@ const logoutUser = async (req, res) => {
   if (user) {
     user.refreshToken = null;
     await user.save();
+
+    await logActivity({
+      userId: user._id,
+      action: "LOGOUT",
+      status: "BERHASIL",
+      ipAddress: req.ip,
+      details: `Pengguna ${user.username} berhasil logout.`,
+    });
   }
 
   res.clearCookie("refreshToken", { httpOnly: true });
@@ -390,7 +466,7 @@ const updateProfilePicture = async (req, res) => {
       }
     }
 
-    const newProfilePicturePath = `/images/profiles/${req.file.filename}`;
+    const newProfilePicturePath = `/images/profiles/${req.user.id}/${req.file.filename}`;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -495,6 +571,14 @@ const updatePassword = async (req, res) => {
     user.refreshToken = null; 
     await user.save();
 
+    await logActivity({
+      userId: user._id,
+      action: "GANTI_PASSWORD",
+      status: "BERHASIL",
+      ipAddress: req.ip,
+      details: `Password untuk pengguna ${user.username} berhasil diupdate.`,
+    });
+
     res.clearCookie("refreshToken", { httpOnly: true });
 
     return res.status(200).json({ message: "Password berhasil diupdate!" });
@@ -554,6 +638,14 @@ const updateEmail = async (req, res) => {
 
     await sendOtpEmail(validated.newEmail, otp, "Update Email");
 
+    await logActivity({
+      userId: user._id,
+      action: "GANTI_EMAIL_REQUEST",
+      status: "BERHASIL",
+      ipAddress: req.ip,
+      details: `Permintaan perubahan email untuk pengguna ${user.username} telah dibuat. Kode OTP telah dikirim ke email baru.`,
+    });
+
     return res.status(200).json({
       message: "Verifikasi berhasil. Kode OTP telah dikirim ke email baru Anda.",
       data: {
@@ -602,11 +694,35 @@ const verifyEmailOTP = async (req, res) => {
       return res.status(400).json({ message: "OTP tidak valid atau telah kedaluwarsa!" });
     }
 
+    const isOtpValid = user.otp === otp;
+    const isOtpNotExpired = user.otpExpiresAt && user.otpExpiresAt > Date.now();
+    if (!isOtpValid || !isOtpNotExpired) {
+      await logActivity({
+        userId: user._id,
+        action: "GANTI_EMAIL_GAGAL",
+        status: "GAGAL",
+        ipAddress: req.ip,
+        details: `Upaya verifikasi OTP untuk email baru (${user.pendingEmail}) gagal.`,
+      });
+
+      return res
+        .status(400)
+        .json({ message: "OTP tidak valid atau telah kedaluwarsa!" });
+    }
+
     user.email = user.pendingEmail;
     user.pendingEmail = null;
     user.otp = null;
     user.otpExpiresAt = null;
     await user.save();
+
+    await logActivity({
+      userId: user._id,
+      action: "GANTI_EMAIL_BERHASIL",
+      status: "BERHASIL",
+      ipAddress: req.ip,
+      details: `Email untuk pengguna ${user.username} berhasil diupdate ke ${user.email}.`,
+    });
 
     return res.status(200).json({
       message: "Email berhasil diperbarui!",
@@ -620,6 +736,33 @@ const verifyEmailOTP = async (req, res) => {
     return res.status(500).json({
       message: "Terjadi kesalahan pada server!",
       error: err.message,
+    });
+  }
+}
+
+const getUserLogs = async(req, res) => {
+  try{
+    const { userId } = req.params;
+    
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    const logs = await Log.find({ userId: userId }).sort({ createdAt: -1 });
+    if (!logs || logs.length === 0) {
+      return res.status(404).json({ message: "Tidak ada log aktivitas untuk pengguna ini." });
+    }
+
+    return res.status(200).json({
+      message: `Berhasil mendapatkan log aktivitas untuk pengguna ${user.username}`,
+      data: logs,
+    });
+  } catch (error){
+    console.error("Gagal mendapatkan log pengguna:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan saat mengambil log aktivitas pengguna",
+      error: error.message,
     });
   }
 }
@@ -638,4 +781,5 @@ module.exports = {
   updatePassword,
   updateEmail,
   verifyEmailOTP,
+  getUserLogs,
 };

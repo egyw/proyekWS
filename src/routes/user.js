@@ -13,6 +13,7 @@ const {
   updatePassword,
   verifyEmailOTP,
   updateEmail,
+  getUserLogs,
 } = require("../controllers/userController");
 const verifyToken = require("../middlewares/authMiddleware");
 const { uploadSingleImage } = require("../utils/multer/multer");
@@ -25,6 +26,7 @@ router.post("/login", loginUser);
 router.post("/verifyLoginOtp", verifyOTP)
 router.get("/token", refreshToken);
 router.delete("/logout", logoutUser);
+router.get("/logs/:userId", getUserLogs);
 router.get("/profile", [verifyToken], getUserProfile);
 router.patch("/profile/password", [verifyToken], updatePassword);
 router.post("/profile/email", [verifyToken], updateEmail);

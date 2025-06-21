@@ -7,7 +7,11 @@ const storage = multer.diskStorage({
     let destPath = "public/uploads/others"; 
 
     if (file.fieldname === "profilePicture") {
-      destPath = "public/images/profiles";
+      if (req.user && req.user.username) {
+        destPath = path.join('public', 'images', 'profiles', req.user.id);
+      } else {
+        destPath = "public/images/profiles/unknown";
+      }
     } else if (file.fieldname === "foodImage") { 
       destPath = "public/images/foodImages";
     } else if (file.fieldname === "foodVideo") {
@@ -29,9 +33,9 @@ const storage = multer.diskStorage({
     if (file.fieldname === "profilePicture") {
       const username = req.user ? req.user.username : 'user';
       customFileName = `${username.replace(/\s+/g, '-').toLowerCase()}-${uniqueSuffix}`;
-    } else if (file.fieldname === "productImage") {
+    } else if (file.fieldname === "foodImage") {
       const foodName = req.body.title || 'food'; 
-      customFileName = `${productName.replace(/\s+/g, '-').toLowerCase()}-${uniqueSuffix}`;
+      customFileName = `${foodName.replace(/\s+/g, '-').toLowerCase()}-${uniqueSuffix}`;
     } else {
       customFileName = `${file.fieldname}-${uniqueSuffix}`;
     }
