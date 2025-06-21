@@ -5,7 +5,7 @@ const TransactionSchema = new mongoose.Schema({
         type: Date,
         required: true
     },
-    username: {
+    user_id: {
         type: String,
         required: true,
         trim: true

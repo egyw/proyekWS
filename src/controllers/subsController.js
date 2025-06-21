@@ -11,7 +11,7 @@ const getSubscription = async (req, res) => {
     
     try {
 
-        const finduser = await Subscriptions.findOne({ userId });
+        const finduser = await Subscriptions.findOne({ userId, paymentStatus: { $in: ["completed", "pending"] }, status: { $in: ["active"] } });
 
         if(finduser){
             return res.status(400).json({ message: "User already has a subscription." });
@@ -22,6 +22,7 @@ const getSubscription = async (req, res) => {
         startDate: null,
         endDate: null,
         paymentStatus: "pending",
+        status: null,
         });
     
         await newSubscription.save();
@@ -39,26 +40,43 @@ const buySubscription = async (req, res) => {
     }
 
     try {
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
         const subscription = await Subscriptions.findOne({ userId, paymentStatus: "pending" });
 
         if (!subscription) {
             return res.status(404).json({ message: "Subscription not found." });
         }
 
+        if(user.saldo < 9.99){
+            return res.status(400).json({ message: "Insufficient balance for subscription." });
+        }
+
+        user.saldo -= 9.99;
+
         subscription.startDate = new Date();
         subscription.endDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
         subscription.paymentStatus = "completed";
+        subscription.status = "active";
 
         await subscription.save();
         
         const transaction = {
             date: new Date(),
-            username: userId,
+            user_id: userId,
             type: "premium",
-            total_amount: paymentDetails.amount,
+            total_amount: 9.99,
         };
 
         await Transaction.create(transaction);
+
+        user.isPremium = true;
+        await user.save();
 
         return res.status(200).json({ message: "Subscription purchased successfully.", subscription });
     } catch (error) {
@@ -66,15 +84,16 @@ const buySubscription = async (req, res) => {
         return res.status(500).json({ message: "Internal server error." });
     }
 };
-const cekSubscriptionStatus = async (req, res) => {
-    const { userId } = req.query;
 
-    if (!userId || !type) {
+const cekSubscriptionStatus = async (req, res) => {
+    const { userId } = req.body;
+
+    if (!userId) {
         return res.status(400).json({ message: "User ID is required." });
     }
 
     try {
-        const subscription = await Subscriptions.findOne({ userId });
+        const subscription = await Subscriptions.find({ userId });
 
         if (!subscription) {
             return res.status(404).json({ message: "Subscription not found." });
@@ -94,14 +113,28 @@ const cancelSubscription = async (req, res) => {
     }
 
     try {
-        const subscription = await Subscriptions.findOne({ userId });
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const subscription = await Subscriptions.findOne({ userId, paymentStatus: { $in: ["completed", "pending"] }, status: { $in: ["active"] } });
 
         if (!subscription) {
             return res.status(404).json({ message: "Subscription not found." });
         }
 
-        subscription.paymentStatus = "cancelled";
+        if (subscription.paymentStatus == "completed") {
+            subscription.status = "cancelled";
+        }
+        if( subscription.paymentStatus == "pending") {
+            subscription.paymentStatus = "cancelled";
+        }
         await subscription.save();
+
+        user.isPremium = false;
+        await user.save();
 
         return res.status(200).json({ message: "Subscription cancelled successfully.", subscription });
     } catch (error) {
@@ -109,7 +142,6 @@ const cancelSubscription = async (req, res) => {
         return res.status(500).json({ message: "Internal server error." });
     }
 };
-const webHookSubscription = async (req, res) => {};
 const getRecommendation = async (req, res) => {};
 const getAlternativeIngredients = async (req, res) => {};
 const topup = async (req, res) => {
@@ -344,9 +376,17 @@ const buyItem = async (req, res) => {
                 price,
             });
         }
+
+        if (user.saldo < totalAmount) {
+            return res.status(400).json({ message: "Insufficient balance for purchase." });
+        }
+
+        user.saldo -= totalAmount;
+        await user.save();
+
         const transaction = new Transaction({
             date: new Date(),
-            username: userId,
+            user_id: userId,
             type: "item",
             total_amount: totalAmount,
         });
@@ -370,7 +410,6 @@ module.exports = {
   buySubscription,
   cekSubscriptionStatus,
   cancelSubscription,
-  webHookSubscription,
   getRecommendation,
   getAlternativeIngredients,
   topup,
