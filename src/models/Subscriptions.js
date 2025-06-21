@@ -8,21 +8,16 @@ const SubscriptionsSchema = new mongoose.Schema(
     },
     startDate: {
       type: Date,
-      default: null,
+      required: true,
     },
     endDate: {
       type: Date,
-      default: null,
+      required: true,
     },
     paymentStatus: {
       type: String,
-      enum: ["pending", "completed", "cancelled"],
+      enum: ["pending", "completed", "failed"],
       default: "pending",
-    },
-    status: {
-      type: String,
-      enum: ["active", "expired", "cancelled"],
-      default: null,
     },
   },
   {
