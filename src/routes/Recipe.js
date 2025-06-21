@@ -24,6 +24,10 @@ router.post(
   [verifyToken, uploadSingleImage("foodImage")],
   insertRecipe
 );
-router.put("/updateRecipe/:id", [verifyToken], updateRecipe);
+router.put(
+  "/updateRecipe/:id",
+  [verifyToken, uploadSingleImage("foodImage")],
+  updateRecipe
+);
 router.delete("/deleteRecipe/:id", [verifyToken], deleteRecipe);
 module.exports = router;

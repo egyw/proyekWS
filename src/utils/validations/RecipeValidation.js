@@ -101,13 +101,13 @@ const recipeValidation = Joi.object({
     "string.uri": "Video harus berupa URL yang valid!",
   }),
 
-  image: Joi.string().uri().allow(null, "").optional().messages({
+  image: Joi.string().allow(null, "").optional().messages({
     "string.uri": "Gambar harus berupa URL yang valid!",
   }),
 
   createdByUser: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
-    .required()
+    .optional()
     .messages({
       "string.pattern.base": "ID pengguna tidak valid!",
       "any.required": "ID pengguna harus diisi!",

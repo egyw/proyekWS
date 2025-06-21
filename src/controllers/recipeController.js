@@ -1,6 +1,8 @@
 const { Recipe, User } = require("../models");
 const { recipeValidation } = require("../utils/validations/RecipeValidation");
 const axios = require("axios");
+const path = require("path");
+const fs = require("fs");
 
 // =========================================================================================================================
 
@@ -118,7 +120,9 @@ const getDetailRecipe = async (req, res) => {
       },
       params: {
         includeNutrition: true,
-        w,
+        addRecipeInformation: true,
+        fillIngredients: true,
+        addRecipeNutrition: true,
       },
     };
     const response = await axios(options);
@@ -595,6 +599,39 @@ const insertRecipe = async (req, res) => {
         });
     }
 
+    if (req.file) {
+      console.log("📁 Single file detected:", req.file);
+
+      // Cek tipe file berdasarkan fieldname atau mimetype
+      if (
+        req.file.fieldname === "foodImage" ||
+        req.file.mimetype.startsWith("image/")
+      ) {
+        const imagePath = `/images/foodImages/${req.file.filename}`;
+        req.body.image = imagePath;
+        req.body.video = null; // Set video ke null jika upload image
+        console.log("✅ Image uploaded:", req.body.image);
+      } else if (
+        req.file.fieldname === "foodVideo" ||
+        req.file.mimetype.startsWith("video/")
+      ) {
+        const videoPath = `videos/foodVideos/${req.file.filename}`;
+        req.body.video = videoPath;
+        req.body.image = null; // Set image ke null jika upload video
+        console.log("✅ Video uploaded:", req.body.video);
+      } else {
+        // Default ke image jika tidak bisa deteksi
+        const imagePath = `images/foodImages/${req.file.filename}`;
+        req.body.image = imagePath;
+        req.body.video = null;
+        console.log("✅ File uploaded as image (default):", req.body.image);
+      }
+    } else {
+      console.log("❌ No file found in request");
+      req.body.image = null;
+      req.body.video = null;
+    }
+
     const validated = await recipeValidation.validateAsync(req.body, {
       abortEarly: false,
     });
@@ -617,6 +654,21 @@ const insertRecipe = async (req, res) => {
     });
   } catch (error) {
     console.error("Error in insertRecipe:", error);
+    if (req.files) {
+      const fs = require("fs");
+      Object.values(req.files)
+        .flat()
+        .forEach((file) => {
+          fs.unlink(file.path, (err) => {
+            if (err) console.error("Error deleting file:", err);
+          });
+        });
+    } else if (req.file) {
+      const fs = require("fs");
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("Error deleting file:", err);
+      });
+    }
 
     if (error.isJoi) {
       const errorMessages = {};
@@ -644,6 +696,24 @@ const insertRecipe = async (req, res) => {
 const updateRecipe = async (req, res) => {
   try {
     const id = req.params.id;
+    const userId = req.user.id || req.user._id;
+
+    // Ambil resep yang akan diupdate
+    const existingRecipe = await Recipe.findById(id);
+    if (!existingRecipe) {
+      return res.status(404).json({
+        success: false,
+        message: "Recipe not found",
+      });
+    }
+
+    // Cek authorization: bandingkan createdByUser di database dengan ID user dari token
+    if (existingRecipe.createdByUser.toString() !== userId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to update this recipe",
+      });
+    }
 
     if (req.body.tags && typeof req.body.tags === "string") {
       req.body.tags = req.body.tags
@@ -667,18 +737,6 @@ const updateRecipe = async (req, res) => {
         });
     }
 
-    const existingRecipe = await Recipe.findById(id);
-    if (!existingRecipe) {
-      return res.status(404).json({
-        message: "Recipe not found",
-      });
-    }
-
-    if (req.body.createdByUser !== req.user.id) {
-      return res.status(403).json({
-        message: "You are not authorized to update this recipe",
-      });
-    }
     const validated = await recipeValidation.validateAsync(req.body, {
       abortEarly: false,
     });
@@ -696,6 +754,22 @@ const updateRecipe = async (req, res) => {
       data: updatedRecipe,
     });
   } catch (error) {
+    if (req.files) {
+      const fs = require("fs");
+      Object.values(req.files)
+        .flat()
+        .forEach((file) => {
+          fs.unlink(file.path, (err) => {
+            if (err) console.error("Error deleting file:", err);
+          });
+        });
+    } else if (req.file) {
+      const fs = require("fs");
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("Error deleting file:", err);
+      });
+    }
+
     if (error.isJoi) {
       const errorMessages = {};
       error.details.forEach((detail) => {
@@ -712,29 +786,44 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+// =========================================================================================================================
 const deleteRecipe = async (req, res) => {
   const id = req.params.id;
+  const userId = req.user.id || req.user._id;
 
   try {
+    // Ambil resep yang akan dihapus
     const existingRecipe = await Recipe.findById(id);
     if (!existingRecipe) {
       return res.status(404).json({
+        success: false,
         message: "Recipe not found",
       });
     }
 
-    if (req.body.createdByUser !== req.user.id) {
+    // Cek authorization
+    if (existingRecipe.createdByUser.toString() !== userId.toString()) {
       return res.status(403).json({
+        success: false,
         message: "You are not authorized to delete this recipe",
       });
     }
 
-    await Recipe.findByIdAndDelete(id);
+    // Gunakan metode delete dari mongoose-delete (soft delete)
+    // Ini akan set deleted=true, deletedAt=current date
+    await existingRecipe.delete(userId);
+
     return res.status(200).json({
+      success: true,
       message: "Recipe deleted successfully",
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error("Error deleting recipe:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Error deleting recipe",
+      error: error.message,
+    });
   }
 };
 
