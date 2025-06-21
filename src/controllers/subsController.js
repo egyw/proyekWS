@@ -268,8 +268,7 @@ const getItemDetailsByName = async (req, res) => {
         if (filteredItems.length === 0) {
             return res.status(404).json({ message: "No items found with the given name." });
         }
-        items = filteredItems;
-        return res.status(200).json({ items });
+        return res.status(200).json({ items: filteredItems });
     } catch (error) {
         console.error("Error fetching item details:", error);
         return res.status(500).json({ message: "Internal server error." });

@@ -42,6 +42,8 @@ Berikut adalah gambaran koleksi (collections) utama dalam basis data:
 - `email`
 - `password`
 - `isPremium` 
+- `saldo` 
+- `cart` 
 - `createdAt` 
 
 ### `recipes`
@@ -97,6 +99,22 @@ Berikut adalah gambaran koleksi (collections) utama dalam basis data:
 - `prompt`
 - `response`
 - `createdAt`
+
+### `transaction` 
+- `_id`
+- `date`
+- `username`
+- `type`
+- `total_amount`
+
+
+### `detail_trans` 
+- `_id`
+- `transaction_id`
+- `item_name`
+- `quantity`
+- `price`
+
 
 ---
 
