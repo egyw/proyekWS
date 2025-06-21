@@ -78,8 +78,6 @@ POST /api/subscribe – Beli langganan (JWT)
 
 GET /api/subscription/status – Cek status akun premium
 
-POST /api/payment/webhook – Webhook dummy (simulasi Midtrans)
-
 GET /api/recommendations – Rekomendasi makanan (Spoonacular)
 
 GET /api/ingredients/alternative?item=susu – Cari bahan pengganti (Spoonacular)
