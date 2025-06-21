@@ -103,7 +103,7 @@ Berikut adalah gambaran koleksi (collections) utama dalam basis data:
 ### `transaction` 
 - `_id`
 - `date`
-- `username`
+- `user_id`
 - `type`
 - `total_amount`
 
