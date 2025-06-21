@@ -19,7 +19,7 @@ const commentarValidation = Joi.object({
 });
 
 const inputUserValidation = Joi.object({
-  title: Joi.string().min(10).required().messages({
+  userInput: Joi.string().min(10).required().messages({
     "string.min": "Panjang inputan minimal 10 karakter!",
     "any.required": "Inputan harus diisi!",
     "string.empty": "Inputan tidak boleh kosong!",

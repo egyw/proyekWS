@@ -59,7 +59,7 @@ const addComentar = async (req, res) => {
       if (komentarFilter && komentarFilter.toLowerCase() !== "tidak") {
         return res.status(400).json({
           message: "Komentar mengandung unsur SARA, tidak aman untuk publik!",
-          error: komentarFilter,
+          // alasan: komentarFilter,
         });
       }
       const newReview = await new Review({
@@ -93,7 +93,7 @@ const addComentar = async (req, res) => {
           rating: validated.rating,
         },
       });
-    }, 30_000);
+    }, 1_000);
   } catch (error) {
     if (error.isJoi) {
       const errorMessages = {};
@@ -299,6 +299,8 @@ const countCalory = async (req, res) => {
     const dtFood = await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?query=${title}&number=1&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
+    console.log(dtFood.data);
+
     const idFood = dtFood.data.results[0].id;
     const infFood = await axios.get(
       `https://api.spoonacular.com/recipes/${idFood}/information?includeNutrition=true&apiKey=${process.env.SPOONACULAR_API_KEY}`

@@ -21,4 +21,4 @@ const aiQueriesSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("aiQueries", aiQueriesSchema);
+module.exports = mongoose.model("aiQueries", aiQueriesSchema, "aiQueries");
