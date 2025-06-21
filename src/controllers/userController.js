@@ -64,6 +64,7 @@ const registerUser = async (req, res) => {
         username: savedUser.username,
         email: savedUser.email,
         isPremium: savedUser.isPremium,
+        role: savedUser.role,
       },
     });
   } catch (error) {
@@ -232,6 +233,7 @@ const verifyOTP = async (req, res) => {
       username: user.username,
       email: user.email,
       isPremium: user.isPremium,
+      role: user.role,
     };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
@@ -322,6 +324,7 @@ const refreshToken = async (req, res) => {
           username: user.username,
           email: user.email,
           isPremium: user.isPremium,
+          role: user.role,
         };
 
         const newAccessToken = jwt.sign(
@@ -383,7 +386,7 @@ const getUserProfile = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const user = await User.findById(userId).select('-password -otp -refreshToken -otpExpiresAt');
+    const user = await User.findById(userId);
 
     if (!user) {
       return res.status(404).json({ message: "Pengguna tidak ditemukan." });
@@ -401,6 +404,8 @@ const getUserProfile = async (req, res) => {
       email: user.email,
       isPremium: user.isPremium,
       profilePicture: profilePictureUrl, 
+      saldo: user.saldo,
+      role: user.role,
     };
 
     return res.status(200).json({
@@ -767,6 +772,56 @@ const getUserLogs = async(req, res) => {
   }
 }
 
+const updateUserRole = async (req, res) => {
+  try{
+    const { userId } = req.params;
+    const { role } = req.body;    
+
+    if (!role || !['user', 'admin'].includes(role)) {
+      return res.status(400).json({
+        message: "Input tidak valid. Harap berikan role 'user' atau 'admin'."
+      });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna dengan ID tersebut tidak ditemukan." });
+    }
+
+    if (req.user.id === userId) {
+        return res.status(400).json({ message: "Anda tidak dapat mengubah role Anda sendiri melalui endpoint ini." });
+    }
+
+    user.role = role;
+    await user.save();
+
+    await logActivity({
+      userId: req.user.id, 
+      action: "UPDATE_ROLE",
+      status: "BERHASIL",
+      ipAddress: req.ip,
+      details: `Admin '${req.user.username}' mengubah role pengguna '${user.username}' (ID: ${userId}) menjadi '${role}'.`
+    });
+
+    return res.status(200).json({
+      message: `Role untuk pengguna ${user.username} berhasil diubah menjadi ${role}.`,
+      data: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (error) {
+    console.error("Gagal mengubah role pengguna:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server saat mengubah role pengguna.",
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   getAllUsers,
   registerUser,
@@ -782,4 +837,5 @@ module.exports = {
   updateEmail,
   verifyEmailOTP,
   getUserLogs,
+  updateUserRole,
 };

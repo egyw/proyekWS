@@ -14,19 +14,22 @@ const {
   verifyEmailOTP,
   updateEmail,
   getUserLogs,
+  updateUserRole,
 } = require("../controllers/userController");
 const verifyToken = require("../middlewares/authMiddleware");
 const { uploadSingleImage } = require("../utils/multer/multer");
 const resizeImage = require("../middlewares/resizeImage");
+const authorize = require("../middlewares/allowedRole");
 const router = express.Router();
 
-router.get("/getAllUsers", getAllUsers);
+router.get("/getAllUsers", [verifyToken, authorize('admin')], getAllUsers);
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/verifyLoginOtp", verifyOTP)
 router.get("/token", refreshToken);
 router.delete("/logout", logoutUser);
-router.get("/logs/:userId", getUserLogs);
+router.get("/logs/:userId", [verifyToken, authorize('admin')], getUserLogs);
+router.patch("/role/:userId", [verifyToken, authorize('admin')], updateUserRole);
 router.get("/profile", [verifyToken], getUserProfile);
 router.patch("/profile/password", [verifyToken], updatePassword);
 router.post("/profile/email", [verifyToken], updateEmail);

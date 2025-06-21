@@ -21,6 +21,7 @@ const logSchema = new mongoose.Schema(
         "GANTI_EMAIL_GAGAL",
         "GANTI_EMAIL_BERHASIL",
         "REFRESH_TOKEN",
+        "UPDATE_ROLE",
       ],
     },
     status: {
