@@ -212,13 +212,16 @@ const getRecommendation = async (req, res) => {
         return res.status(500).json({ message: "Internal server error." });
     }
 };
+
 const getAlternativeIngredients = async (req, res) => {
     const userId = req.user.id;
-    
     const userInput = req.body.userInput;
 
     if (!userId) {
         return res.status(400).json({ message: "User ID is required." });
+    }
+    if (!userInput || userInput.length === 0) {
+        return res.status(400).json({ message: "User input (food name) is required." });
     }
 
     try {
@@ -227,32 +230,94 @@ const getAlternativeIngredients = async (req, res) => {
             return res.status(404).json({ message: "User not found." });
         }
 
-        const aiPrompt = `Bedasarkan input pengguna: ${userInput}. dan harus bedasarkan dari data ini : ${JSON.stringify(type)}
-        berikan text juga, sebagai hasil dalam bahasa inggris, dan jangan lupa untuk memberikan alternatif bahan makanan yang sesuai dengan input makananan pengguna.`;
+        let localIngredients = [];
+        if (typeof Recipe !== "undefined") {
+            const localRecipe = await Recipe.findOne({ title: { $regex: new RegExp(userInput, 'i') } });
+            if (localRecipe && Array.isArray(localRecipe.ingredients)) {
+                localIngredients = localRecipe.ingredients.map(i => (i.name ? i.name : i));
+            }
+        }
+        let spoonacularIngredients = [];
+        try {
+            const cleanUserInput = userInput.trim().toLowerCase();
+            const apiKey = process.env.SPOONACULAR_API_KEY;
+            const searchResponse = await axios.get("https://api.spoonacular.com/recipes/complexSearch", { params: { query: cleanUserInput, number: 1, apiKey: apiKey } });
+            const recipeResult = searchResponse.data.results?.[0];
+            if (recipeResult) {
+                const recipeId = recipeResult.id;
+                const detailsResponse = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`, { params: { includeNutrition: false, apiKey: apiKey } });
+                const fullRecipeDetails = detailsResponse.data;
+                if (fullRecipeDetails && fullRecipeDetails.extendedIngredients) {
+                    spoonacularIngredients = fullRecipeDetails.extendedIngredients.map(i => i.name);
+                }
+            }
+        } catch (err) {
+            console.error("[ERROR] Spoonacular communication failed:", err.message);
+        }
+        const allIngredients = Array.from(new Set([...localIngredients, ...spoonacularIngredients]));
+
+        if (allIngredients.length === 0) {
+            return res.status(404).json({ message: "No ingredients found for this food." });
+        }
+
+        const aiPrompt = `
+                            Given the following list of ingredients for the food "${userInput}":
+                            ${allIngredients.map(i => `- ${i}`).join('\n')}
+                            For each ingredient, suggest at least one alternative ingredient. 
+                            Format the response as a JSON array of objects with "original" and "alternative" fields. ONLY return the JSON array.
+                            Example:
+                            [
+                            { "original": "egg", "alternative": "chia seeds" },
+                            { "original": "milk", "alternative": "soy milk" }
+                            ]
+                        `;
         
         const geminiResponse = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=${process.env.GEMINI_API_KEY}`,
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-            contents: [
-                {
-                parts: [{ text: aiPrompt }],
-                },
-            ],
-            }),
-        }
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.GEMINI_API_KEY}`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: aiPrompt }] }],
+                    generationConfig: { response_mime_type: "application/json" }
+                }),
+            }
         );
 
-        const geminiResult = await geminiResponse.json();
-        const textResponse = geminiResult.candidates[0].content.parts[0].text;
+        if (!geminiResponse.ok) {
+            const errorBody = await geminiResponse.json().catch(() => geminiResponse.text());
+            return res.status(500).json({ message: "Error communicating with AI service.", error: errorBody });
+        }
 
-    }catch (error) {
-        console.error("Error fetching user:", error);
+        const geminiResult = await geminiResponse.json();
+        const textResponse = geminiResult.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!textResponse) {
+             return res.status(500).json({ message: "AI returned an empty response." });
+        }
+
+        let alternativesArray;
+        try {
+            alternativesArray = JSON.parse(textResponse);
+        } catch (e) {
+            return res.status(500).json({ message: "AI generated a response, but it was not in a valid JSON format.", rawResponse: textResponse });
+        }
+
+        if (!Array.isArray(alternativesArray) || alternativesArray.length === 0) {
+            return res.status(404).json({ message: "AI could not generate any alternative ingredients." });
+        }
+
+        return res.status(200).json({
+            food: userInput,
+            ingredient: alternativesArray
+        });
+
+    } catch (error) {
+        console.error("Error in getAlternativeIngredients function:", error);
         return res.status(500).json({ message: "Internal server error." });
     }
 };
+
 const topup = async (req, res) => {
     const userId = req.user.id;
     let amount = req.body.amount;
