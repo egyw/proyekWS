@@ -1,9 +1,9 @@
-const { Subscriptions, Transaction, DetailTrans, User } = require("../models");
+const { Subscriptions, Transaction, DetailTrans, User, aiQueries, Recipe } = require("../models");
 const axios = require('axios');
 const { query } = require("../utils/spoonacular/listFoodTypeSpoonacular");
 
 const getSubscription = async (req, res) => {
-    const { userId } = req.body;
+    const userId = req.user.id;
     
     if (!userId) {
         return res.status(400).json({ message: "User ID is required." });
@@ -33,7 +33,7 @@ const getSubscription = async (req, res) => {
     }
 };
 const buySubscription = async (req, res) => {
-    const { userId } = req.body;
+    const userId = req.user.id;
 
     if (!userId) {
         return res.status(400).json({ message: "User ID is required." });
@@ -86,7 +86,7 @@ const buySubscription = async (req, res) => {
 };
 
 const cekSubscriptionStatus = async (req, res) => {
-    const { userId } = req.body;
+    const userId = req.user.id;
 
     if (!userId) {
         return res.status(400).json({ message: "User ID is required." });
@@ -106,7 +106,7 @@ const cekSubscriptionStatus = async (req, res) => {
     }
 };
 const cancelSubscription = async (req, res) => {
-    const { userId } = req.body;
+    const userId = req.user.id;
 
     if (!userId) {
         return res.status(400).json({ message: "User ID is required." });
@@ -142,10 +142,122 @@ const cancelSubscription = async (req, res) => {
         return res.status(500).json({ message: "Internal server error." });
     }
 };
-const getRecommendation = async (req, res) => {};
-const getAlternativeIngredients = async (req, res) => {};
+const getRecommendation = async (req, res) => {
+    const userId = req.user.id;
+    let userInput = req.body.userInput;
+
+    if (!userId) {
+        return res.status(400).json({ message: "User ID is required." });
+    }
+    if (!userInput || userInput.length === 0) {
+        return res.status(400).json({ message: "User input (ingredients) is required." });
+    }
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        let localRecipes = [];
+        if (typeof userInput === 'string') {
+            userInput = userInput.split(',').map(i => i.trim());
+        }
+        
+        if (typeof Recipe !== "undefined") {
+            const regexUserInput = userInput.map(item => new RegExp(item, 'i'));
+
+            localRecipes = await Recipe.find({
+                "ingredients.name": { $all: regexUserInput }
+            }).limit(5);
+        }
+
+        const spoonacularRes = await axios.get(
+            "https://api.spoonacular.com/recipes/complexSearch",
+            {
+                params: {
+                    includeIngredients: userInput.join(','),
+                    number: 5,
+                    addRecipeInformation: true,
+                    apiKey: process.env.SPOONACULAR_API_KEY
+                }
+            }
+        );
+        const spoonacularRecipes = (spoonacularRes.data.results || []).map(r => ({
+            title: r.title,
+            image: r.image,
+            cuisine: r.cuisines,
+            sourceUrl: r.sourceUrl
+        }));
+
+        const result = [
+            ...localRecipes.map(r => ({
+                title: r.title,
+                image: r.image,
+                cuisine: r.cuisine || [],
+                source: "local"
+            })),
+            ...spoonacularRecipes.map(r => ({
+                ...r,
+                source: "spoonacular"
+            }))
+        ];
+
+        return res.status(200).json({
+            message: "Recommendation generated successfully.",
+            recommendations: result
+        });
+    } catch (error) {
+        console.error("Error generating recommendation:", error);
+        return res.status(500).json({ message: "Internal server error." });
+    }
+};
+const getAlternativeIngredients = async (req, res) => {
+    const userId = req.user.id;
+    
+    const userInput = req.body.userInput;
+
+    if (!userId) {
+        return res.status(400).json({ message: "User ID is required." });
+    }
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const aiPrompt = `Bedasarkan input pengguna: ${userInput}. dan harus bedasarkan dari data ini : ${JSON.stringify(type)}
+        berikan text juga, sebagai hasil dalam bahasa inggris, dan jangan lupa untuk memberikan alternatif bahan makanan yang sesuai dengan input makananan pengguna.`;
+        
+        const geminiResponse = await fetch(
+        `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash-001:generateContent?key=${process.env.GEMINI_API_KEY}`,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+            contents: [
+                {
+                parts: [{ text: aiPrompt }],
+                },
+            ],
+            }),
+        }
+        );
+
+        const geminiResult = await geminiResponse.json();
+        const textResponse = geminiResult.candidates[0].content.parts[0].text;
+
+    }catch (error) {
+        console.error("Error fetching user:", error);
+        return res.status(500).json({ message: "Internal server error." });
+    }
+};
 const topup = async (req, res) => {
-    const { userId, amount } = req.body;
+    const userId = req.user.id;
+    let amount = req.body.amount;
+
+    amount = parseFloat(amount);
 
     if (!userId || !amount) {
         return res.status(400).json({ message: "User ID and amount are required." });
@@ -159,6 +271,7 @@ const topup = async (req, res) => {
         }
 
         user.saldo += amount;
+
         await user.save();
 
         return res.status(200).json({ message: "Top-up successful.", balance: user.saldo });
@@ -307,7 +420,9 @@ const getItemDetailsByName = async (req, res) => {
     }
 };
 const addItemtoCart = async (req, res) => {
-    const { userId, itemId, quantity } = req.body;
+    const { itemId, quantity } = req.body;
+
+    const userId = req.user.id;
 
     if (!userId || !itemId || !quantity) {
         return res.status(400).json({ message: "User ID, item ID, and quantity are required." });
@@ -344,7 +459,7 @@ const addItemtoCart = async (req, res) => {
     }
 };
 const buyItem = async (req, res) => {
-    const { userId } = req.body;
+    const userId = req.user.id;
 
     if (!userId) {
         return res.status(400).json({ message: "User ID is required." });
