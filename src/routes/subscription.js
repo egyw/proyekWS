@@ -10,6 +10,9 @@ const {
     getAllItemDetails,
     getItemDetailsByName,
     addItemtoCart,
+    viewCart,
+    removeItemFromCart,
+    removeAllItemFromCart,
     buyItem,
 } = require("../controllers/subsController");
 const verifyToken = require("../middlewares/authMiddleware");
@@ -26,6 +29,9 @@ router.post("/topup", [verifyToken], topup);
 router.get("/item/details", [verifyToken], getAllItemDetails);
 router.get("/item/details/:name", [verifyToken], getItemDetailsByName);
 router.post("/cart/add", [verifyToken], addItemtoCart);
+router.get("/cart/view", [verifyToken], viewCart);
+router.delete("/cart/remove", [verifyToken], removeItemFromCart);
+router.delete("/cart/removeAll", [verifyToken], removeAllItemFromCart);
 router.post("/item/buy", [verifyToken], buyItem);
 
 module.exports = router;

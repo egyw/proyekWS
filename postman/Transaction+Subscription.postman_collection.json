@@ -474,6 +474,135 @@
 					"response": []
 				},
 				{
+					"name": "viewcart",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "eggy2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "5162nrnetq@bltiwd.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/transaction/item/buy",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"item",
+								"buy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeItemCart",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "item_name",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/transaction/cart/remove",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"cart",
+								"remove"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeAllItemCart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6InBncXp0MWRld2NAb3N4b2Z1bGsuY29tIiwiaXNQcmVtaXVtIjp0cnVlLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MDU2NzEwMiwiZXhwIjoxNzUwNjUzNTAyfQ.3WmthEuNhLJV1d9xC8m6MQkON7ph7CYxD6zFY_3INcU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "eggy2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "5162nrnetq@bltiwd.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/transaction/cart/removeAll",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"cart",
+								"removeAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "buyCart",
 					"request": {
 						"method": "POST",
