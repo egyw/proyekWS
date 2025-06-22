@@ -83,12 +83,15 @@ const addComentar = async (req, res) => {
         validated.commentar,
         validated.rating
       );
+      const protocol = req.protocol; // http atau https
+      const host = req.get("host"); // localhost:3000 atau namadomain.com
 
+      const imageUrl = `${protocol}://${host}/Public/foodImages/${dtRecipes.image}`;
       return res.status(200).json({
         message: "Berhasil menampilkan resep",
         data: {
           title: validated.title,
-          image_url: "http://localhost:3000/images/tempe.jpg",
+          image_url: imageUrl,
           comments: validated.commentar,
           rating: validated.rating,
         },
