@@ -10,7 +10,10 @@ const {
   getRecipebyUser,
 } = require("../controllers/recipeController");
 const verifyToken = require("../middlewares/authMiddleware");
-const { uploadSingleImage } = require("../utils/multer/multer");
+const {
+  uploadSingleImage,
+  uploadSingleVideo,
+} = require("../utils/multer/multer");
 const resizeImage = require("../middlewares/resizeImage");
 const router = express.Router();
 

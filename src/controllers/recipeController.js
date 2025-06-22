@@ -8,6 +8,8 @@ const fs = require("fs");
 
 const getAllRecipe = async (req, res) => {
   try {
+    const number = parseInt(req.query.number) || 12;
+
     const options = {
       method: "GET",
       url: "https://api.spoonacular.com/recipes/complexSearch",
@@ -16,11 +18,12 @@ const getAllRecipe = async (req, res) => {
         "x-api-key": process.env.SPOONACULAR_API_KEY,
       },
       params: {
-        number: 12,
         addRecipeInformation: true,
         fillIngredients: true,
         addRecipeNutrition: true,
-        sort: "popularity",
+        sort: "_id",
+        sortDirection: "desc",
+        number: number,
       },
     };
 
@@ -111,6 +114,18 @@ const getDetailRecipe = async (req, res) => {
       return res.status(400).json({ message: "ID harus diisi" });
     }
 
+    // Check if ID is a valid MongoDB ObjectId (24 hex chars)
+    const isMongoDbId = /^[0-9a-fA-F]{24}$/.test(id);
+
+    if (isMongoDbId) {
+      // Try to fetch from local database first
+      const localRecipe = await Recipe.findById(id);
+      if (localRecipe) {
+        return res.status(200).json(localRecipe);
+      }
+    }
+
+    // If not a MongoDB ID or recipe not found in DB, try external API
     const options = {
       method: "GET",
       url: `https://api.spoonacular.com/recipes/${id}/information`,
@@ -125,6 +140,7 @@ const getDetailRecipe = async (req, res) => {
         addRecipeNutrition: true,
       },
     };
+
     const response = await axios(options);
 
     if (!response.data) {
@@ -182,27 +198,21 @@ const getDetailRecipe = async (req, res) => {
 
     return res.status(200).json(transformedRecipe);
   } catch (error) {
-    console.error(
-      "Error fetching recipe detail from external API:",
-      error.message
-    );
+    console.error("Error fetching recipe detail:", error.message);
 
-    try {
-      if (id.match(/^[0-9a-fA-F]{24}$/)) {
+    // One last attempt to check local DB if we haven't already
+    if (/^[0-9a-fA-F]{24}$/.test(id)) {
+      try {
         const localRecipe = await Recipe.findById(id);
-
         if (localRecipe) {
           return res.status(200).json(localRecipe);
         }
+      } catch (dbError) {
+        console.error("Database error:", dbError.message);
       }
-
-      return res.status(404).json({ message: "Recipe not found" });
-    } catch (dbError) {
-      return res.status(500).json({
-        message: "Both external API and database failed",
-        error: error.message,
-      });
     }
+
+    return res.status(404).json({ message: "Recipe not found in any source" });
   }
 };
 
@@ -282,7 +292,19 @@ const getRecipeByIngredients = async (req, res) => {
         .json({ message: "Ingredients parameter is required" });
     }
 
-    // Configuration untuk API Spoonacular - Find by Ingredients
+    // Search in local database first
+    const searchTerms = ingredients.split(",").map((term) => term.trim());
+    const regexPattern = searchTerms.map((term) => `(?=.*${term})`).join("");
+
+    const localRecipes = await Recipe.find({
+      $or: [
+        { "ingredients.name": { $regex: new RegExp(regexPattern, "i") } },
+        { tags: { $regex: new RegExp(regexPattern, "i") } },
+        { title: { $regex: new RegExp(regexPattern, "i") } },
+      ],
+    }).limit(6);
+
+    // Configuration for API Spoonacular - Find by Ingredients
     const options = {
       method: "GET",
       url: "https://api.spoonacular.com/recipes/findByIngredients",
@@ -292,96 +314,132 @@ const getRecipeByIngredients = async (req, res) => {
       },
       params: {
         ingredients: ingredients,
-        number: 12,
+        number: 6, // Reduced to combine with local recipes
         ranking: 1,
         ignorePantry: true,
       },
     };
 
     const response = await axios(options);
+    let externalRecipes = [];
 
-    if (!response.data || response.data.length === 0) {
+    if (response.data && response.data.length > 0) {
+      // Get detailed information for each recipe
+      const detailedRecipes = await Promise.all(
+        response.data.map(async (recipe) => {
+          try {
+            const detailOptions = {
+              method: "GET",
+              url: `https://api.spoonacular.com/recipes/${recipe.id}/information`,
+              headers: {
+                "Content-Type": "application/json",
+                "x-api-key": process.env.SPOONACULAR_API_KEY,
+              },
+              params: {
+                includeNutrition: true,
+              },
+            };
+
+            const detailResponse = await axios(detailOptions);
+            return { ...recipe, details: detailResponse.data };
+          } catch (error) {
+            console.error(
+              `Error fetching details for recipe ${recipe.id}:`,
+              error.message
+            );
+            return recipe;
+          }
+        })
+      );
+
+      externalRecipes = detailedRecipes.map((recipe) => ({
+        _id: recipe.id,
+        title: recipe.title,
+        servings: recipe.details?.servings || 4,
+        readyInMinutes: recipe.details?.readyInMinutes || 30,
+        preparationMinutes:
+          recipe.details?.preparationMinutes ||
+          Math.floor((recipe.details?.readyInMinutes || 30) * 0.4),
+        cookingMinutes:
+          recipe.details?.cookingMinutes ||
+          Math.floor((recipe.details?.readyInMinutes || 30) * 0.6),
+        ingredients: [
+          ...(recipe.usedIngredients?.map((ing) => ({
+            name: ing.name,
+            measure: `${ing.amount} ${ing.unit}`.trim(),
+            used: true,
+          })) || []),
+          ...(recipe.missedIngredients?.map((ing) => ({
+            name: ing.name,
+            measure: `${ing.amount} ${ing.unit}`.trim(),
+            missing: true,
+          })) || []),
+        ],
+        dishTypes: recipe.details?.dishTypes?.join(", ") || "main course",
+        tags:
+          recipe.details?.diets?.join(", ") ||
+          `ingredient-based, ${recipe.usedIngredientCount} ingredients used`,
+        area: recipe.details?.cuisines?.join(", ") || "international",
+        instructions:
+          recipe.details?.instructions?.replace(/<[^>]*>/g, "") ||
+          `Recipe made with ${recipe.usedIngredientCount} ingredients you have.`,
+        video: null,
+        createdByUser: null,
+        dateModified: null,
+        image: recipe.image,
+        healthScore: recipe.details?.healthScore || 70,
+        summary:
+          recipe.details?.summary?.replace(/<[^>]*>/g, "") ||
+          `This recipe uses ${recipe.usedIngredientCount} of the ingredients you have.`,
+        weightWatcherSmartPoints:
+          recipe.details?.weightWatcherSmartPoints || null,
+        calories:
+          recipe.details?.nutrition?.nutrients?.find(
+            (n) => n.name === "Calories"
+          )?.amount || null,
+        carbs:
+          recipe.details?.nutrition?.nutrients?.find(
+            (n) => n.name === "Carbohydrates"
+          )?.amount + " g" || null,
+        fat:
+          recipe.details?.nutrition?.nutrients?.find((n) => n.name === "Fat")
+            ?.amount + " g" || null,
+        protein:
+          recipe.details?.nutrition?.nutrients?.find(
+            (n) => n.name === "Protein"
+          )?.amount + " g" || null,
+        // External API indicator
+        source: "external",
+        usedIngredientCount: recipe.usedIngredientCount,
+        missedIngredientCount: recipe.missedIngredientCount,
+      }));
+    }
+
+    // Mark local recipes
+    const markedLocalRecipes = localRecipes.map((recipe) => {
+      const recipeObj = recipe.toObject();
+      recipeObj.source = "local";
+      return recipeObj;
+    });
+
+    // Combine results
+    const combinedResults = [...markedLocalRecipes, ...externalRecipes];
+
+    if (combinedResults.length === 0) {
       return res
         .status(404)
         .json({ message: "No recipes found with those ingredients" });
     }
 
-    const recipes = response.data;
-
-    // Transform data dari API eksternal ke format database lokal
-    const transformedRecipes = recipes.map((recipe) => ({
-      _id: recipe.id,
-      title: recipe.title,
-      servings: null, // Data detail tidak tersedia di endpoint ini
-      readyInMinutes: null,
-      preparationMinutes: null,
-      cookingMinutes: null,
-      ingredients: [
-        ...(recipe.usedIngredients?.map((ing) => ({
-          name: ing.name,
-          measure: `${ing.amount} ${ing.unit}`.trim(),
-        })) || []),
-        ...(recipe.missedIngredients?.map((ing) => ({
-          name: ing.name + " (missing)",
-          measure: `${ing.amount} ${ing.unit}`.trim(),
-        })) || []),
-      ],
-      dishTypes: null,
-      tags: "ingredient-based",
-      area: "international",
-      instructions: "Use getDetailRecipe endpoint to get full instructions",
-      video: null,
-      createdByUser: null,
-      dateModified: null,
-      image: recipe.image,
-      healthScore: null,
-      summary: `Recipe using ${recipe.usedIngredientCount} of your ingredients. Missing ${recipe.missedIngredientCount} ingredients.`,
-      weightWatcherSmartPoints: null,
-      calories: null,
-      carbs: null,
-      fat: null,
-      protein: null,
-      // Additional info specific to ingredient-based search
-      usedIngredientCount: recipe.usedIngredientCount,
-      missedIngredientCount: recipe.missedIngredientCount,
-      likes: recipe.likes,
-    }));
-
-    return res.status(200).json(transformedRecipes);
+    return res.status(200).json(combinedResults);
   } catch (error) {
     console.error("Error searching recipes by ingredients:", error.message);
-
-    // Fallback ke database lokal dengan text search
-    try {
-      const searchTerms = req.query.ingredients
-        .split(",")
-        .map((term) => term.trim());
-      const regexPattern = searchTerms.map((term) => `(?=.*${term})`).join("");
-
-      const localRecipes = await Recipe.find({
-        $or: [
-          { "ingredients.name": { $regex: new RegExp(regexPattern, "i") } },
-          { tags: { $regex: new RegExp(regexPattern, "i") } },
-          { title: { $regex: new RegExp(regexPattern, "i") } },
-        ],
-      }).limit(12);
-
-      if (localRecipes.length === 0) {
-        return res
-          .status(404)
-          .json({ message: "No recipes found with those ingredients" });
-      }
-
-      return res.status(200).json(localRecipes);
-    } catch (dbError) {
-      return res.status(500).json({
-        message: "Both external API and database search failed",
-        error: error.message,
-      });
-    }
+    return res.status(500).json({
+      message: "Error searching recipes by ingredients",
+      error: error.message,
+    });
   }
 };
-
 // =========================================================================================================================
 
 const getRecipeByNutrients = async (req, res) => {
@@ -422,7 +480,27 @@ const getRecipeByNutrients = async (req, res) => {
       });
     }
 
-    // Configuration untuk API Spoonacular - Find by Nutrients
+    // Build query for local database
+    let dbQuery = {};
+
+    // Parse numeric values for database query
+    if (minCalories) dbQuery.calories = { $gte: parseFloat(minCalories) };
+    if (maxCalories) {
+      dbQuery.calories = dbQuery.calories || {};
+      dbQuery.calories.$lte = parseFloat(maxCalories);
+    }
+
+    // Search in local database
+    const localRecipes = await Recipe.find(dbQuery).limit(6);
+
+    // Mark local recipes
+    const markedLocalRecipes = localRecipes.map((recipe) => {
+      const recipeObj = recipe.toObject();
+      recipeObj.source = "local";
+      return recipeObj;
+    });
+
+    // Configuration for API Spoonacular - Find by Nutrients
     const options = {
       method: "GET",
       url: "https://api.spoonacular.com/recipes/findByNutrients",
@@ -431,7 +509,7 @@ const getRecipeByNutrients = async (req, res) => {
         "x-api-key": process.env.SPOONACULAR_API_KEY,
       },
       params: {
-        number: 12, // Jumlah resep yang diambil
+        number: 6, // Reduced to combine with local recipes
         ...(minCalories && { minCalories }),
         ...(maxCalories && { maxCalories }),
         ...(minProtein && { minProtein }),
@@ -447,101 +525,69 @@ const getRecipeByNutrients = async (req, res) => {
       },
     };
 
-    // Menggunakan axios untuk mencari recipe berdasarkan nutrients
-    const response = await axios(options);
+    let transformedExternalRecipes = [];
 
-    if (!response.data || response.data.length === 0) {
+    try {
+      // Get recipes from external API
+      const response = await axios(options);
+
+      if (response.data && response.data.length > 0) {
+        // Transform data from external API
+        transformedExternalRecipes = response.data.map((recipe) => ({
+          _id: recipe.id,
+          title: recipe.title,
+          servings: recipe.servings || 4,
+          readyInMinutes: recipe.readyInMinutes || 30,
+          preparationMinutes: Math.floor((recipe.readyInMinutes || 30) * 0.4),
+          cookingMinutes: Math.floor((recipe.readyInMinutes || 30) * 0.6),
+          ingredients: [], // Not available in nutrient endpoint
+          dishTypes: "main course",
+          tags: "nutrient-based, healthy",
+          area: "international",
+          instructions: "Use getDetailRecipe endpoint to get full instructions",
+          video: null,
+          createdByUser: null,
+          dateModified: null,
+          image: recipe.image,
+          healthScore: null,
+          summary: `Recipe found based on nutritional criteria - ${recipe.calories} calories`,
+          weightWatcherSmartPoints: null,
+          calories: recipe.calories,
+          carbs: recipe.carbs,
+          fat: recipe.fat,
+          protein: recipe.protein,
+          // Additional nutritional info if available
+          ...(recipe.sugar && { sugar: recipe.sugar }),
+          ...(recipe.fiber && { fiber: recipe.fiber }),
+          // Search criteria info
+          source: "external",
+          searchCriteria: { ...req.query },
+        }));
+      }
+    } catch (apiError) {
+      console.error("External API error:", apiError.message);
+      // Continue with only local results if API fails
+    }
+
+    // Combine results
+    const combinedResults = [
+      ...markedLocalRecipes,
+      ...transformedExternalRecipes,
+    ];
+
+    if (combinedResults.length === 0) {
       return res.status(404).json({
         message: "No recipes found with the specified nutritional criteria",
       });
     }
 
-    const recipes = response.data;
-
-    // Transform data dari API eksternal ke format database lokal
-    const transformedRecipes = recipes.map((recipe) => ({
-      _id: recipe.id,
-      title: recipe.title,
-      servings: recipe.servings || null,
-      readyInMinutes: recipe.readyInMinutes || null,
-      preparationMinutes:
-        recipe.preparationMinutes ||
-        Math.floor((recipe.readyInMinutes || 30) * 0.4),
-      cookingMinutes:
-        recipe.cookingMinutes ||
-        Math.floor((recipe.readyInMinutes || 30) * 0.6),
-      ingredients: [], // Data ingredients tidak tersedia di endpoint nutrients
-      dishTypes: recipe.dishTypes?.join(", ") || null,
-      tags:
-        [...(recipe.diets || []), "nutrient-based"].join(", ") ||
-        "healthy, nutrient-filtered",
-      area: recipe.cuisines?.join(", ") || "international",
-      instructions:
-        "Use getDetailRecipe endpoint to get full instructions and ingredients",
-      video: null,
-      createdByUser: null,
-      dateModified: null,
-      image: recipe.image,
-      healthScore: recipe.healthScore || null,
-      summary:
-        recipe.summary?.replace(/<[^>]*>/g, "") ||
-        `Recipe found based on nutritional criteria - ${
-          recipe.calories || "N/A"
-        } calories`,
-      weightWatcherSmartPoints: recipe.weightWatcherSmartPoints || null,
-      calories: recipe.calories || null,
-      carbs: recipe.carbs ? recipe.carbs + " g" : null,
-      fat: recipe.fat ? recipe.fat + " g" : null,
-      protein: recipe.protein ? recipe.protein + " g" : null,
-      // Additional nutritional info if available
-      ...(recipe.sugar && { sugar: recipe.sugar + " g" }),
-      ...(recipe.fiber && { fiber: recipe.fiber + " g" }),
-      ...(recipe.sodium && { sodium: recipe.sodium + " mg" }),
-      // Search criteria info
-      searchCriteria: {
-        ...(minCalories && { minCalories }),
-        ...(maxCalories && { maxCalories }),
-        ...(minProtein && { minProtein }),
-        ...(maxProtein && { maxProtein }),
-        ...(minCarbs && { minCarbs }),
-        ...(maxCarbs && { maxCarbs }),
-        ...(minFat && { minFat }),
-        ...(maxFat && { maxFat }),
-      },
-    }));
-
-    return res.status(200).json(transformedRecipes);
+    return res.status(200).json(combinedResults);
   } catch (error) {
     console.error("Error searching recipes by nutrients:", error.message);
-
-    // Fallback ke database lokal dengan filter berdasarkan range nutrients
-    try {
-      let query = {};
-
-      // Build query untuk range nutrients (jika ada field numeric di database)
-      if (req.query.minCalories || req.query.maxCalories) {
-        query.calories = {};
-        if (req.query.minCalories)
-          query.calories.$gte = parseInt(req.query.minCalories);
-        if (req.query.maxCalories)
-          query.calories.$lte = parseInt(req.query.maxCalories);
-      }
-
-      const localRecipes = await Recipe.find(query).limit(12);
-
-      if (localRecipes.length === 0) {
-        return res.status(404).json({
-          message: "No recipes found with the specified nutritional criteria",
-        });
-      }
-
-      return res.status(200).json(localRecipes);
-    } catch (dbError) {
-      return res.status(500).json({
-        message: "Both external API and database search failed",
-        error: error.message,
-      });
-    }
+    return res.status(500).json({
+      message: "Error searching recipes by nutrients",
+      error: error.message,
+    });
   }
 };
 
@@ -715,16 +761,29 @@ const updateRecipe = async (req, res) => {
       });
     }
 
+    // Create update payload based on existing recipe
+    const updateData = { ...existingRecipe.toObject() };
+    delete updateData._id; // Remove _id to avoid conflicts
+
+    // Only update fields that are provided in the request body
+    Object.keys(req.body).forEach((key) => {
+      if (req.body[key] !== undefined) {
+        updateData[key] = req.body[key];
+      }
+    });
+
+    // Process tags if provided
     if (req.body.tags && typeof req.body.tags === "string") {
-      req.body.tags = req.body.tags
+      updateData.tags = req.body.tags
         .split(",")
         .map((tag) => tag.trim())
         .filter((tag) => tag.length > 0)
         .join(", ");
     }
 
+    // Process ingredients if provided
     if (req.body.ingredients && typeof req.body.ingredients === "string") {
-      req.body.ingredients = req.body.ingredients
+      updateData.ingredients = req.body.ingredients
         .split(",")
         .map((ingredient) => ingredient.trim())
         .filter((ingredient) => ingredient.length > 0)
@@ -737,25 +796,57 @@ const updateRecipe = async (req, res) => {
         });
     }
 
-    const validated = await recipeValidation.validateAsync(req.body, {
-      abortEarly: false,
-    });
+    // Handle file upload if provided
+    if (req.file) {
+      console.log("📁 Single file detected:", req.file);
+
+      // Cek tipe file berdasarkan fieldname atau mimetype
+      if (
+        req.file.fieldname === "foodImage" ||
+        req.file.mimetype.startsWith("image/")
+      ) {
+        const imagePath = `/images/foodImages/${req.file.filename}`;
+        updateData.image = imagePath;
+        updateData.video = null; // Set video ke null jika upload image
+        console.log("✅ Image uploaded:", updateData.image);
+      } else if (
+        req.file.fieldname === "foodVideo" ||
+        req.file.mimetype.startsWith("video/")
+      ) {
+        const videoPath = `videos/foodVideos/${req.file.filename}`;
+        updateData.video = videoPath;
+        updateData.image = null; // Set image ke null jika upload video
+        console.log("✅ Video uploaded:", updateData.video);
+      } else {
+        // Default ke image jika tidak bisa deteksi
+        const imagePath = `images/foodImages/${req.file.filename}`;
+        updateData.image = imagePath;
+        updateData.video = null;
+        console.log("✅ File uploaded as image (default):", updateData.image);
+      }
+    } else if (req.body.image === null || req.body.video === null) {
+      // Only update image/video if explicitly set to null in request
+      if (req.body.image === null) updateData.image = null;
+      if (req.body.video === null) updateData.video = null;
+    }
 
     // Set dateModified to current date when updating
-    validated.dateModified = new Date();
+    updateData.dateModified = new Date();
 
-    const updatedRecipe = await Recipe.findByIdAndUpdate(id, validated, {
+    // Skip full validation for partial updates
+    const updatedRecipe = await Recipe.findByIdAndUpdate(id, updateData, {
       new: true,
-      runValidators: true,
+      runValidators: false, // Don't run mongoose validators to allow partial updates
     });
 
     return res.status(200).json({
+      success: true,
       message: "Recipe updated successfully!",
       data: updatedRecipe,
     });
   } catch (error) {
+    // Clean up uploaded files in case of error
     if (req.files) {
-      const fs = require("fs");
       Object.values(req.files)
         .flat()
         .forEach((file) => {
@@ -764,11 +855,12 @@ const updateRecipe = async (req, res) => {
           });
         });
     } else if (req.file) {
-      const fs = require("fs");
       fs.unlink(req.file.path, (err) => {
         if (err) console.error("Error deleting file:", err);
       });
     }
+
+    console.error("Error updating recipe:", error);
 
     if (error.isJoi) {
       const errorMessages = {};
@@ -777,12 +869,17 @@ const updateRecipe = async (req, res) => {
       });
 
       return res.status(400).json({
+        success: false,
         message: "Validation failed!",
         error: errorMessages,
       });
     }
 
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: "Error updating recipe",
+      error: error.message,
+    });
   }
 };
 
