@@ -19,6 +19,6 @@ router.get("/spoonExcel/information", [verifyToken], exportInfoToExcel);
 router.get("/ai/history/export", [verifyToken], exportToPDF);
 router.get("/ai/history", [verifyToken], aiHistory);
 router.get("/ai/calory/:title", [verifyToken], countCalory);
-router.get("/:title", [verifyToken], getListReview);
+router.get("/:id", [verifyToken], getListReview);
 
 module.exports = router;

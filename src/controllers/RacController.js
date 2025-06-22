@@ -115,25 +115,26 @@ const addComentar = async (req, res) => {
 };
 
 const getListReview = async (req, res) => {
-  const { title } = req.params;
-  if (!title) {
+  const { id } = req.params;
+  console.log(id);
+
+  if (!id) {
     return res.status(400).json({
-      message: "Title tidak boleh kosong!",
+      message: "Id tidak boleh kosong!",
     });
   }
-
   try {
-    const dtRecipes = await Recipe.findOne({
-      title: new RegExp(`^${title}$`, "i"),
-    });
-    if (!dtRecipes) {
-      return res.status(404).json({
-        message: "Resep tidak ditemukan",
-      });
-    }
+    // const dtRecipes = await Recipe.findOne({
+    //   title: new RegExp(`^${title}$`, "i"),
+    // });
+    // if (!dtRecipes) {
+    //   return res.status(404).json({
+    //     message: "Resep tidak ditemukan",
+    //   });
+    // }
     const count = await Review.aggregate([
       {
-        $match: { recipeId: dtRecipes.id },
+        $match: { recipeId: id },
       },
       {
         $group: {
@@ -150,7 +151,7 @@ const getListReview = async (req, res) => {
     ]);
     const reviews = await Review.aggregate([
       {
-        $match: { recipeId: dtRecipes.id },
+        $match: { recipeId: id },
       },
       {
         $project: {
