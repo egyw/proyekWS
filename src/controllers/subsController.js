@@ -306,6 +306,13 @@ const getAlternativeIngredients = async (req, res) => {
         if (!Array.isArray(alternativesArray) || alternativesArray.length === 0) {
             return res.status(404).json({ message: "AI could not generate any alternative ingredients." });
         }
+        
+        const aiQueriesEntry = new aiQueries({
+            userId: userId,
+            prompt: aiPrompt,
+            response: JSON.stringify(alternativesArray)
+        });
+        await aiQueriesEntry.save();
 
         return res.status(200).json({
             food: userInput,
