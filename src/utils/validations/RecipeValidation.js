@@ -138,32 +138,32 @@ const recipeValidation = Joi.object({
     .min(0)
     .max(100)
     .allow(null)
-    .optional()
+    .required()
     .messages({
       "number.base": "Weight Watcher Smart Points harus berupa angka!",
       "number.min": "Weight Watcher Smart Points minimal 0!",
       "number.max": "Weight Watcher Smart Points maksimal 100!",
     }),
 
-  calories: Joi.number().min(0).max(10000).allow(null).optional().messages({
+  calories: Joi.number().min(0).max(10000).allow(null).required().messages({
     "number.base": "Kalori harus berupa angka!",
     "number.min": "Kalori minimal 0!",
     "number.max": "Kalori maksimal 10000!",
   }),
 
-  carbs: Joi.string().min(0).max(1000).optional().messages({
+  carbs: Joi.string().min(0).max(1000).required().messages({
     "string.base": "Karbohidrat harus berupa string!",
     "string.min": "Karbohidrat minimal 0!",
     "string.max": "Karbohidrat maksimal 1000 gram!",
   }),
 
-  fat: Joi.string().min(0).max(1000).allow(null).optional().messages({
+  fat: Joi.string().min(0).max(1000).required().messages({
     "string.base": "Lemak harus berupa string!",
     "string.min": "Lemak minimal 0!",
     "string.max": "Lemak maksimal 1000 gram!",
   }),
 
-  protein: Joi.string().min(0).max(1000).allow(null).optional().messages({
+  protein: Joi.string().min(0).max(1000).required().messages({
     "string.base": "Protein harus berupa string!",
     "string.min": "Protein minimal 0!",
     "string.max": "Protein maksimal 1000 gram!",
