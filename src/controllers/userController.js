@@ -8,6 +8,59 @@ const path = require("path");
 const fs = require("fs");
 const { logActivity } = require("../utils/logger/logger");
 const Log = require("../models/Log");
+const FailedLoginAttempt = require("../models/FailedLoginAttempt");
+const IpBan = require("../models/IpBan");
+
+// helper untuk nge handle login yang gagal
+const handleFailedLogin = async (identifier, ipAddress) => {
+    const FAILED_ATTEMPT_LIMIT = 5;
+    const ATTEMPT_WINDOW_SECONDS = 30;
+    const TIMEOUT_MINUTES = 1;
+    const TIMEOUT_LIMIT = 3;
+    const BAN_WINDOW_MINUTES = 30;
+
+    try {
+        const now = new Date();
+        const windowStart = new Date(now.getTime() - ATTEMPT_WINDOW_SECONDS * 1000);
+        
+        let attemptRecord = await FailedLoginAttempt.findOne({ identifier, ipAddress });
+
+        if (!attemptRecord) {
+            attemptRecord = new FailedLoginAttempt({ identifier, ipAddress });
+        }
+
+        attemptRecord.timestamps.push(now);
+        attemptRecord.timestamps = attemptRecord.timestamps.filter(ts => ts > windowStart);
+
+        if (attemptRecord.timestamps.length >= FAILED_ATTEMPT_LIMIT) {
+            attemptRecord.lockUntil = new Date(now.getTime() + TIMEOUT_MINUTES * 60 * 1000);
+            attemptRecord.timestamps = []; 
+            await attemptRecord.save();
+
+            const banWindowStart = new Date(now.getTime() - BAN_WINDOW_MINUTES * 60 * 1000);
+            let ipRecord = await IpBan.findOne({ ipAddress });
+            if (!ipRecord) {
+                ipRecord = new IpBan({ ipAddress });
+            }
+
+            ipRecord.timeoutHistory.push(now);
+            ipRecord.timeoutHistory = ipRecord.timeoutHistory.filter(ts => ts > banWindowStart);
+            
+            if (ipRecord.timeoutHistory.length >= TIMEOUT_LIMIT) {
+                ipRecord.isBanned = true;
+            }
+
+            await ipRecord.save();
+        } else {
+            await attemptRecord.save();
+        }
+
+    } catch (error) {
+        console.error("Error di handleFailedLogin:", error);
+    }
+};
+
+//  ===================================================================================================
 
 const getAllUsers = async (req, res) => {
   try {
@@ -108,6 +161,7 @@ const loginUser = async (req, res) => {
     });
 
     if (!user) {
+      await handleFailedLogin(validated.identifier, req.ip);
       return res
         .status(404)
         .json({ message: "Username/Email atau Password salah!" });
@@ -125,6 +179,8 @@ const loginUser = async (req, res) => {
         ipAddress: req.ip,
         details: `Login gagal untuk pengguna ${user.username}. Password salah.`,
       });
+
+      await handleFailedLogin(validated.identifier, req.ip);
 
       return res
         .status(401)
@@ -203,6 +259,8 @@ const verifyOTP = async (req, res) => {
     });
 
     if (!user) {
+      await handleFailedLogin(validated.identifier, req.ip);
+
       const tempUser = await User.findOne({
         $or: [
           { username: validated.identifier },
@@ -225,6 +283,8 @@ const verifyOTP = async (req, res) => {
       });
     }
 
+    await FailedLoginAttempt.deleteOne({ identifier: user.username, ipAddress: req.ip });
+    await FailedLoginAttempt.deleteOne({ identifier: user.email, ipAddress: req.ip });
     user.otp = null;
     user.otpExpiresAt = null;
 

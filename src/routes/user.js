@@ -20,12 +20,13 @@ const verifyToken = require("../middlewares/authMiddleware");
 const { uploadSingleImage } = require("../utils/multer/multer");
 const resizeImage = require("../middlewares/resizeImage");
 const authorize = require("../middlewares/allowedRole");
+const loginLimiter = require("../middlewares/loginLimiter");
 const router = express.Router();
 
 router.get("/getAllUsers", [verifyToken, authorize('admin')], getAllUsers);
 router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.post("/verifyLoginOtp", verifyOTP)
+router.post("/login", [loginLimiter], loginUser);
+router.post("/verifyLoginOtp", [loginLimiter], verifyOTP)
 router.get("/token", refreshToken);
 router.delete("/logout", logoutUser);
 router.get("/logs/:userId", [verifyToken, authorize('admin')], getUserLogs);
