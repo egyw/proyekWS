@@ -11,7 +11,7 @@ const getSubscription = async (req, res) => {
     
     try {
 
-        const finduser = await Subscriptions.findOne({ userId, paymentStatus: { $in: ["completed", "pending"] }, status: { $in: ["active"] } });
+        const finduser = await Subscriptions.findOne({ userId, paymentStatus: { $in: ["completed", "pending"] }, status: { $in: ["active", null] } });
 
         if(finduser){
             return res.status(400).json({ message: "User already has a subscription." });
@@ -26,7 +26,7 @@ const getSubscription = async (req, res) => {
         });
     
         await newSubscription.save();
-        return res.status(201).json({ message: "Subscription created successfully.", subscription: newSubscription });
+        return res.status(201).json({ message: "Subscription created successfully. Please pay $9.99", subscription: newSubscription });
     } catch (error) {
         console.error("Error creating subscription:", error);
         return res.status(500).json({ message: "Internal server error." });
@@ -119,7 +119,7 @@ const cancelSubscription = async (req, res) => {
             return res.status(404).json({ message: "User not found." });
         }
 
-        const subscription = await Subscriptions.findOne({ userId, paymentStatus: { $in: ["completed", "pending"] }, status: { $in: ["active"] } });
+        const subscription = await Subscriptions.findOne({ userId, paymentStatus: { $in: ["completed", "pending"] }, status: { $in: ["active", null] } });
 
         if (!subscription) {
             return res.status(404).json({ message: "Subscription not found." });
