@@ -331,5 +331,5 @@ const seedData = async () => {
     console.error("Error seeding data:", error);
   }
 };
-
+// node runSeeder.js
 module.exports = { seedData };
