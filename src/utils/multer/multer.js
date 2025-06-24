@@ -41,7 +41,12 @@ const storage = multer.diskStorage({
       const username = req.user ? req.user.username : "user";
       customFileName = `${username.replace(/\s+/g, "-").toLowerCase()}-${uniqueSuffix}`;
     } else if (file.fieldname === "foodImage") {
-      const foodName = req.body && req.body.title ? req.body.title : "food";
+      const foodName =
+        req.body.foodName || req.body.name || req.body.title || "food";
+      customFileName = `${foodName.replace(/\s+/g, "-").toLowerCase()}-${uniqueSuffix}`;
+    } else if (file.fieldname === "foodVideo") {
+      const foodName =
+        req.body.foodName || req.body.name || req.body.title || "food";
       customFileName = `${foodName.replace(/\s+/g, "-").toLowerCase()}-${uniqueSuffix}`;
     } else {
       customFileName = `${file.fieldname}-${uniqueSuffix}`;
@@ -68,6 +73,19 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+const combinedFileFilter = (req, file, cb) => {
+  console.log(`🔍 Processing file: ${file.fieldname} - ${file.mimetype}`);
+
+  if (
+    file.mimetype.startsWith("image/") ||
+    file.mimetype.startsWith("video/")
+  ) {
+    cb(null, true);
+  } else {
+    cb(new Error("Hanya file gambar atau video yang diizinkan!"), false);
+  }
+};
+
 const imageUploader = multer({
   storage: storage,
   fileFilter: fileFilter,
@@ -84,6 +102,15 @@ const videoUploader = multer({
   },
 });
 
+const combinedUploader = multer({
+  storage: storage,
+  fileFilter: combinedFileFilter,
+  limits: {
+    fileSize: 100 * 1024 * 1024, // 100MB untuk accommodate video
+    files: 15, // Maximum 15 files
+  },
+});
+
 // image
 const uploadSingleImage = (fieldName) => imageUploader.single(fieldName);
 const uploadMultipleImages = (fieldName, maxCount) =>
@@ -92,6 +119,22 @@ const uploadFields = (fieldsConfig) => imageUploader.fields(fieldsConfig);
 
 // video
 const uploadSingleVideo = (fieldName) => videoUploader.single(fieldName);
+const uploadMultipleVideos = (fieldName = "videos", maxCount = 3) =>
+  videoUploader.array(fieldName, maxCount);
+
+const uploadImageAndVideo = () => {
+  return combinedUploader.fields([
+    { name: "foodImage", maxCount: 1 },
+    { name: "foodVideo", maxCount: 1 },
+  ]);
+};
+
+const uploadMultipleImageAndVideo = () => {
+  return combinedUploader.fields([
+    { name: "foodImage", maxCount: 5 },
+    { name: "foodVideo", maxCount: 3 },
+  ]);
+};
 
 app.use("/public", express.static("public"));
 
@@ -100,4 +143,7 @@ module.exports = {
   uploadMultipleImages,
   uploadFields,
   uploadSingleVideo,
+  uploadMultipleVideos,
+  uploadImageAndVideo,
+  uploadMultipleImageAndVideo,
 };

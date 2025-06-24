@@ -245,20 +245,7 @@ const getRecipebyUser = async (req, res) => {
         });
       }
     }
-    // Check if the requester is trying to access another user's recipes
-    if (req.body.username && req.user.username !== req.body.username) {
-      // Check if the requesting user has admin privileges
-      // This is optional - remove if you don't have admin roles
-      const requestingUser = await User.findOne({
-        username: req.user.username,
-      });
-      if (!requestingUser.isAdmin) {
-        return res.status(403).json({
-          success: false,
-          message: "Tidak diizinkan untuk melihat resep pengguna lain",
-        });
-      }
-    }
+
     const userRecipes = await Recipe.find({
       createdByUser: targetUser._id,
     });
@@ -873,38 +860,146 @@ const insertRecipe = async (req, res) => {
         });
     }
 
-    if (req.file) {
-      console.log("📁 Single file detected:", req.file);
+    req.body.image = null;
+    req.body.video = null;
 
-      // Cek tipe file berdasarkan fieldname atau mimetype
+    // ✅ DEBUG: Log file structure
+    console.log("🔍 DEBUG - req.file:", !!req.file);
+    console.log("🔍 DEBUG - req.files:", !!req.files);
+    if (req.files) {
+      console.log(
+        "🔍 DEBUG - req.files structure:",
+        JSON.stringify(req.files, null, 2)
+      );
+    }
+
+    req.body.image = null;
+    req.body.video = null;
+
+    // ✅ DEBUG: Log file structure
+    console.log("🔍 DEBUG - req.file:", !!req.file);
+    console.log("🔍 DEBUG - req.files:", !!req.files);
+    if (req.files) {
+      console.log(
+        "🔍 DEBUG - req.files structure:",
+        JSON.stringify(req.files, null, 2)
+      );
+    }
+
+    // ✅ HANDLE MULTIPLE FILES dengan logic yang diperbaiki
+    if (req.files && typeof req.files === "object") {
+      console.log("📁 Processing req.files:", Object.keys(req.files));
+
+      const fileFields = Object.keys(req.files);
+      console.log("📁 Available fields:", fileFields);
+
+      for (const fieldName of fileFields) {
+        const files = req.files[fieldName];
+
+        if (Array.isArray(files) && files.length > 0) {
+          const file = files[0];
+          console.log(`📁 Processing field '${fieldName}':`, {
+            filename: file.filename,
+            mimetype: file.mimetype,
+            fieldname: file.fieldname,
+            originalname: file.originalname,
+          });
+
+          // ✅ FIX: PRIORITY - Check field name first, then mimetype as fallback
+          if (
+            fieldName.toLowerCase() === "image" ||
+            fieldName.toLowerCase() === "foodimage"
+          ) {
+            // ✅ Field name is explicitly for image
+            req.body.image = `/images/foodImages/${file.filename}`;
+            console.log(
+              "✅ Image set by FIELD NAME:",
+              fieldName,
+              "->",
+              req.body.image
+            );
+          } else if (
+            fieldName.toLowerCase() === "video" ||
+            fieldName.toLowerCase() === "foodvideo"
+          ) {
+            // ✅ Field name is explicitly for video
+            req.body.video = `/videos/foodVideos/${file.filename}`;
+            console.log(
+              "✅ Video set by FIELD NAME:",
+              fieldName,
+              "->",
+              req.body.video
+            );
+          }
+          // ✅ FALLBACK: If field name is ambiguous, check mimetype
+          else if (file.mimetype.startsWith("image/")) {
+            req.body.image = `/images/foodImages/${file.filename}`;
+            console.log(
+              "✅ Image set by MIMETYPE:",
+              file.mimetype,
+              "->",
+              req.body.image
+            );
+          } else if (file.mimetype.startsWith("video/")) {
+            req.body.video = `/videos/foodVideos/${file.filename}`;
+            console.log(
+              "✅ Video set by MIMETYPE:",
+              file.mimetype,
+              "->",
+              req.body.video
+            );
+          } else {
+            console.log("❌ Unknown file type:", {
+              fieldName,
+              mimetype: file.mimetype,
+              filename: file.filename,
+            });
+          }
+        } else {
+          console.log(
+            `❌ No files in field '${fieldName}' or not an array:`,
+            files
+          );
+        }
+      }
+    }
+    // ✅ HANDLE SINGLE FILE
+    else if (req.file) {
+      console.log("📁 Processing single file:", {
+        fieldname: req.file.fieldname,
+        filename: req.file.filename,
+        mimetype: req.file.mimetype,
+        originalname: req.file.originalname,
+      });
+
+      // ✅ Priority: Field name first, then mimetype
       if (
-        req.file.fieldname === "foodImage" ||
-        req.file.mimetype.startsWith("image/")
+        req.file.fieldname.toLowerCase() === "image" ||
+        req.file.fieldname.toLowerCase() === "foodimage"
       ) {
-        const imagePath = `/images/foodImages/${req.file.filename}`;
-        req.body.image = imagePath;
-        req.body.video = null; // Set video ke null jika upload image
-        console.log("✅ Image uploaded:", req.body.image);
+        req.body.image = `/images/foodImages/${req.file.filename}`;
+        console.log("✅ Single image set by FIELD NAME:", req.body.image);
       } else if (
-        req.file.fieldname === "foodVideo" ||
-        req.file.mimetype.startsWith("video/")
+        req.file.fieldname.toLowerCase() === "video" ||
+        req.file.fieldname.toLowerCase() === "foodvideo"
       ) {
-        const videoPath = `videos/foodVideos/${req.file.filename}`;
-        req.body.video = videoPath;
-        req.body.image = null; // Set image ke null jika upload video
-        console.log("✅ Video uploaded:", req.body.video);
-      } else {
-        // Default ke image jika tidak bisa deteksi
-        const imagePath = `images/foodImages/${req.file.filename}`;
-        req.body.image = imagePath;
-        req.body.video = null;
-        console.log("✅ File uploaded as image (default):", req.body.image);
+        req.body.video = `/videos/foodVideos/${req.file.filename}`;
+        console.log("✅ Single video set by FIELD NAME:", req.body.video);
+      } else if (req.file.mimetype.startsWith("image/")) {
+        req.body.image = `/images/foodImages/${req.file.filename}`;
+        console.log("✅ Single image set by MIMETYPE:", req.body.image);
+      } else if (req.file.mimetype.startsWith("video/")) {
+        req.body.video = `/videos/foodVideos/${req.file.filename}`;
+        console.log("✅ Single video set by MIMETYPE:", req.body.video);
       }
     } else {
-      console.log("❌ No file found in request");
-      req.body.image = null;
-      req.body.video = null;
+      console.log("❌ No files detected");
     }
+
+    // ✅ DEBUG: Final check
+    console.log("🔍 FINAL RESULT:");
+    console.log("📸 Image:", req.body.image);
+    console.log("🎥 Video:", req.body.video);
 
     const validated = await recipeValidation.validateAsync(req.body, {
       abortEarly: false,
@@ -995,7 +1090,7 @@ const updateRecipe = async (req, res) => {
 
     // Only update fields that are provided in the request body
     Object.keys(req.body).forEach((key) => {
-      if (req.body[key] !== undefined) {
+      if (req.body[key] !== undefined && key !== "image" && key !== "video") {
         updateData[key] = req.body[key];
       }
     });
@@ -1024,41 +1119,146 @@ const updateRecipe = async (req, res) => {
         });
     }
 
-    // Handle file upload if provided
-    if (req.file) {
-      console.log("📁 Single file detected:", req.file);
+    if (req.files && typeof req.files === "object") {
+      console.log("📁 UPDATE - Processing req.files:", Object.keys(req.files));
 
-      // Cek tipe file berdasarkan fieldname atau mimetype
-      if (
-        req.file.fieldname === "foodImage" ||
-        req.file.mimetype.startsWith("image/")
-      ) {
-        const imagePath = `/images/foodImages/${req.file.filename}`;
-        updateData.image = imagePath;
-        updateData.video = null; // Set video ke null jika upload image
-        console.log("✅ Image uploaded:", updateData.image);
-      } else if (
-        req.file.fieldname === "foodVideo" ||
-        req.file.mimetype.startsWith("video/")
-      ) {
-        const videoPath = `videos/foodVideos/${req.file.filename}`;
-        updateData.video = videoPath;
-        updateData.image = null; // Set image ke null jika upload video
-        console.log("✅ Video uploaded:", updateData.video);
-      } else {
-        // Default ke image jika tidak bisa deteksi
-        const imagePath = `images/foodImages/${req.file.filename}`;
-        updateData.image = imagePath;
-        updateData.video = null;
-        console.log("✅ File uploaded as image (default):", updateData.image);
+      const fileFields = Object.keys(req.files);
+      console.log("📁 UPDATE - Available fields:", fileFields);
+
+      for (const fieldName of fileFields) {
+        const files = req.files[fieldName];
+
+        if (Array.isArray(files) && files.length > 0) {
+          const file = files[0];
+          console.log(`📁 UPDATE - Processing field '${fieldName}':`, {
+            filename: file.filename,
+            mimetype: file.mimetype,
+            fieldname: file.fieldname,
+            originalname: file.originalname,
+          });
+
+          // ✅ DIRECT ASSIGNMENT - Prioritas field name
+          if (
+            fieldName.toLowerCase() === "image" ||
+            fieldName.toLowerCase() === "foodimage"
+          ) {
+            const newImagePath = `/images/foodImages/${file.filename}`;
+            updateData.image = newImagePath;
+            console.log(
+              "✅ UPDATE - Image OVERRIDDEN:",
+              existingRecipe.image,
+              "->",
+              newImagePath
+            );
+          } else if (
+            fieldName.toLowerCase() === "video" ||
+            fieldName.toLowerCase() === "foodvideo"
+          ) {
+            const newVideoPath = `/videos/foodVideos/${file.filename}`;
+            updateData.video = newVideoPath;
+            console.log(
+              "✅ UPDATE - Video OVERRIDDEN:",
+              existingRecipe.video,
+              "->",
+              newVideoPath
+            );
+          }
+          // ✅ FALLBACK: Check mimetype
+          else if (file.mimetype.startsWith("image/")) {
+            const newImagePath = `/images/foodImages/${file.filename}`;
+            updateData.image = newImagePath;
+            console.log(
+              "✅ UPDATE - Image set by MIMETYPE:",
+              existingRecipe.image,
+              "->",
+              newImagePath
+            );
+          } else if (file.mimetype.startsWith("video/")) {
+            const newVideoPath = `/videos/foodVideos/${file.filename}`;
+            updateData.video = newVideoPath;
+            console.log(
+              "✅ UPDATE - Video set by MIMETYPE:",
+              existingRecipe.video,
+              "->",
+              newVideoPath
+            );
+          } else {
+            console.log("❌ UPDATE - Unknown file type:", {
+              fieldName,
+              mimetype: file.mimetype,
+              filename: file.filename,
+            });
+          }
+        } else {
+          console.log(
+            `❌ UPDATE - No files in field '${fieldName}' or not an array:`,
+            files
+          );
+        }
       }
-    } else if (req.body.image === null || req.body.video === null) {
-      // Only update image/video if explicitly set to null in request
-      if (req.body.image === null) updateData.image = null;
-      if (req.body.video === null) updateData.video = null;
+    }
+    // ✅ Handle single file
+    else if (req.file) {
+      console.log("📁 UPDATE - Processing single file:", {
+        fieldname: req.file.fieldname,
+        filename: req.file.filename,
+        mimetype: req.file.mimetype,
+        originalname: req.file.originalname,
+      });
+
+      // ✅ DIRECT ASSIGNMENT - Priority field name
+      if (
+        req.file.fieldname.toLowerCase() === "image" ||
+        req.file.fieldname.toLowerCase() === "foodimage"
+      ) {
+        const newImagePath = `/images/foodImages/${req.file.filename}`;
+        updateData.image = newImagePath;
+        console.log(
+          "✅ UPDATE - Single image OVERRIDDEN:",
+          existingRecipe.image,
+          "->",
+          newImagePath
+        );
+      } else if (
+        req.file.fieldname.toLowerCase() === "video" ||
+        req.file.fieldname.toLowerCase() === "foodvideo"
+      ) {
+        const newVideoPath = `/videos/foodVideos/${req.file.filename}`;
+        updateData.video = newVideoPath;
+        console.log(
+          "✅ UPDATE - Single video OVERRIDDEN:",
+          existingRecipe.video,
+          "->",
+          newVideoPath
+        );
+      } else if (req.file.mimetype.startsWith("image/")) {
+        const newImagePath = `/images/foodImages/${req.file.filename}`;
+        updateData.image = newImagePath;
+        console.log(
+          "✅ UPDATE - Single image set by MIMETYPE:",
+          existingRecipe.image,
+          "->",
+          newImagePath
+        );
+      } else if (req.file.mimetype.startsWith("video/")) {
+        const newVideoPath = `/videos/foodVideos/${req.file.filename}`;
+        updateData.video = newVideoPath;
+        console.log(
+          "✅ UPDATE - Single video set by MIMETYPE:",
+          existingRecipe.video,
+          "->",
+          newVideoPath
+        );
+      }
+    } else {
+      console.log("❌ UPDATE - No files detected, keeping original paths");
     }
 
-    // Set dateModified to current date when updating
+    // ✅ DEBUG: Final check - sama seperti insertRecipe
+    console.log("🔍 UPDATE FINAL RESULT:");
+    console.log("📸 Update Image:", updateData.image);
+    console.log("🎥 Update Video:", updateData.video);
+
     updateData.dateModified = new Date();
 
     // Skip full validation for partial updates

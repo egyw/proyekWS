@@ -97,13 +97,25 @@ const recipeValidation = Joi.object({
     "string.empty": "Instruksi tidak boleh kosong!",
   }),
 
-  video: Joi.string().uri().allow(null, "").optional().messages({
-    "string.uri": "Video harus berupa URL yang valid!",
-  }),
+  image: Joi.string()
+    .allow(null, "")
+    .default(null)
+    .optional()
+    .pattern(/^\/?(images|public)\/.*\.(jpg|jpeg|png|gif|webp)$/i)
+    .messages({
+      "string.pattern.base":
+        "Format gambar tidak valid! Harus berupa path gambar yang valid.",
+    }),
 
-  image: Joi.string().allow(null, "").optional().messages({
-    "string.uri": "Gambar harus berupa URL yang valid!",
-  }),
+  video: Joi.string()
+    .allow(null, "")
+    .default(null)
+    .optional()
+    .pattern(/^\/?(videos|public)\/.*\.(mp4|avi|mov|wmv|flv|webm|mkv|gif)$/i)
+    .messages({
+      "string.pattern.base":
+        "Format video tidak valid! Harus berupa path video yang valid.",
+    }),
 
   createdByUser: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
