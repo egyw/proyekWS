@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 const { faker } = require('@faker-js/faker/locale/id_ID');
+const bcrypt = require('bcrypt');
 
 const User = require('./src/models/User');
 const Recipe = require('./src/models/Recipe');
@@ -50,15 +51,19 @@ const importData = async () => {
         const NUM_USERS = 15;
         const NUM_RECIPES = 25;
         const NUM_TRANSACTIONS = 20;
+        const saltRounds = 10;
 
         // usersData ============================================================================================================
         const usersData = [];
         for (let i = 0; i < NUM_USERS; i++) {
+            const plainPassword = faker.internet.password();
+            const hashedPassword = bcrypt.hashSync(plainPassword, saltRounds);
+
             usersData.push({
                 profilePicture: faker.image.avatar(),
                 username: faker.internet.username().toLowerCase() + faker.string.numeric(2),
                 email: faker.internet.email().toLowerCase(),
-                password: 'hashed_password_placeholder',
+                password: hashedPassword,
                 role: i < 2 ? 'admin' : 'user',
                 isPremium: faker.datatype.boolean(),
                 saldo: faker.finance.amount({ min: 0, max: 500000, dec: 0 }),
