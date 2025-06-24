@@ -1,12 +1,243 @@
 [{
   "_id": {
-    "$oid": "682c62a6835d470cfa75ff87"
+    "$oid": "6842d1aed77a55645557e159"
   },
-  "username": "egy",
-  "email": "tes123@gmail.com",
-  "password": "$2y$10$f7r16OpQKhrQXglWaywDpuU5sX2cQGb2cWBAXo40HnerOY7pAbX5K",
-  "isPremium": true,
+  "username": "eggy",
+  "email": "wcyn9vgb3a@mkzaso.com",
+  "password": "$2b$10$1rkoaB9NOvrwbTyjsLGScuCAdquJCiNlkkd.TW2nY8H6ISXpSOtFi",
+  "isPremium": false,
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoid2N5bjl2Z2IzYUBta3phc28uY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwNzUwODczLCJleHAiOjE3NTMzNDI4NzN9.mZhNK02jLfjZZ2-skD1Dn_ev3n0Oo4GbQaPAANaa_no",
   "createdAt": {
-    "$date": "2025-05-20T00:00:00.000Z"
+    "$date": "2025-06-06T11:31:58.642Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-24T07:44:03.572Z"
+  },
+  "__v": 1,
+  "cart": [],
+  "profilePicture": "/images/profiles/6842d1aed77a55645557e159/eggy-1750751043539-874666875.jpeg",
+  "role": "admin",
+  "saldo": 0,
+  "otp": null,
+  "otpExpiresAt": null
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a1"
+  },
+  "profilePicture": null,
+  "username": "budi_santoso",
+  "email": "budi.santoso@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": true,
+  "saldo": 150000,
+  "refreshToken": "",
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a2"
+  },
+  "profilePicture": null,
+  "username": "citra_lestari",
+  "email": "citra.lestari@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": false,
+  "saldo": 50000,
+  "refreshToken": null,
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:01:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:01:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a3"
+  },
+  "profilePicture": null,
+  "username": "admin_web",
+  "email": "admin@myapp.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "admin",
+  "isPremium": true,
+  "saldo": 1000000,
+  "refreshToken": "",
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:02:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:02:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a4"
+  },
+  "profilePicture": "null",
+  "username": "dewi_anjani",
+  "email": "dewi.anjani@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": true,
+  "saldo": 0,
+  "refreshToken": null,
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:03:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:03:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a5"
+  },
+  "profilePicture": null,
+  "username": "eko_prasetyo",
+  "email": "eko.prasetyo@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": false,
+  "saldo": 75000,
+  "refreshToken": "",
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:04:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:04:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a6"
+  },
+  "profilePicture": null,
+  "username": "fitri_rahayu",
+  "email": "fitri.rahayu@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": false,
+  "saldo": 25000,
+  "refreshToken": null,
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:05:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:05:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a7"
+  },
+  "profilePicture": "null",
+  "username": "guntur_perkasa",
+  "email": "guntur.perkasa@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": true,
+  "saldo": 200000,
+  "refreshToken": null,
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:06:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:06:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a8"
+  },
+  "profilePicture": null,
+  "username": "herlina_w",
+  "email": "herlina.w@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": false,
+  "saldo": 0,
+  "refreshToken": "",
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:07:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:07:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a9"
+  },
+  "profilePicture": null,
+  "username": "ivan_maulana",
+  "email": "ivan.maulana@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": false,
+  "saldo": 10000,
+  "refreshToken": null,
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:08:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:08:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1b0"
+  },
+  "profilePicture": null,
+  "username": "jane_doe",
+  "email": "jane.doe@example.com",
+  "password": "$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC",
+  "role": "user",
+  "isPremium": true,
+  "saldo": 500000,
+  "refreshToken": "",
+  "pendingEmail": null,
+  "otp": null,
+  "otpExpiresAt": null,
+  "createdAt": {
+    "$date": "2024-02-12T10:09:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T10:09:00.000Z"
   }
 }]

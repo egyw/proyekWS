@@ -1,0 +1,170 @@
+[{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a1"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a1"
+  },
+  "item_name": "Langganan Premium 1 Bulan",
+  "quantity": 1,
+  "price": 50000,
+  "createdAt": {
+    "$date": "2024-02-01T10:00:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-01T10:00:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a2"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a2"
+  },
+  "item_name": "Minyak Goreng 1L",
+  "quantity": 2,
+  "price": 25000,
+  "createdAt": {
+    "$date": "2024-02-02T11:30:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-02T11:30:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a3"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a3"
+  },
+  "item_name": "Beras 5kg",
+  "quantity": 1,
+  "price": 65000,
+  "createdAt": {
+    "$date": "2024-02-03T14:00:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-03T14:00:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a4"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a4"
+  },
+  "item_name": "Langganan Premium 3 Bulan",
+  "quantity": 1,
+  "price": 120000,
+  "createdAt": {
+    "$date": "2024-02-04T09:00:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-04T09:00:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a5"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a5"
+  },
+  "item_name": "Telur Ayam 1kg",
+  "quantity": 1,
+  "price": 35000,
+  "createdAt": {
+    "$date": "2024-02-05T16:20:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-05T16:20:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a6"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a6"
+  },
+  "item_name": "Langganan Premium 1 Bulan",
+  "quantity": 1,
+  "price": 50000,
+  "createdAt": {
+    "$date": "2024-02-06T18:00:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-06T18:00:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a7"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a7"
+  },
+  "item_name": "Gula Pasir 1kg",
+  "quantity": 2,
+  "price": 17000,
+  "createdAt": {
+    "$date": "2024-02-07T20:15:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-07T20:15:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a8"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a7"
+  },
+  "item_name": "Daging Ayam 1kg",
+  "quantity": 1,
+  "price": 76000,
+  "createdAt": {
+    "$date": "2024-02-07T20:15:03.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-07T20:15:03.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4a9"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a9"
+  },
+  "item_name": "Garam Meja",
+  "quantity": 1,
+  "price": 5000,
+  "createdAt": {
+    "$date": "2024-02-09T12:00:02.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-09T12:00:02.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c4f8a3e4b1e8a3b0c4b0"
+  },
+  "transaction_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a9"
+  },
+  "item_name": "Kecap Manis Botol",
+  "quantity": 1,
+  "price": 17000,
+  "createdAt": {
+    "$date": "2024-02-09T12:00:03.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-09T12:00:03.000Z"
+  }
+}]

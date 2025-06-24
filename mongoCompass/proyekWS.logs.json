@@ -1,0 +1,180 @@
+[{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a1"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a1"
+  },
+  "action": "LOGIN_BERHASIL",
+  "status": "BERHASIL",
+  "ipAddress": "192.168.1.1",
+  "details": "Login via web",
+  "createdAt": {
+    "$date": "2024-02-12T14:01:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:01:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a2"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a2"
+  },
+  "action": "LOGIN_GAGAL",
+  "status": "GAGAL",
+  "ipAddress": "10.0.0.2",
+  "details": "Password salah",
+  "createdAt": {
+    "$date": "2024-02-12T14:02:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:02:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a3"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a3"
+  },
+  "action": "UPDATE_ROLE",
+  "status": "BERHASIL",
+  "ipAddress": "192.168.1.5",
+  "details": "Mengubah role user fitri_rahayu menjadi user",
+  "createdAt": {
+    "$date": "2024-02-12T14:03:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:03:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a4"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a4"
+  },
+  "action": "GANTI_PASSWORD",
+  "status": "BERHASIL",
+  "ipAddress": "172.16.0.10",
+  "details": "Password berhasil diubah",
+  "createdAt": {
+    "$date": "2024-02-12T14:04:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:04:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a5"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a5"
+  },
+  "action": "REGISTER",
+  "status": "BERHASIL",
+  "ipAddress": "192.168.2.100",
+  "details": "User baru terdaftar",
+  "createdAt": {
+    "$date": "2024-02-12T14:05:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:05:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a6"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a6"
+  },
+  "action": "LOGOUT",
+  "status": "BERHASIL",
+  "ipAddress": "10.0.5.20",
+  "details": "User logout",
+  "createdAt": {
+    "$date": "2024-02-12T14:06:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:06:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a7"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a1"
+  },
+  "action": "REFRESH_TOKEN",
+  "status": "BERHASIL",
+  "ipAddress": "192.168.1.1",
+  "details": "Token diperbarui",
+  "createdAt": {
+    "$date": "2024-02-12T14:07:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:07:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a8"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a8"
+  },
+  "action": "GANTI_EMAIL_REQUEST",
+  "status": "BERHASIL",
+  "ipAddress": "203.0.113.15",
+  "details": "Request ganti email ke herlina.baru@example.com",
+  "createdAt": {
+    "$date": "2024-02-12T14:08:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:08:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7a9"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a9"
+  },
+  "action": "LOGIN_OTP_DIKIRIM",
+  "status": "BERHASIL",
+  "ipAddress": "198.51.100.8",
+  "details": "OTP dikirim ke email",
+  "createdAt": {
+    "$date": "2024-02-12T14:09:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:09:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c7bfa3e4b1e8a3b0c7b0"
+  },
+  "userId": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a2"
+  },
+  "action": "LOGIN_GAGAL",
+  "status": "GAGAL",
+  "ipAddress": "10.0.0.2",
+  "details": "Password salah, percobaan ke-2",
+  "createdAt": {
+    "$date": "2024-02-12T14:10:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T14:10:00.000Z"
+  }
+}]

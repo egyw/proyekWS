@@ -1,0 +1,77 @@
+[{
+  "_id": {
+    "$oid": "65d3f8a1b4e5c6a7d8e9f0a1"
+  },
+  "user": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a2"
+  },
+  "item_name": "Minyak Goreng 1L",
+  "price": 25000,
+  "quantity": 2
+},
+{
+  "_id": {
+    "$oid": "65d3f8a1b4e5c6a7d8e9f0a2"
+  },
+  "user": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a7"
+  },
+  "item_name": "Beras 5kg",
+  "price": 65000,
+  "quantity": 1
+},
+{
+  "_id": {
+    "$oid": "65d3f8a1b4e5c6a7d8e9f0a3"
+  },
+  "user": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a1"
+  },
+  "item_name": "Kecap Manis Botol",
+  "price": 17000,
+  "quantity": 1
+},
+{
+  "_id": {
+    "$oid": "65d3f8a1b4e5c6a7d8e9f0a4"
+  },
+  "user": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a1"
+  },
+  "item_name": "Mie Instan Goreng",
+  "price": 3000,
+  "quantity": 5
+},
+{
+  "_id": {
+    "$oid": "65d3f8a1b4e5c6a7d8e9f0a5"
+  },
+  "user": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1b0"
+  },
+  "item_name": "Kopi Bubuk 250g",
+  "price": 28000,
+  "quantity": 1
+},
+{
+  "_id": {
+    "$oid": "65d3f8a1b4e5c6a7d8e9f0a6"
+  },
+  "user": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a5"
+  },
+  "item_name": "Gula Pasir 1kg",
+  "price": 17500,
+  "quantity": 2
+},
+{
+  "_id": {
+    "$oid": "65d3f8a1b4e5c6a7d8e9f0a7"
+  },
+  "user": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a6"
+  },
+  "item_name": "Teh Celup Kotak",
+  "price": 8000,
+  "quantity": 1
+}]

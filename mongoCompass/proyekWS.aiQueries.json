@@ -1,11 +1,140 @@
 [{
   "_id": {
-    "$oid": "682c721b835d470cfa75ffb7"
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a1"
   },
-  "userId": {
-    "$oid": "682c62a6835d470cfa75ff87"
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a1",
+  "prompt": "Buatkan resep sederhana untuk sarapan",
+  "response": "Anda bisa membuat telur orak-arik dengan roti gandum.",
+  "createdAt": {
+    "$date": "2024-02-12T12:01:00.000Z"
   },
-  "prompt": "Gimana cara turun berat badan",
-  "response": "Turu ae dek...",
-  "createdAt": null
+  "updatedAt": {
+    "$date": "2024-02-12T12:01:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a2"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a2",
+  "prompt": "Ide makan malam sehat rendah kalori",
+  "response": "Salad sayur dengan dada ayam panggang adalah pilihan yang bagus.",
+  "createdAt": {
+    "$date": "2024-02-12T12:02:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:02:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a3"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a5",
+  "prompt": "Bagaimana cara membuat saus carbonara yang creamy?",
+  "response": "Gunakan campuran kuning telur dan keju parmesan, jangan menggunakan krim.",
+  "createdAt": {
+    "$date": "2024-02-12T12:03:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:03:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a4"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a6",
+  "prompt": "Resep kue tanpa oven",
+  "response": "Anda bisa mencoba membuat cheesecake tanpa panggang atau bola-bola coklat.",
+  "createdAt": {
+    "$date": "2024-02-12T12:04:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:04:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a5"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a9",
+  "prompt": "Apa saja bumbu dasar untuk rendang?",
+  "response": "Bumbu dasar rendang meliputi bawang merah, bawang putih, cabai, jahe, lengkuas, dan kunyit.",
+  "createdAt": {
+    "$date": "2024-02-12T12:05:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:05:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a6"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a1",
+  "prompt": "resep minuman segar untuk cuaca panas",
+  "response": "Coba buat es lemon tea atau jus semangka mint.",
+  "createdAt": {
+    "$date": "2024-02-12T12:06:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:06:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a7"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a4",
+  "prompt": "Berapa lama merebus daging sapi agar empuk?",
+  "response": "Tergantung potongan, merebus daging sapi bisa memakan waktu 1.5 hingga 2 jam.",
+  "createdAt": {
+    "$date": "2024-02-12T12:07:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:07:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a8"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a7",
+  "prompt": "Pengganti santan dalam masakan",
+  "response": "Anda bisa menggunakan susu evaporasi, krim, atau campuran kacang mete yang dihaluskan.",
+  "createdAt": {
+    "$date": "2024-02-12T12:08:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:08:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5a9"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1a8",
+  "prompt": "cara menyimpan sayuran agar tetap segar",
+  "response": "Bungkus sayuran dengan kertas atau kain lembab sebelum dimasukkan ke kulkas.",
+  "createdAt": {
+    "$date": "2024-02-12T12:09:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:09:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c5bda3e4b1e8a3b0c5b0"
+  },
+  "userId": "65c0c1b9a3e4b1e8a3b0c1b0",
+  "prompt": "resep masakan dari tahu dan tempe",
+  "response": "Anda dapat membuat tahu tempe bacem, orek tempe, atau semur tahu.",
+  "createdAt": {
+    "$date": "2024-02-12T12:10:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T12:10:00.000Z"
+  }
 }]

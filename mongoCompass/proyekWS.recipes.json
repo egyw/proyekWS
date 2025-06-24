@@ -31,7 +31,7 @@
   "instructions": "Dateng ke pak taman. bilang pak belik tempe. done.",
   "video": null,
   "createdByUser": {
-    "$oid": "682c62a6835d470cfa75ff87"
+    "$oid": "684fd6c5c2296bcbdd852ef4"
   },
   "dateModified": null,
   "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi2ytxSeQqH2qTWbiI2A3_E9i2hs8hV2XjTg&s",
@@ -48,4 +48,458 @@
   "carbs": "13g",
   "fat": "90g",
   "protein": "600 g"
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a1"
+  },
+  "title": "Nasi Goreng Spesial Ala Resto",
+  "servings": 2,
+  "readyInMinutes": 20,
+  "preparationMinutes": 10,
+  "cookingMinutes": 10,
+  "ingredients": [
+    {
+      "name": "Nasi putih",
+      "measure": "1 piring"
+    },
+    {
+      "name": "Telur",
+      "measure": "1 butir"
+    },
+    {
+      "name": "Bawang merah",
+      "measure": "3 siung"
+    }
+  ],
+  "dishTypes": "main course",
+  "tags": "indonesian, breakfast",
+  "area": "Indonesia",
+  "instructions": "Tumis bumbu hingga harum, masukkan nasi dan telur, aduk rata.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a1"
+  },
+  "dateModified": null,
+  "image": "image_nasgor.jpg",
+  "healthScore": 75,
+  "summary": "Nasi goreng klasik yang lezat dan mudah dibuat.",
+  "weightWatcherSmartPoints": 8,
+  "calories": 450,
+  "carbs": "50g",
+  "fat": "20g",
+  "protein": "15g",
+  "createdAt": {
+    "$date": "2024-02-12T11:00:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a2"
+  },
+  "title": "Soto Ayam Lamongan Gurih",
+  "servings": 4,
+  "readyInMinutes": 60,
+  "preparationMinutes": 20,
+  "cookingMinutes": 40,
+  "ingredients": [
+    {
+      "name": "Ayam kampung",
+      "measure": "1/2 ekor"
+    },
+    {
+      "name": "Sereh",
+      "measure": "2 batang"
+    }
+  ],
+  "dishTypes": "soup",
+  "tags": "indonesian, comfort food",
+  "area": "Jawa Timur",
+  "instructions": "Rebus ayam dengan bumbu hingga empuk. Sajikan dengan pelengkap.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a2"
+  },
+  "dateModified": null,
+  "image": "image_soto.jpg",
+  "healthScore": 80,
+  "summary": "Soto ayam khas Lamongan dengan kuah kuning yang kaya rempah.",
+  "weightWatcherSmartPoints": 7,
+  "calories": 350,
+  "carbs": "15g",
+  "fat": "18g",
+  "protein": "30g",
+  "createdAt": {
+    "$date": "2024-02-12T11:01:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:01:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a3"
+  },
+  "title": "Rendang Daging Sapi Empuk",
+  "servings": 6,
+  "readyInMinutes": 180,
+  "preparationMinutes": 30,
+  "cookingMinutes": 150,
+  "ingredients": [
+    {
+      "name": "Daging sapi",
+      "measure": "500 gram"
+    },
+    {
+      "name": "Santan kental",
+      "measure": "500 ml"
+    }
+  ],
+  "dishTypes": "main course",
+  "tags": "padang, spicy",
+  "area": "Sumatra Barat",
+  "instructions": "Masak daging dengan bumbu dan santan hingga kering dan empuk.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a3"
+  },
+  "dateModified": null,
+  "image": "image_rendang.jpg",
+  "healthScore": 60,
+  "summary": "Rendang daging otentik yang dimasak perlahan hingga bumbu meresap.",
+  "weightWatcherSmartPoints": 12,
+  "calories": 600,
+  "carbs": "10g",
+  "fat": "45g",
+  "protein": "40g",
+  "createdAt": {
+    "$date": "2024-02-12T11:02:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:02:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a4"
+  },
+  "title": "Ayam Bakar Madu Pedas Manis",
+  "servings": 3,
+  "readyInMinutes": 45,
+  "preparationMinutes": 15,
+  "cookingMinutes": 30,
+  "ingredients": [
+    {
+      "name": "Paha ayam",
+      "measure": "3 potong"
+    },
+    {
+      "name": "Madu",
+      "measure": "3 sdm"
+    },
+    {
+      "name": "Kecap manis",
+      "measure": "5 sdm"
+    }
+  ],
+  "dishTypes": "main course",
+  "tags": "grill, sweet, spicy",
+  "area": "Indonesia",
+  "instructions": "Marinasi ayam lalu bakar hingga matang sambil diolesi sisa bumbu.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a1"
+  },
+  "dateModified": null,
+  "image": "image_ayambakar.jpg",
+  "healthScore": 70,
+  "summary": "Ayam bakar dengan bumbu olesan madu yang manis dan sedikit pedas.",
+  "weightWatcherSmartPoints": 10,
+  "calories": 550,
+  "carbs": "25g",
+  "fat": "30g",
+  "protein": "35g",
+  "createdAt": {
+    "$date": "2024-02-12T11:03:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:03:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a5"
+  },
+  "title": "Spaghetti Carbonara Creamy",
+  "servings": 2,
+  "readyInMinutes": 25,
+  "preparationMinutes": 10,
+  "cookingMinutes": 15,
+  "ingredients": [
+    {
+      "name": "Spaghetti",
+      "measure": "200 gram"
+    },
+    {
+      "name": "Smoked beef",
+      "measure": "5 lembar"
+    },
+    {
+      "name": "Kuning telur",
+      "measure": "2 butir"
+    }
+  ],
+  "dishTypes": "main course",
+  "tags": "italian, pasta",
+  "area": "Italy",
+  "instructions": "Rebus pasta. Tumis smoked beef, campurkan dengan pasta dan saus telur.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a5"
+  },
+  "dateModified": null,
+  "image": "image_carbonara.jpg",
+  "healthScore": 50,
+  "summary": "Pasta carbonara klasik Italia yang creamy tanpa menggunakan krim.",
+  "weightWatcherSmartPoints": 14,
+  "calories": 700,
+  "carbs": "80g",
+  "fat": "35g",
+  "protein": "25g",
+  "createdAt": {
+    "$date": "2024-02-12T11:04:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:04:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a6"
+  },
+  "title": "Salad Buah Segar Saus Mayo",
+  "servings": 5,
+  "readyInMinutes": 15,
+  "preparationMinutes": 15,
+  "cookingMinutes": 0,
+  "ingredients": [
+    {
+      "name": "Apel",
+      "measure": "1 buah"
+    },
+    {
+      "name": "Melon",
+      "measure": "1/4 buah"
+    },
+    {
+      "name": "Mayonnaise",
+      "measure": "100 gram"
+    }
+  ],
+  "dishTypes": "dessert, salad",
+  "tags": "healthy, fresh",
+  "area": "International",
+  "instructions": "Potong buah-buahan, campur dengan saus mayo dan keju parut.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a6"
+  },
+  "dateModified": null,
+  "image": "image_salad.jpg",
+  "healthScore": 90,
+  "summary": "Salad buah menyegarkan dengan saus mayonnaise manis dan gurih.",
+  "weightWatcherSmartPoints": 5,
+  "calories": 250,
+  "carbs": "30g",
+  "fat": "15g",
+  "protein": "5g",
+  "createdAt": {
+    "$date": "2024-02-12T11:05:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:05:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a7"
+  },
+  "title": "Gulai Ikan Kakap Merah",
+  "servings": 4,
+  "readyInMinutes": 40,
+  "preparationMinutes": 15,
+  "cookingMinutes": 25,
+  "ingredients": [
+    {
+      "name": "Ikan kakap",
+      "measure": "500 gram"
+    },
+    {
+      "name": "Santan",
+      "measure": "700 ml"
+    }
+  ],
+  "dishTypes": "main course",
+  "tags": "curry, indonesian",
+  "area": "Sumatra",
+  "instructions": "Tumis bumbu halus, masukkan ikan dan santan, masak hingga matang.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a7"
+  },
+  "dateModified": null,
+  "image": "image_gulai.jpg",
+  "healthScore": 78,
+  "summary": "Gulai ikan khas Sumatra dengan kuah kental yang kaya rasa.",
+  "weightWatcherSmartPoints": 9,
+  "calories": 480,
+  "carbs": "12g",
+  "fat": "30g",
+  "protein": "38g",
+  "createdAt": {
+    "$date": "2024-02-12T11:06:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:06:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a8"
+  },
+  "title": "Capcay Goreng Seafood",
+  "servings": 3,
+  "readyInMinutes": 25,
+  "preparationMinutes": 15,
+  "cookingMinutes": 10,
+  "ingredients": [
+    {
+      "name": "Udang",
+      "measure": "100 gram"
+    },
+    {
+      "name": "Wortel",
+      "measure": "1 buah"
+    },
+    {
+      "name": "Sawi putih",
+      "measure": "5 lembar"
+    }
+  ],
+  "dishTypes": "main course",
+  "tags": "chinese, stir-fry",
+  "area": "Asia",
+  "instructions": "Tumis bawang, masukkan seafood dan sayuran, beri bumbu.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a8"
+  },
+  "dateModified": null,
+  "image": "image_capcay.jpg",
+  "healthScore": 85,
+  "summary": "Tumisan aneka sayur dengan seafood, cepat dan menyehatkan.",
+  "weightWatcherSmartPoints": 6,
+  "calories": 320,
+  "carbs": "20g",
+  "fat": "15g",
+  "protein": "25g",
+  "createdAt": {
+    "$date": "2024-02-12T11:07:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:07:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a9"
+  },
+  "title": "Tongseng Kambing Khas Solo",
+  "servings": 4,
+  "readyInMinutes": 75,
+  "preparationMinutes": 20,
+  "cookingMinutes": 55,
+  "ingredients": [
+    {
+      "name": "Daging kambing",
+      "measure": "400 gram"
+    },
+    {
+      "name": "Kol",
+      "measure": "1/4 buah"
+    }
+  ],
+  "dishTypes": "soup, main course",
+  "tags": "javanese, spicy",
+  "area": "Jawa Tengah",
+  "instructions": "Rebus daging hingga empuk, tumis bumbu lalu masukkan daging dan sayuran.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a9"
+  },
+  "dateModified": null,
+  "image": "image_tongseng.jpg",
+  "healthScore": 65,
+  "summary": "Tongseng kambing dengan kuah manis pedas yang menghangatkan.",
+  "weightWatcherSmartPoints": 11,
+  "calories": 500,
+  "carbs": "18g",
+  "fat": "35g",
+  "protein": "30g",
+  "createdAt": {
+    "$date": "2024-02-12T11:08:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:08:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2b0"
+  },
+  "title": "Kue Pukis Pandan Lembut",
+  "servings": 10,
+  "readyInMinutes": 50,
+  "preparationMinutes": 20,
+  "cookingMinutes": 30,
+  "ingredients": [
+    {
+      "name": "Tepung terigu",
+      "measure": "250 gram"
+    },
+    {
+      "name": "Santan",
+      "measure": "300 ml"
+    },
+    {
+      "name": "Pasta pandan",
+      "measure": "1 sdt"
+    }
+  ],
+  "dishTypes": "dessert, snack",
+  "tags": "cake, sweet",
+  "area": "Indonesia",
+  "instructions": "Campur semua bahan adonan, diamkan, lalu cetak di cetakan pukis.",
+  "video": null,
+  "createdByUser": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1b0"
+  },
+  "dateModified": null,
+  "image": "image_pukis.jpg",
+  "healthScore": 40,
+  "summary": "Kue tradisional yang lembut dengan aroma pandan yang wangi.",
+  "weightWatcherSmartPoints": 4,
+  "calories": 180,
+  "carbs": "35g",
+  "fat": "4g",
+  "protein": "3g",
+  "createdAt": {
+    "$date": "2024-02-12T11:09:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T11:09:00.000Z"
+  }
 }]

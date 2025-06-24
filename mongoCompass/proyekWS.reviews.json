@@ -1,14 +1,210 @@
 [{
   "_id": {
-    "$oid": "682c6b8c835d470cfa75ff96"
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a1"
   },
   "recipeId": {
-    "$oid": "682c67d8835d470cfa75ff8b"
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a1"
   },
-  "username": "egy",
-  "comment": "Woiiii enak banget loooo",
-  "rating": {
-    "$numberDecimal": "5"
+  "recipeTitle": "Nasi Goreng Spesial Ala Resto",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a2"
   },
-  "createdAt": null
+  "commentedByUsername": "citra_lestari",
+  "comment": "Resepnya mudah diikuti dan rasanya enak banget!",
+  "rating": 5,
+  "createdAt": {
+    "$date": "2024-02-12T13:01:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:01:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a2"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a2"
+  },
+  "recipeTitle": "Soto Ayam Lamongan Gurih",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a1"
+  },
+  "commentedByUsername": "budi_santoso",
+  "comment": "Sotonya gurih, keluarga saya suka.",
+  "rating": 4,
+  "createdAt": {
+    "$date": "2024-02-12T13:02:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:02:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a3"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a3"
+  },
+  "recipeTitle": "Rendang Daging Sapi Empuk",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a5"
+  },
+  "commentedByUsername": "eko_prasetyo",
+  "comment": "Rendangnya mantap, bumbunya meresap sempurna.",
+  "rating": 5,
+  "createdAt": {
+    "$date": "2024-02-12T13:03:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:03:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a4"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a5"
+  },
+  "recipeTitle": "Spaghetti Carbonara Creamy",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a4"
+  },
+  "commentedByUsername": "dewi_anjani",
+  "comment": "Agak terlalu creamy buat saya, tapi tetap enak.",
+  "rating": 3,
+  "createdAt": {
+    "$date": "2024-02-12T13:04:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:04:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a5"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a1"
+  },
+  "recipeTitle": "Nasi Goreng Spesial Ala Resto",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a3"
+  },
+  "commentedByUsername": "admin_web",
+  "comment": "Standar, tidak ada yang spesial.",
+  "rating": 3,
+  "createdAt": {
+    "$date": "2024-02-12T13:05:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:05:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a6"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a6"
+  },
+  "recipeTitle": "Salad Buah Segar Saus Mayo",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a7"
+  },
+  "commentedByUsername": "guntur_perkasa",
+  "comment": "Segar sekali! Cocok untuk penutup makan siang.",
+  "rating": 5,
+  "createdAt": {
+    "$date": "2024-02-12T13:06:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:06:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a7"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a9"
+  },
+  "recipeTitle": "Tongseng Kambing Khas Solo",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a6"
+  },
+  "commentedByUsername": "fitri_rahayu",
+  "comment": "Dagingnya sedikit alot, mungkin cara merebus saya salah.",
+  "rating": 3,
+  "createdAt": {
+    "$date": "2024-02-12T13:07:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:07:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a8"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2b0"
+  },
+  "recipeTitle": "Kue Pukis Pandan Lembut",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a8"
+  },
+  "commentedByUsername": "herlina_w",
+  "comment": "Lembut dan wangi pandannya terasa.",
+  "rating": 4,
+  "createdAt": {
+    "$date": "2024-02-12T13:08:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:08:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6a9"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a4"
+  },
+  "recipeTitle": "Ayam Bakar Madu Pedas Manis",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1b0"
+  },
+  "commentedByUsername": "jane_doe",
+  "comment": "Pedas manisnya pas! Akan saya buat lagi.",
+  "rating": 5,
+  "createdAt": {
+    "$date": "2024-02-12T13:09:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:09:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c6e8a3e4b1e8a3b0c6b0"
+  },
+  "recipeId": {
+    "$oid": "65c0c2d3a3e4b1e8a3b0c2a8"
+  },
+  "recipeTitle": "Capcay Goreng Seafood",
+  "commentedBy": {
+    "$oid": "65c0c1b9a3e4b1e8a3b0c1a9"
+  },
+  "commentedByUsername": "ivan_maulana",
+  "comment": "Cepat dan praktis untuk makan malam.",
+  "rating": 4,
+  "createdAt": {
+    "$date": "2024-02-12T13:10:00.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-12T13:10:00.000Z"
+  }
 }]

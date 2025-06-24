@@ -1,0 +1,170 @@
+[{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a1"
+  },
+  "date": {
+    "$date": "2024-02-01T10:00:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a1",
+  "type": "premium",
+  "total_amount": 50000,
+  "createdAt": {
+    "$date": "2024-02-01T10:00:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-01T10:00:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a2"
+  },
+  "date": {
+    "$date": "2024-02-02T11:30:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a2",
+  "type": "item",
+  "total_amount": 50000,
+  "createdAt": {
+    "$date": "2024-02-02T11:30:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-02T11:30:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a3"
+  },
+  "date": {
+    "$date": "2024-02-03T14:00:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a7",
+  "type": "item",
+  "total_amount": 65000,
+  "createdAt": {
+    "$date": "2024-02-03T14:00:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-03T14:00:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a4"
+  },
+  "date": {
+    "$date": "2024-02-04T09:00:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a4",
+  "type": "premium",
+  "total_amount": 120000,
+  "createdAt": {
+    "$date": "2024-02-04T09:00:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-04T09:00:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a5"
+  },
+  "date": {
+    "$date": "2024-02-05T16:20:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a1",
+  "type": "item",
+  "total_amount": 35000,
+  "createdAt": {
+    "$date": "2024-02-05T16:20:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-05T16:20:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a6"
+  },
+  "date": {
+    "$date": "2024-02-06T18:00:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1b0",
+  "type": "premium",
+  "total_amount": 50000,
+  "createdAt": {
+    "$date": "2024-02-06T18:00:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-06T18:00:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a7"
+  },
+  "date": {
+    "$date": "2024-02-07T20:15:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a5",
+  "type": "item",
+  "total_amount": 110000,
+  "createdAt": {
+    "$date": "2024-02-07T20:15:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-07T20:15:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a8"
+  },
+  "date": {
+    "$date": "2024-02-08T08:45:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a3",
+  "type": "item",
+  "total_amount": 75000,
+  "createdAt": {
+    "$date": "2024-02-08T08:45:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-08T08:45:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3a9"
+  },
+  "date": {
+    "$date": "2024-02-09T12:00:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a8",
+  "type": "item",
+  "total_amount": 22000,
+  "createdAt": {
+    "$date": "2024-02-09T12:00:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-09T12:00:01.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "65c0c3e7a3e4b1e8a3b0c3b0"
+  },
+  "date": {
+    "$date": "2024-02-10T13:10:00.000Z"
+  },
+  "user_id": "65c0c1b9a3e4b1e8a3b0c1a6",
+  "type": "item",
+  "total_amount": 95000,
+  "createdAt": {
+    "$date": "2024-02-10T13:10:01.000Z"
+  },
+  "updatedAt": {
+    "$date": "2024-02-10T13:10:01.000Z"
+  }
+}]
