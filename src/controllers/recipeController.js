@@ -3,6 +3,7 @@ const { recipeValidation } = require("../utils/validations/RecipeValidation");
 const axios = require("axios");
 const path = require("path");
 const fs = require("fs");
+const { cloudinary } = require("../utils/cloudinary/cloudinary");
 
 // =========================================================================================================================
 
@@ -792,7 +793,7 @@ const getRecipeByNutrients = async (req, res) => {
 
 // =========================================================================================================================
 
-const insertRecipe = async (req, res) => {
+const insertRecipeWithMulter = async (req, res) => {
   try {
     // Ambil user ID dari JWT token
     const userId = req.user.id || req.user._id;
@@ -1061,8 +1062,222 @@ const insertRecipe = async (req, res) => {
 };
 
 // =========================================================================================================================
+const insertRecipeWithCloud = async (req, res) => {
+  try {
+    // Ambil user ID dari JWT token
+    const userId = req.user.id || req.user._id;
 
-const updateRecipe = async (req, res) => {
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID tidak ditemukan dari token",
+      });
+    }
+
+    req.body.createdByUser = userId;
+
+    if (req.body.title) {
+      const existingRecipe = await Recipe.findOne({
+        title: { $regex: new RegExp(`^${req.body.title.trim()}$`, "i") },
+        createdByUser: userId,
+      });
+
+      if (existingRecipe) {
+        return res.status(409).json({
+          success: false,
+          message: "Recipe with this title already exists",
+          error: `You already have a recipe titled "${req.body.title}". Please use a different title.`,
+          suggestion: "Try adding a variation or description to make it unique",
+        });
+      }
+    }
+
+    // Processing tags
+    if (req.body.tags && typeof req.body.tags === "string") {
+      req.body.tags = req.body.tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0)
+        .join(", ");
+    }
+
+    // Processing ingredients
+    if (req.body.ingredients && typeof req.body.ingredients === "string") {
+      req.body.ingredients = req.body.ingredients
+        .split(",")
+        .map((ingredient) => ingredient.trim())
+        .filter((ingredient) => ingredient.length > 0)
+        .map((ingredient) => {
+          const parts = ingredient.split(":");
+          return {
+            name: parts[0]?.trim() || ingredient,
+            measure: parts[1]?.trim() || "secukupnya",
+          };
+        });
+    }
+    // Processing ingredients
+    if (req.body.ingredients && typeof req.body.ingredients === "string") {
+      req.body.ingredients = req.body.ingredients
+        .split(",")
+        .map((ingredient) => ingredient.trim())
+        .filter((ingredient) => ingredient.length > 0)
+        .map((ingredient) => {
+          const parts = ingredient.split(":");
+          return {
+            name: parts[0]?.trim() || ingredient,
+            measure: parts[1]?.trim() || "secukupnya",
+          };
+        });
+    }
+
+    req.body.image = null;
+    req.body.video = null;
+
+    // ✅ DEBUG: Log file structure
+    console.log("🔍 CLOUDINARY DEBUG - req.files:", !!req.files);
+    if (req.files) {
+      console.log(
+        "🔍 CLOUDINARY DEBUG - req.files structure:",
+        JSON.stringify(req.files, null, 2)
+      );
+    }
+
+    // ✅ CLOUDINARY FILE HANDLING - Super Simple!
+    if (req.files && typeof req.files === "object") {
+      console.log(
+        "📁 CLOUDINARY - Processing uploaded files:",
+        Object.keys(req.files)
+      );
+
+      // Handle foodImage
+      if (req.files.foodImage && req.files.foodImage.length > 0) {
+        req.body.image = req.files.foodImage[0].path; // URL dari Cloudinary
+        console.log("✅ CLOUDINARY - Image uploaded successfully:");
+        console.log("📸 Image URL:", req.body.image);
+        console.log("📸 Image public_id:", req.files.foodImage[0].public_id);
+      }
+
+      // Handle foodVideo
+      if (req.files.foodVideo && req.files.foodVideo.length > 0) {
+        req.body.video = req.files.foodVideo[0].path; // URL dari Cloudinary
+        console.log("✅ CLOUDINARY - Video uploaded successfully:");
+        console.log("🎥 Video URL:", req.body.video);
+        console.log("🎥 Video public_id:", req.files.foodVideo[0].public_id);
+      }
+    } else {
+      console.log("❌ CLOUDINARY - No files detected");
+    }
+
+    // ✅ DEBUG: Final check
+    console.log("🔍 CLOUDINARY FINAL RESULT:");
+    console.log("📸 Final Image URL:", req.body.image);
+    console.log("🎥 Final Video URL:", req.body.video);
+
+    const validated = await recipeValidation.validateAsync(req.body, {
+      abortEarly: false,
+    });
+
+    if (!validated) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed!",
+        error: "Invalid data. Please provide valid recipe details.",
+      });
+    }
+
+    const newRecipe = new Recipe(validated);
+    const savedRecipe = await newRecipe.save();
+
+    return res.status(201).json({
+      success: true,
+      message: "Recipe created successfully!",
+      data: savedRecipe,
+    });
+  } catch (error) {
+    console.error("Error in insertRecipe:", error);
+    if (req.files) {
+      const fs = require("fs");
+      Object.values(req.files)
+        .flat()
+        .forEach((file) => {
+          fs.unlink(file.path, (err) => {
+            if (err) console.error("Error deleting file:", err);
+          });
+        });
+    } else if (req.file) {
+      const fs = require("fs");
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("Error deleting file:", err);
+      });
+    }
+
+    if (error.isJoi) {
+      const errorMessages = {};
+      error.details.forEach((detail) => {
+        errorMessages[detail.path[0]] = detail.message;
+      });
+
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed!",
+        error: errorMessages,
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
+};
+
+// =========================================================================================================================
+const deleteCloudinaryMedia = async (mediaUrl) => {
+  if (!mediaUrl || !mediaUrl.includes("cloudinary")) {
+    console.log("⚠️  No valid Cloudinary URL to delete:", mediaUrl);
+    return;
+  }
+
+  try {
+    const urlParts = mediaUrl.split("/");
+
+    // ✅ YOUR METHOD: Extract public_id with folder structure
+    const publicIdWithFormat = urlParts
+      .slice(urlParts.indexOf("proyekWS"))
+      .join("/");
+    const publicId = publicIdWithFormat.substring(
+      0,
+      publicIdWithFormat.lastIndexOf(".")
+    );
+
+    if (!publicId) {
+      console.log("❌ Could not extract public_id from URL:", mediaUrl);
+      return;
+    }
+
+    // ✅ MY METHOD: Determine resource type for better handling
+    const isVideo = mediaUrl.includes("/video/upload/");
+    const resourceType = isVideo ? "video" : "image";
+
+    console.log(`🗑️  Deleting ${resourceType} from Cloudinary:`, publicId);
+
+    // ✅ Delete with resource type specification
+    const result = await cloudinary.uploader.destroy(publicId, {
+      resource_type: resourceType,
+    });
+
+    console.log(`✅ Successfully deleted ${resourceType}:`, publicId);
+    console.log("🔍 Deletion result:", result);
+
+    return result;
+  } catch (error) {
+    console.error("❌ Failed to delete media from Cloudinary:", error);
+    // Don't throw - let update continue even if deletion fails
+  }
+};
+// =========================================================================================================================
+const updateRecipeWithMulter = async (req, res) => {
   try {
     const id = req.params.id;
     const userId = req.user.id || req.user._id;
@@ -1312,6 +1527,209 @@ const updateRecipe = async (req, res) => {
 };
 
 // =========================================================================================================================
+const updateRecipeWithCloud = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const userId = req.user.id || req.user._id;
+
+    // Ambil resep yang akan diupdate
+    const existingRecipe = await Recipe.findById(id);
+    if (!existingRecipe) {
+      return res.status(404).json({
+        success: false,
+        message: "Recipe not found",
+      });
+    }
+
+    // Cek authorization: bandingkan createdByUser di database dengan ID user dari token
+    if (existingRecipe.createdByUser.toString() !== userId.toString()) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not authorized to update this recipe",
+      });
+    }
+
+    const updateData = { ...existingRecipe.toObject() };
+    delete updateData._id; // Remove _id to avoid conflicts
+
+    // Only update fields that are provided in the request body
+    Object.keys(req.body).forEach((key) => {
+      if (req.body[key] !== undefined && key !== "image" && key !== "video") {
+        updateData[key] = req.body[key];
+      }
+    });
+
+    // Process tags if provided
+    if (req.body.tags && typeof req.body.tags === "string") {
+      updateData.tags = req.body.tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag.length > 0)
+        .join(", ");
+    }
+
+    // Process ingredients if provided
+    if (req.body.ingredients && typeof req.body.ingredients === "string") {
+      updateData.ingredients = req.body.ingredients
+        .split(",")
+        .map((ingredient) => ingredient.trim())
+        .filter((ingredient) => ingredient.length > 0)
+        .map((ingredient) => {
+          const parts = ingredient.split(":");
+          return {
+            name: parts[0]?.trim() || ingredient,
+            measure: parts[1]?.trim() || "secukupnya",
+          };
+        });
+    }
+
+    if (req.files && typeof req.files === "object") {
+      console.log(
+        "📁 CLOUDINARY UPDATE - Processing uploaded files:",
+        Object.keys(req.files)
+      );
+
+      // Handle foodImage update
+      if (req.files.foodImage && req.files.foodImage.length > 0) {
+        console.log("📸 CLOUDINARY UPDATE - Processing new image");
+
+        // ✅ Log old image details
+        console.log("🗑️  Current image to be replaced:", existingRecipe.image);
+
+        // ✅ Delete old image from Cloudinary if exists
+        if (
+          existingRecipe.image &&
+          existingRecipe.image.includes("cloudinary")
+        ) {
+          console.log("🗑️  Deleting old image from Cloudinary...");
+          await deleteCloudinaryMedia(existingRecipe.image);
+        }
+
+        // ✅ Set new image URL from Cloudinary
+        updateData.image = req.files.foodImage[0].path;
+
+        // ✅ Detailed logging for new image
+        console.log("✅ CLOUDINARY UPDATE - Image updated successfully:");
+        console.log("📸 Old Image URL:", existingRecipe.image);
+        console.log("📸 New Image URL:", updateData.image);
+        console.log(
+          "📸 New Image public_id:",
+          req.files.foodImage[0].public_id
+        );
+        console.log(
+          "📸 New Image filename:",
+          req.files.foodImage[0].filename || "auto-generated"
+        );
+        console.log(
+          "📸 Original filename:",
+          req.files.foodImage[0].originalname
+        );
+      }
+
+      // Handle foodVideo update
+      if (req.files.foodVideo && req.files.foodVideo.length > 0) {
+        console.log("🎥 CLOUDINARY UPDATE - Processing new video");
+
+        // ✅ Log old video details
+        console.log("🗑️  Current video to be replaced:", existingRecipe.video);
+
+        // ✅ Delete old video from Cloudinary if exists
+        if (
+          existingRecipe.video &&
+          existingRecipe.video.includes("cloudinary")
+        ) {
+          console.log("🗑️  Deleting old video from Cloudinary...");
+          await deleteCloudinaryMedia(existingRecipe.video);
+        }
+
+        // ✅ Set new video URL from Cloudinary
+        updateData.video = req.files.foodVideo[0].path;
+
+        // ✅ Detailed logging for new video
+        console.log("✅ CLOUDINARY UPDATE - Video updated successfully:");
+        console.log("🎥 Old Video URL:", existingRecipe.video);
+        console.log("🎥 New Video URL:", updateData.video);
+        console.log(
+          "🎥 New Video public_id:",
+          req.files.foodVideo[0].public_id
+        );
+        console.log(
+          "🎥 New Video filename:",
+          req.files.foodVideo[0].filename || "auto-generated"
+        );
+        console.log(
+          "🎥 Original filename:",
+          req.files.foodVideo[0].originalname
+        );
+      }
+
+      // ✅ Summary logging
+      const processedFields = [];
+      if (req.files.foodImage) processedFields.push("foodImage");
+      if (req.files.foodVideo) processedFields.push("foodVideo");
+
+      if (processedFields.length > 0) {
+        console.log(
+          "✅ CLOUDINARY UPDATE - Successfully processed fields:",
+          processedFields
+        );
+        console.log("🔄 Total files replaced:", processedFields.length);
+      }
+    }
+
+    updateData.dateModified = new Date();
+
+    // Skip full validation for partial updates
+    const updatedRecipe = await Recipe.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: false, // Don't run mongoose validators to allow partial updates
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Recipe updated successfully!",
+      data: updatedRecipe,
+    });
+  } catch (error) {
+    // Clean up uploaded files in case of error
+    if (req.files) {
+      Object.values(req.files)
+        .flat()
+        .forEach((file) => {
+          fs.unlink(file.path, (err) => {
+            if (err) console.error("Error deleting file:", err);
+          });
+        });
+    } else if (req.file) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("Error deleting file:", err);
+      });
+    }
+
+    console.error("Error updating recipe:", error);
+
+    if (error.isJoi) {
+      const errorMessages = {};
+      error.details.forEach((detail) => {
+        errorMessages[detail.path[0]] = detail.message;
+      });
+
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed!",
+        error: errorMessages,
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: "Error updating recipe",
+      error: error.message,
+    });
+  }
+};
+
+// =========================================================================================================================
 const deleteRecipe = async (req, res) => {
   const id = req.params.id;
   const userId = req.user.id || req.user._id;
@@ -1357,8 +1775,10 @@ module.exports = {
   getAllRecipe,
   getDetailRecipe,
   getRecipebyUser,
-  updateRecipe,
-  insertRecipe,
+  updateRecipeWithMulter,
+  updateRecipeWithCloud,
+  insertRecipeWithCloud,
+  insertRecipeWithMulter,
   deleteRecipe,
   getRecipeByIngredients,
   getRecipeByNutrients,
