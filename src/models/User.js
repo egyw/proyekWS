@@ -32,27 +32,6 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  cart: {
-    type: [
-      {
-        item_name: {
-          type: String,
-          required: true,
-        },
-        price: {
-          type: Number,
-          required: true,
-          min: 0,
-        },
-        quantity: {
-          type: Number,
-          required: true,
-          min: 1,
-        },
-      },
-    ],
-    default: [],
-  },
   refreshToken: {
     type: String,
     default: null,

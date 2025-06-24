@@ -9,4 +9,5 @@ module.exports = {
   FailedLoginAttempt: require("./FailedLoginAttempt"),
   IpBan: require("./IpBan"),
   Log: require("./Log"),
+  Cart: require("./Cart"),
 };

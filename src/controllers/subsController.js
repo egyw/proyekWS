@@ -1,4 +1,4 @@
-const { Subscriptions, Transaction, DetailTrans, User, aiQueries, Recipe } = require("../models");
+const { Subscriptions, Transaction, DetailTrans, User, aiQueries, Recipe, Cart } = require("../models");
 const axios = require('axios');
 const { query } = require("../utils/spoonacular/listFoodTypeSpoonacular");
 
@@ -502,15 +502,13 @@ const addItemtoCart = async (req, res) => {
 
     try {
         const user = await User.findById(userId);
-
         quantity = parseInt(quantity);
 
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
-
-        if (!user.cart) {
-            user.cart = [];
+        if (quantity <= 0) {
+            return res.status(400).json({ message: "Quantity must be greater than zero." });
         }
 
         const itemDetails = await fetchItemDetail(itemId);
@@ -520,21 +518,30 @@ const addItemtoCart = async (req, res) => {
         const item_name = itemDetails.name;
         const item_price = itemDetails.price;
 
-        const existingItemIndex = user.cart.findIndex(item => item.item_name === item_name);
-        if (existingItemIndex !== -1) {
-            user.cart[existingItemIndex].quantity += quantity;
-            user.cart[existingItemIndex].price += item_price * quantity;
+        let cartItem = await Cart.findOne({ user: userId, item_name });
+
+        if (cartItem) {
+            cartItem.quantity += quantity;
+            cartItem.price += item_price * quantity;
+            await cartItem.save();
         } else {
-            user.cart.push({
+            cartItem = new Cart({
+                user: userId,
                 item_name,
-                quantity,
                 price: item_price * quantity,
+                quantity: quantity
             });
+            await cartItem.save();
         }
+        const userCart = await Cart.find({ user: userId });
 
-        await user.save();
+        const simpleCart = userCart.map(item => ({
+            item_name: item.item_name,
+            quantity: item.quantity,
+            price: item.price
+        }));
 
-        return res.status(200).json({ message: "Item added to cart successfully.", cart: user.cart });
+        return res.status(200).json({ message: "Item added to cart successfully.", cart: simpleCart });
     } catch (error) {
         console.error("Error adding item to cart:", error);
         return res.status(500).json({ message: "Internal server error." });
@@ -547,19 +554,21 @@ const viewCart = async (req, res) => {
         return res.status(400).json({ message: "User ID is required." });
     }
     try {
-        const user = await User.findById(userId).select('cart');
-        if (!user) {
-            return res.status(404).json({ message: "User not found." });
-        }
-        if (!user.cart || user.cart.length === 0) {
+        const userCart = await Cart.find({ user: userId });
+        if (!userCart || userCart.length === 0) {
             return res.status(200).json({ message: "Cart is empty." });
         }
-        return res.status(200).json({ message: "Cart retrieved successfully.", cart: user.cart });
+
+        const simpleCart = userCart.map(item => ({
+            item_name: item.item_name,
+            quantity: item.quantity,
+            price: item.price
+        }));
+        return res.status(200).json({ message: "Cart retrieved successfully.", cart: simpleCart });
     } catch (error) {
         console.error("Error retrieving cart:", error);
         return res.status(500).json({ message: "Internal server error." });
     }
-        
 };
 
 const removeItemFromCart = async (req, res) => {
@@ -573,16 +582,21 @@ const removeItemFromCart = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
-        if (!user.cart || user.cart.length === 0) {
-            return res.status(400).json({ message: "Cart is empty." });
-        }
-        const itemIndex = user.cart.findIndex(item => item.item_name === item_name);
-        if (itemIndex === -1) {
+
+        const deleted = await Cart.findOneAndDelete({ user: userId, item_name });
+        if (!deleted) {
             return res.status(404).json({ message: "Item not found in cart." });
         }
-        user.cart.splice(itemIndex, 1);
-        await user.save();
-        return res.status(200).json({ message: "Item removed from cart successfully.", cart: user.cart });
+
+        const userCart = await Cart.find({ user: userId });
+
+        const simpleCart = userCart.map(item => ({
+            item_name: item.item_name,
+            quantity: item.quantity,
+            price: item.price
+        }));
+
+        return res.status(200).json({ message: "Item removed from cart successfully.", cart: simpleCart });
     } catch (error) {
         console.error("Error removing item from cart:", error);
         return res.status(500).json({ message: "Internal server error." });
@@ -599,12 +613,15 @@ const removeAllItemFromCart = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
-        if (!user.cart || user.cart.length === 0) {
+
+        const cartItems = await Cart.find({ user: userId });
+        if (!cartItems || cartItems.length === 0) {
             return res.status(400).json({ message: "Cart is already empty." });
         }
-        user.cart = [];
-        await user.save();
-        return res.status(200).json({ message: "All items removed from cart successfully.", cart: user.cart });
+
+        await Cart.deleteMany({ user: userId });
+
+        return res.status(200).json({ message: "All items removed from cart successfully.", cart: [] });
     } catch (error) {
         console.error("Error removing all items from cart:", error);
         return res.status(500).json({ message: "Internal server error." });
@@ -625,14 +642,15 @@ const buyItem = async (req, res) => {
             return res.status(404).json({ message: "User not found." });
         }
 
-        if (!user.cart || user.cart.length === 0) {
+        const userCart = await Cart.find({ user: userId });
+        if (!userCart || userCart.length === 0) {
             return res.status(400).json({ message: "Cart is empty." });
         }
 
         let totalAmount = 0;
         const detailTrans = [];
 
-        for (const item of user.cart) {
+        for (const item of userCart) {
             const item_name = item.item_name;
             const quantity = item.quantity;
             const price = item.price;
@@ -659,12 +677,14 @@ const buyItem = async (req, res) => {
             total_amount: totalAmount,
         });
         await transaction.save();
+
         for (const detail of detailTrans) {
             detail.transaction_id = transaction._id; 
             await DetailTrans.create(detail);
         }
-        user.cart = [];
-        await user.save();
+
+        await Cart.deleteMany({ user: userId });
+
         return res.status(200).json({ message: "Items purchased successfully.", transaction });
     } catch (error) {
         console.error("Error buying items:", error);
