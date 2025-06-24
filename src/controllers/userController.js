@@ -617,19 +617,19 @@ const deleteProfilePicture = async (req, res) => {
 
     // =================================================================================================
     // hapus pake multer
-    const picturePath = path.join(process.cwd(), 'public', user.profilePicture);
+    // const picturePath = path.join(process.cwd(), 'public', user.profilePicture);
 
-    if (fs.existsSync(picturePath)) {
-      fs.unlink(picturePath, (err) => {
-        if (err) {
-          console.error("Gagal menghapus file fisik gambar profil:", err);
-        } else {
-          console.log("File gambar profil fisik berhasil dihapus:", picturePath);
-        }
-      });
-    } else {
-      console.log("File fisik gambar profil tidak ditemukan, hanya akan mengupdate database.");
-    }
+    // if (fs.existsSync(picturePath)) {
+    //   fs.unlink(picturePath, (err) => {
+    //     if (err) {
+    //       console.error("Gagal menghapus file fisik gambar profil:", err);
+    //     } else {
+    //       console.log("File gambar profil fisik berhasil dihapus:", picturePath);
+    //     }
+    //   });
+    // } else {
+    //   console.log("File fisik gambar profil tidak ditemukan, hanya akan mengupdate database.");
+    // }
 
     // =================================================================================================
     // hapus pake cloudinary
