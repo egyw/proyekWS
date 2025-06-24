@@ -25,4 +25,4 @@ const DetailTransSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Detail_trans', DetailTransSchema);
+module.exports = mongoose.model('Detail_trans', DetailTransSchema, 'detail_trans');

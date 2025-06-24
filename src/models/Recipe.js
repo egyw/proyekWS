@@ -98,7 +98,7 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
-});
+}, { timestamps: true });
 
 recipeSchema.plugin(mongooseDelete, {
   overrideMethods: "all",
@@ -107,4 +107,4 @@ recipeSchema.plugin(mongooseDelete, {
   validateBeforeDelete: true,
 });
 
-module.exports = mongoose.model("Recipe", recipeSchema);
+module.exports = mongoose.model("Recipe", recipeSchema, 'recipes');

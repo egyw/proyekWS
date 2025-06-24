@@ -31,4 +31,4 @@ const SubscriptionsSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Subscriptions", SubscriptionsSchema);
+module.exports = mongoose.model("Subscriptions", SubscriptionsSchema, "subscriptions");
