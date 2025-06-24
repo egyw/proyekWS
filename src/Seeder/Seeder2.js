@@ -7,7 +7,8 @@ const { Recipe } = require("../models");
 const { FailedLoginAttempt } = require("../models");
 const { IpBan } = require("../models");
 const { Log } = require("../models");
-
+const mongoose = require("mongoose");
+require("dotenv").config();
 const seedData = async () => {
   try {
     // Clear existing data
@@ -331,5 +332,31 @@ const seedData = async () => {
     console.error("Error seeding data:", error);
   }
 };
+// Fungsi untuk menjalankan seeder
+const runSeeder = async () => {
+  try {
+    // Koneksi ke database
+    console.log("MONGODB_URI:", process.env.MONGODB_URI);
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected to MongoDB");
+
+    // Jalankan seeder
+    await seedData();
+
+    // Tutup koneksi
+    await mongoose.connection.close();
+    console.log("Seeding completed and connection closed");
+    process.exit(0);
+  } catch (error) {
+    console.error("Error:", error);
+    process.exit(1);
+  }
+};
+
+// Jalankan seeder jika file ini dijalankan langsung
+if (require.main === module) {
+  runSeeder();
+}
+
 // node runSeeder.js
 module.exports = { seedData };
