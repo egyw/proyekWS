@@ -92,9 +92,16 @@ const importData = async () => {
                 tags: faker.lorem.words(3).replace(/ /g, ', '),
                 area: faker.location.country(),
                 instructions: faker.lorem.paragraphs(3),
+                video: faker.internet.url(),
                 createdByUser: randomUser._id,
                 image: faker.image.urlLoremFlickr({ category: 'food' }),
+                healthScore: faker.number.int({ min: 0, max: 100 }),
+                summary: faker.lorem.sentence(),
+                weightWatcherSmartPoints: faker.number.int({ min: 0, max: 50 }),
                 calories: faker.number.int({ min: 200, max: 1200 }),
+                carbs: faker.number.int({ min: 20, max: 100 }),
+                fat: faker.number.int({ min: 5, max: 50 }),
+                protein: faker.number.int({ min: 10, max: 80 }),
             });
         }
         const createdRecipes = await Recipe.insertMany(recipesData);
@@ -102,7 +109,7 @@ const importData = async () => {
 
         // cartsData ============================================================================================================
         const cartsData = [];
-        for (let i = 0; i < 20; i++) { // Buat 20 item di keranjang untuk user yang berbeda
+        for (let i = 0; i < 20; i++) { 
             const randomUser = faker.helpers.arrayElement(createdUsers);
             cartsData.push({
                 user: randomUser._id,
