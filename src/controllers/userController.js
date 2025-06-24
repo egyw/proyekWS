@@ -10,6 +10,12 @@ const { logActivity } = require("../utils/logger/logger");
 const Log = require("../models/Log");
 const FailedLoginAttempt = require("../models/FailedLoginAttempt");
 const IpBan = require("../models/IpBan");
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 // helper untuk nge handle login yang gagal
 const handleFailedLogin = async (identifier, ipAddress) => {
@@ -452,9 +458,9 @@ const getUserProfile = async (req, res) => {
       return res.status(404).json({ message: "Pengguna tidak ditemukan." });
     }
 
-    let profilePictureUrl = null;
-    if (user.profilePicture) {
-      profilePictureUrl = `${req.protocol}://${req.get('host')}${user.profilePicture}`;
+    let profilePictureUrl = user.profilePicture; 
+    if (user.profilePicture && !user.profilePicture.startsWith('http')) {
+        profilePictureUrl = `${req.protocol}://${req.get('host')}${user.profilePicture}`;
     }
 
 
@@ -482,6 +488,7 @@ const getUserProfile = async (req, res) => {
   }
 };
 
+// ini cuman untuk metode gambar menggunakan multer (bukan CLOUDINARY)
 const getUserProfilePicture = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -517,22 +524,44 @@ const updateProfilePicture = async (req, res) => {
     const userId = req.user.id;
     const user = await User.findById(userId);
 
-    if (user && user.profilePicture) {
-      const oldPicturePath = path.join(__dirname, '..', '..', 'public', user.profilePicture);
-      console.log(oldPicturePath)
-      if (fs.existsSync(oldPicturePath)) {
-        fs.unlink(oldPicturePath, (err) => {
-          if (err) {
-            console.error("Gagal menghapus gambar lama:", err);
-          } else {
-            console.log("Gambar profil lama berhasil dihapus:", oldPicturePath);
-          }
-        });
-      }
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
     }
 
-    const newProfilePicturePath = `/images/profiles/${req.user.id}/${req.file.filename}`;
+    // ====================================================================================================
+    // menggunakan multer
+    // if (user && user.profilePicture) {
+    //   const oldPicturePath = path.join(__dirname, '..', '..', 'public', user.profilePicture);
+    //   console.log(oldPicturePath)
+    //   if (fs.existsSync(oldPicturePath)) {
+    //     fs.unlink(oldPicturePath, (err) => {
+    //       if (err) {
+    //         console.error("Gagal menghapus gambar lama:", err);
+    //       } else {
+    //         console.log("Gambar profil lama berhasil dihapus:", oldPicturePath);
+    //       }
+    //     });
+    //   }
+    // }
 
+    // const newProfilePicturePath = `/images/profiles/${req.user.id}/${req.file.filename}`;
+
+    // ===================================================================================================
+    // menggunakan cloudinary
+    if (user.profilePicture) {
+        // Ekstrak public_id dari URL Cloudinary lama
+        // Contoh URL: http://res.cloudinary.com/demo/image/upload/v123/proyekWS/profiles/profile-123.jpg
+        const urlParts = user.profilePicture.split('/');
+        const publicIdWithFormat = urlParts.slice(urlParts.indexOf('proyekWS')).join('/');
+        const publicId = publicIdWithFormat.substring(0, publicIdWithFormat.lastIndexOf('.'));
+        
+        if (publicId) {
+            await cloudinary.uploader.destroy(publicId);
+        }
+    }
+    const newProfilePicturePath = req.file.path;
+    // ===================================================================================================
+    
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { profilePicture: newProfilePicturePath },
@@ -573,6 +602,9 @@ const deleteProfilePicture = async (req, res) => {
       return res.status(400).json({ message: "Tidak ada gambar profil untuk dihapus." });
     }
 
+
+    // =================================================================================================
+    // hapus pake multer
     const picturePath = path.join(process.cwd(), 'public', user.profilePicture);
 
     if (fs.existsSync(picturePath)) {
@@ -586,6 +618,19 @@ const deleteProfilePicture = async (req, res) => {
     } else {
       console.log("File fisik gambar profil tidak ditemukan, hanya akan mengupdate database.");
     }
+
+    // =================================================================================================
+    // hapus pake cloudinary
+    const urlParts = user.profilePicture.split('/');
+    const publicIdWithFormat = urlParts.slice(urlParts.indexOf('proyekWS')).join('/');
+    const publicId = publicIdWithFormat.substring(0, publicIdWithFormat.lastIndexOf('.'));
+    
+    // Hapus gambar dari Cloudinary
+    if (publicId) {
+        await cloudinary.uploader.destroy(publicId);
+    }
+    // =================================================================================================
+
 
     user.profilePicture = null;
     await user.save();

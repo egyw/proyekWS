@@ -21,6 +21,7 @@ const { uploadSingleImage } = require("../utils/multer/multer");
 const resizeImage = require("../middlewares/resizeImage");
 const authorize = require("../middlewares/allowedRole");
 const loginLimiter = require("../middlewares/loginLimiter");
+const { uploadProfileToCloud } = require("../utils/cloudinary/cloudinary");
 const router = express.Router();
 
 router.get("/getAllUsers", [verifyToken, authorize('admin')], getAllUsers);
@@ -37,6 +38,10 @@ router.post("/profile/email", [verifyToken], updateEmail);
 router.post("/profile/verifyEmailOtp", [verifyToken], verifyEmailOTP);
 router.get("/profile/picture", [verifyToken], getUserProfilePicture);
 router.delete("/profile/picture", [verifyToken], deleteProfilePicture);
-router.post("/profile/upload", [verifyToken, uploadSingleImage('profilePicture'), resizeImage], updateProfilePicture)
 
+// multer
+// router.post("/profile/upload", [verifyToken, uploadSingleImage('profilePicture'), resizeImage], updateProfilePicture) 
+
+// cloudinary
+router.post("/profile/upload", [verifyToken, uploadProfileToCloud.single('profilePicture')], updateProfilePicture);
 module.exports = router;
