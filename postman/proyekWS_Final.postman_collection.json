@@ -9,360 +9,6 @@
 	},
 	"item": [
 		{
-			"name": "User",
-			"item": [
-				{
-					"name": "createUser",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "username",
-									"value": "eggy2",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"register"
-							]
-						},
-						"description": "Gets information about the authenticated user."
-					},
-					"response": []
-				},
-				{
-					"name": "login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "identifier",
-									"value": "eggy1",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/login",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "verifyOTP",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "identifier",
-									"value": "eggy1",
-									"type": "text"
-								},
-								{
-									"key": "otp",
-									"value": "570831",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/verifyOtp",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"verifyOtp"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "semua user",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "username",
-									"value": "eggy2",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/getAllUsers",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"getAllUsers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updPP",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "profilePicture",
-									"type": "file",
-									"src": "/C:/Users/ebewa/Pictures/lupa.jpg"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/profile/upload",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"profile",
-								"upload"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getProfile",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/profile",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"profile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getPPonly",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/profile/picture",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"profile",
-								"picture"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "hapusPP",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/profile/picture",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"profile",
-								"picture"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "refreshToken",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v1/user/token",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"token"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "logout",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
-				}
-			],
-			"description": "The `/me` endpoints let you manage information about the authenticated user."
-		},
-		{
 			"name": "Recipes Collection",
 			"item": [
 				{
@@ -394,12 +40,10 @@
 							"formdata": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/recipes/getDetailRecipe/:id",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/recipes/getDetailRecipe/:id",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -641,12 +285,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/recipes/getRecipeByUser",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/recipes/getRecipeByUser",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -911,12 +553,10 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/recipes/getAllRecipes?number=100",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/recipes/getAllRecipes?number=100",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -1016,12 +656,10 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/recipes/getRecipeByIngredients?ingredients=<sesui dengan bahan dari resep>",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/recipes/getRecipeByIngredients?ingredients=<sesui dengan bahan dari resep>",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -1185,12 +823,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v1/recipes/getRecipeByNutrients?minCalories=&maxCalories=800",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/recipes/getRecipeByNutrients?minCalories=&maxCalories=800",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -1348,7 +984,7 @@
 					]
 				},
 				{
-					"name": "CreatedRecipe",
+					"name": "CreatedRecipeWithCloud",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1380,12 +1016,10 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/recipes/insertRecipe",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/recipes/insertRecipe",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -1713,7 +1347,7 @@
 					]
 				},
 				{
-					"name": "UpdateRecipe",
+					"name": "CreatedRecipeWithMulter",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1721,6 +1355,369 @@
 								{
 									"key": "token",
 									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTQwYmJjYmExZjZmOTY3OTJlMzNhOSIsInVzZXJuYW1lIjoieW9zaGkiLCJlbWFpbCI6Inlvc2hpQGprb3R5cGMuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA1MDg0MTAsImV4cCI6MTc1MDU5NDgxMH0.fOmRgqVkoBYjyTdFxE1r_LfuXvAus7AXto7E1ig942I",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "foodImage",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/recipes/insertRecipe",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"recipes",
+								"insertRecipe"
+							]
+						},
+						"description": "## Endpoint: Add Recipe\n\n### URL\n\n`POST http://localhost:3000/api/v1/recipes/insertRecipe`\n\n### Deskripsi\n\nEndpoint ini digunakan untuk menambahkan resep baru ke dalam sistem. Pengguna dapat mengirimkan informasi terkait resep melalui permintaan POST dengan format form-data.\n\n### Request Body\n\nPermintaan ini memerlukan beberapa parameter dalam format form-data:\n\n- **foodImage** (file): Gambar makanan untuk resep.\n    \n- **title** (text): Judul resep.\n    \n- **servings** (text): Jumlah porsi yang dihasilkan oleh resep.\n    \n- **readyInMinutes** (text): Waktu yang dibutuhkan untuk menyiapkan resep (dalam menit).\n    \n- **preparationMinutes** (text): Waktu yang dibutuhkan untuk persiapan (dalam menit).\n    \n- **cookingMinutes** (text): Waktu yang dibutuhkan untuk memasak (dalam menit).\n    \n- **ingredients** (text): Bahan-bahan yang diperlukan untuk resep.\n    \n- **dishTypes** (text): Jenis hidangan.\n    \n- **tags** (text): Tag yang relevan untuk resep.\n    \n- **area** (text): Wilayah asal resep.\n    \n- **instructions** (text): Instruksi langkah demi langkah untuk membuat resep.\n    \n- **healthScore** (text): Skor kesehatan dari resep.\n    \n- **summary** (text): Ringkasan dari resep.\n    \n- **weightWatcherSmartPoints** (text): Poin pintar untuk program Weight Watchers.\n    \n- **calories** (text): Jumlah kalori per porsi.\n    \n- **carbs** (text): Jumlah karbohidrat per porsi.\n    \n- **fat** (text): Jumlah lemak per porsi.\n    \n- **protein** (text): Jumlah protein per porsi.\n    \n\n### Response\n\nPermintaan ini dapat menghasilkan beberapa status kode:\n\n``` json\n{\n    \"success\": true,\n    \"message\": \"Detail resep berhasil diambil.\",\n    \"data\": {\n        \"_id\": \"60d0fe4f5311236168a109ca\",\n        \"title\": \"Nasi Goreng Seafood Spesial\",\n        \"summary\": \"Nasi goreng seafood klasik dengan sentuhan modern, cocok untuk makan malam cepat dan lezat.\",\n        \"image\": \"https://cdn.example.com/images/nasi-goreng.jpg\",\n        \"video\": \"https://youtube.com/watch?v=12345\",\n        \"servings\": 2,\n        \"readyInMinutes\": 25,\n        \"preparationMinutes\": 10,\n        \"cookingMinutes\": 15,\n        \"tags\": [\n            \"quick\",\n            \"seafood\",\n            \"asian\"\n        ],\n        \"dishTypes\": [\n            \"main course\",\n            \"breakfast\"\n        ],\n        \"ingredients\": [\n            {\n                \"name\": \"Nasi Putih\",\n                \"measure\": \"2 piring\"\n            },\n            {\n                \"name\": \"Udang\",\n                \"measure\": \"100 gr\"\n            }\n        ],\n        \"nutrition\": {\n            \"calories\": \"450kcal\",\n            \"carbs\": \"55g\",\n            \"fat\": \"18g\",\n            \"protein\": \"22g\"\n        },\n        \"healthScore\": 78,\n        \"weightWatcherSmartPoints\": 12,\n        \"area\": \"Indonesian\",\n        \"instructions\": \"1. Panaskan wajan dan tumis bumbu halus.\\n2. Masukkan udang dan masak hingga berubah warna.\",\n        \"createdByUser\": \"user-9876\",\n        \"dateModified\": \"2025-06-23T10:00:00Z\",\n        \"deleted\": false,\n        \"__v\": 0\n    }\n}\n ```\n\n#### ERROR\n\n``` json\n{\n    \"success\": false,\n    \"message\": \"Validasi data gagal. Terdapat data yang tidak sesuai format.\",\n    \"error\": {\n        \"fields\": {\n            \"title\": \"Judul resep tidak boleh kosong.\",\n            \"servings\": \"Jumlah porsi harus berupa angka dan lebih dari 0.\",\n            \"ingredients\": \"Bahan masakan tidak boleh kosong.\"\n        }\n    }\n}\n\n\n ```\n\n### Catatan\n\nPastikan semua parameter yang diperlukan disertakan dalam permintaan untuk menghindari kesalahan."
+					},
+					"response": [
+						{
+							"name": "CreatedRecipeFailtoken",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "foodImage",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/recipes/insertRecipe",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"recipes",
+										"insertRecipe"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "32"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"20-x2kAWyCxuz0ZLEtV81A+roWl/KU\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 23 Jun 2025 13:31:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Token tidak valid.\"\n}"
+						},
+						{
+							"name": "CreatedRecipeFail",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "foodImage",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/recipes/insertRecipe",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"recipes",
+										"insertRecipe"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "683"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2ab-0UTiy2I6E9THZ2CawUFmZ8PKbL8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 23 Jun 2025 13:30:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Validation failed!\",\n    \"error\": {\n        \"title\": \"Judul harus diisi!\",\n        \"servings\": \"Porsi harus diisi!\",\n        \"readyInMinutes\": \"Waktu siap harus diisi!\",\n        \"preparationMinutes\": \"Waktu persiapan harus diisi!\",\n        \"cookingMinutes\": \"Waktu memasak harus diisi!\",\n        \"ingredients\": \"Bahan-bahan harus diisi!\",\n        \"dishTypes\": \"Jenis hidangan harus diisi!\",\n        \"tags\": \"Tag harus diisi!\",\n        \"area\": \"Area harus diisi!\",\n        \"instructions\": \"Instruksi harus diisi!\",\n        \"weightWatcherSmartPoints\": \"\\\"weightWatcherSmartPoints\\\" is required\",\n        \"calories\": \"\\\"calories\\\" is required\",\n        \"carbs\": \"\\\"carbs\\\" is required\",\n        \"fat\": \"\\\"fat\\\" is required\",\n        \"protein\": \"\\\"protein\\\" is required\",\n        \"foodImage\": \"\\\"foodImage\\\" is not allowed\"\n    }\n}"
+						},
+						{
+							"name": "CreatedRecipeSucces",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "kue cucur",
+											"type": "text"
+										},
+										{
+											"key": "servings",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "readyInMinutes",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "preparationMinutes",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "cookingMinutes",
+											"value": "34",
+											"type": "text"
+										},
+										{
+											"key": "ingredients",
+											"value": "tepung: 10 kg  , air : 30 ml",
+											"type": "text"
+										},
+										{
+											"key": "dishTypes",
+											"value": "side dish",
+											"type": "text"
+										},
+										{
+											"key": "tags",
+											"value": "kue basah, item",
+											"type": "text"
+										},
+										{
+											"key": "area",
+											"value": "indonesian",
+											"type": "text"
+										},
+										{
+											"key": "instructions",
+											"value": "ready to eat",
+											"type": "text"
+										},
+										{
+											"key": "healthScore",
+											"value": "24",
+											"type": "text"
+										},
+										{
+											"key": "summary",
+											"value": "ini enak dimakan loe",
+											"type": "text"
+										},
+										{
+											"key": "weightWatcherSmartPoints",
+											"value": "12",
+											"type": "text"
+										},
+										{
+											"key": "calories",
+											"value": "212",
+											"type": "text"
+										},
+										{
+											"key": "carbs",
+											"value": "20 ",
+											"type": "text"
+										},
+										{
+											"key": "fat",
+											"value": "30 kg",
+											"type": "text"
+										},
+										{
+											"key": "protein",
+											"value": "40 kg",
+											"type": "text"
+										},
+										{
+											"key": "foodImage",
+											"type": "file",
+											"src": "/C:/Users/kenji/Downloads/resep-bolu-kukus.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/recipes/insertRecipe",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"recipes",
+										"insertRecipe"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "686"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2ae-EH9uw8yKlfuxoCL+DOouRQP8Jmk\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 23 Jun 2025 13:33:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Recipe created successfully!\",\n    \"data\": {\n        \"title\": \"kue cucur\",\n        \"servings\": 2,\n        \"readyInMinutes\": 1,\n        \"preparationMinutes\": 2,\n        \"cookingMinutes\": 34,\n        \"ingredients\": [\n            {\n                \"name\": \"tepung\",\n                \"measure\": \"10 kg\"\n            },\n            {\n                \"name\": \"air\",\n                \"measure\": \"30 ml\"\n            }\n        ],\n        \"dishTypes\": \"side dish\",\n        \"tags\": \"kue basah, item\",\n        \"area\": \"indonesian\",\n        \"instructions\": \"ready to eat\",\n        \"video\": null,\n        \"createdByUser\": \"68540bbcba1f6f96792e33a9\",\n        \"dateModified\": null,\n        \"image\": \"/images/foodImages/kue-cucur-1750685616497-107378994.jpg\",\n        \"healthScore\": 24,\n        \"summary\": \"ini enak dimakan loe\",\n        \"weightWatcherSmartPoints\": 12,\n        \"calories\": 212,\n        \"carbs\": \"20 \",\n        \"fat\": \"30 kg\",\n        \"protein\": \"40 kg\",\n        \"_id\": \"685957b0b9caf2f69d68d3e7\",\n        \"deleted\": false,\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "UpdateRecipeWithCloud",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTQwYWRlYmExZjZmOTY3OTJlMzM5YSIsInVzZXJuYW1lIjoia2VuamkiLCJlbWFpbCI6ImtlbmppQG1yb3R6aXMuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA3NDE4OTksImV4cCI6MTc1MDgyODI5OX0.BS3-euLtLPxKRfoBjaGHtahRSgM2FoG2OaySG4sBmlY",
 									"type": "string"
 								}
 							]
@@ -1740,33 +1737,272 @@
 								{
 									"key": "foodImage",
 									"type": "file",
-									"src": "/C:/Users/kenji/Downloads/Gmabar kue beras.jpg"
+									"src": "/C:/Users/kenji/Downloads/resep-bolu-kukus.jpg"
 								},
 								{
 									"key": "title",
-									"value": "kue beras",
+									"value": "kue dragon",
 									"type": "text"
+								},
+								{
+									"key": "foodVideo",
+									"type": "file",
+									"src": "/C:/Users/kenji/Downloads/ezgif-8fddd813d82af4.mp4"
 								}
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/recipes/updateRecipe/:id",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/recipes/updateRecipeWithCloud/:id",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
 								"recipes",
-								"updateRecipe",
+								"updateRecipeWithCloud",
 								":id"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "<id dari user>"
+									"value": "685a54f81873aae74580665d"
+								}
+							]
+						},
+						"description": "### Endpoint Pembaruan Resep\n\nEndpoint ini memungkinkan pengguna untuk memperbarui resep yang ada dalam sistem. Ini adalah permintaan `PUT` yang menargetkan resep tertentu yang diidentifikasi dengan `id` uniknya. Tujuan dari permintaan ini adalah untuk memodifikasi detail resep, termasuk judul dan gambar terkait, memastikan bahwa informasi tersebut terkini dan akurat.\n\n#### Parameter Permintaan\n\nPermintaan ini mengharapkan parameter berikut dalam body form-data:\n\n- **foodImage** (file): Parameter ini digunakan untuk mengunggah gambar yang terkait dengan resep. Ini harus berupa file gambar yang valid.\n    \n- **title** (text): Parameter ini mewakili judul resep. Ini adalah string yang menggambarkan nama resep yang diperbarui.\n    \n\n#### Struktur Respons\n\nSetelah pembaruan berhasil, server akan merespons dengan konfirmasi pembaruan. Respons biasanya akan mencakup detail resep yang diperbarui, seperti:\n\n- **success**: Boolean yang menunjukkan keberhasilan operasi.\n    \n- **message**: Pesan yang memberikan konteks tambahan tentang pembaruan.\n    \n- **data**: Objek yang berisi detail resep yang diperbarui, yang mungkin mencakup:\n    \n    - **_id**: Pengidentifikasi unik resep.\n        \n    - **title**: Judul resep yang diperbarui.\n        \n    - **servings**: Jumlah porsi yang dihasilkan resep.\n        \n    - **readyInMinutes**: Total waktu yang diperlukan untuk menyiapkan resep.\n        \n    - **preparationMinutes**: Waktu yang dibutuhkan untuk persiapan.\n        \n    - **cookingMinutes**: Waktu yang dibutuhkan untuk memasak.\n        \n    - **ingredients**: Array bahan yang digunakan dalam resep.\n        \n    - **dishTypes**: Jenis hidangan (misalnya, pembuka, hidangan utama).\n        \n    - **tags**: Tag yang terkait dengan resep.\n        \n    - **area**: Area geografis yang terkait dengan resep.\n        \n    - **instructions**: Instruksi langkah demi langkah untuk menyiapkan resep.\n        \n    - **image**: URL gambar yang diunggah.\n        \n\nPastikan bahwa `id` dalam URL sesuai dengan resep yang ada di database agar pembaruan dapat diproses dengan benar."
+					},
+					"response": [
+						{
+							"name": "UpdateRecipeFail",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "foodImage",
+											"type": "file",
+											"src": "/C:/Users/kenji/Downloads/Gmabar kue beras.jpg"
+										},
+										{
+											"key": "title",
+											"value": "kue beras",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/recipes/updateRecipe/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"recipes",
+										"updateRecipe",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6857b3b2c238c5f4ca38b5f2"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2e-92juu6Itr/Z3Z1yDWb4/EWH9vnU\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 23 Jun 2025 13:56:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": false,\n    \"message\": \"Recipe not found\"\n}"
+						},
+						{
+							"name": "UpdateRecipeSucces",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "foodImage",
+											"type": "file",
+											"src": "/C:/Users/kenji/Downloads/Gmabar kue beras.jpg"
+										},
+										{
+											"key": "title",
+											"value": "kue beras",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/api/v1/recipes/updateRecipe/:id",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"recipes",
+										"updateRecipe",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "6857b3b2c238c5f4ca38b5f6"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "703"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2bf-6fCSxYe9oufSQOmqMREGqePwRdo\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 23 Jun 2025 13:56:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Recipe updated successfully!\",\n    \"data\": {\n        \"_id\": \"6857b3b2c238c5f4ca38b5f6\",\n        \"title\": \"kue beras\",\n        \"servings\": 2,\n        \"readyInMinutes\": 1,\n        \"preparationMinutes\": 2,\n        \"cookingMinutes\": 34,\n        \"ingredients\": [\n            {\n                \"name\": \"tepung\",\n                \"measure\": \"10 kg\"\n            },\n            {\n                \"name\": \"air\",\n                \"measure\": \"30 ml\"\n            }\n        ],\n        \"dishTypes\": \"side dish\",\n        \"tags\": \"kue basah, item\",\n        \"area\": \"indonesian\",\n        \"instructions\": \"ready to eat\",\n        \"video\": null,\n        \"createdByUser\": \"68540bbcba1f6f96792e33a9\",\n        \"dateModified\": \"2025-06-23T13:56:37.960Z\",\n        \"image\": \"/images/foodImages/food-1750578152535-259435898.jpg\",\n        \"healthScore\": 24,\n        \"summary\": \"ini enak dimakan loe\",\n        \"weightWatcherSmartPoints\": 12,\n        \"calories\": 212,\n        \"carbs\": \"20 g\",\n        \"fat\": \"30 kg\",\n        \"protein\": \"40 g\",\n        \"deleted\": false,\n        \"__v\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "UpdateRecipeWithMulter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTQwYWRlYmExZjZmOTY3OTJlMzM5YSIsInVzZXJuYW1lIjoia2VuamkiLCJlbWFpbCI6ImtlbmppQG1yb3R6aXMuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA3NDE4OTksImV4cCI6MTc1MDgyODI5OX0.BS3-euLtLPxKRfoBjaGHtahRSgM2FoG2OaySG4sBmlY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "foodImage",
+									"type": "file",
+									"src": "/C:/Users/kenji/Downloads/resep-bolu-kukus.jpg"
+								},
+								{
+									"key": "title",
+									"value": "kue dragon",
+									"type": "text"
+								},
+								{
+									"key": "foodVideo",
+									"type": "file",
+									"src": "/C:/Users/kenji/Downloads/ezgif-8fddd813d82af4.mp4"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/recipes/updateRecipeWithCloud/:id",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"recipes",
+								"updateRecipeWithCloud",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "685a54f81873aae74580665d"
 								}
 							]
 						},
@@ -1972,12 +2208,10 @@
 							"urlencoded": []
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v1/recipes/deleteRecipe/:id",
-							"protocol": "http",
+							"raw": "{{HOST}}/api/v1/recipes/deleteRecipe/:id",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2166,9 +2400,46 @@
 			"item": [
 				{
 					"name": "getIngredientByName",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6InBncXp0MWRld2NAb3N4b2Z1bGsuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA1MjE0NzYsImV4cCI6MTc1MDYwNzg3Nn0.f33X04ee_RJBPTYE3OnAtoQdZU2zssYHC_B7rYmjZMI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/transaction/item/details/milk",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"transaction",
+								"item",
+								"details",
+								"milk"
+							]
+						},
 						"description": "### **Get Ingredient Details by Name**\n\nEndpoint ini digunakan untuk mencari dan mengambil detail bahan makanan berdasarkan namanya. Pencarian dilakukan melalui API eksternal (Spoonacular) untuk mendapatkan daftar bahan yang relevan beserta harganya.\n\n**HTTP Request**  \nGET [http://localhost:3000/api/v1/transaction/item/details/:name](http://localhost:3000/api/v1/transaction/item/details/:name)\n\n**Path Parameter**\n\n- name (string, **wajib**): Nama bahan yang ingin dicari. Contoh: milk, flour, sugar.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan bahwa pencarian berhasil dan daftar bahan ditemukan.\n    \n- 400 Bad Request: Menandakan bahwa parameter name tidak disertakan dalam URL.\n    \n- 404 Not Found: Menandakan bahwa tidak ada bahan yang ditemukan dengan nama yang diberikan, atau bahan yang ditemukan tidak memiliki informasi harga.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan pada server, misalnya gagal terhubung ke API eksternal.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat bahan berhasil ditemukan, respons akan berisi sebuah array dari objek items.\n\nGenerated json\n\n``` json\n{\n  \"items\": [\n    {\n      \"id\": 1077,\n      \"name\": \"milk\",\n      \"price\": 63.36\n    },\n    {\n      \"id\": 1102,\n      \"name\": \"whole milk\",\n      \"price\": 82.26\n    },\n    {\n      \"id\": 98976,\n      \"name\": \"condensed milk\",\n      \"price\": 38.64\n    }\n  ]\n}\n\n ```\n\n**2\\. Error Response (404 Not Found)**\n\nJika tidak ada bahan yang cocok dengan nama \"xyzabc\".\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item not found.\"\n}\n\n ```\n\n**3\\. Error Response (400 Bad Request)**\n\nJika path parameter name tidak diisi.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item name is required.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- Endpoint ini bergantung pada API eksternal Spoonacular. Ketersediaan dan konten data bergantung pada layanan tersebut.\n    \n- Hasil pencarian dibatasi hingga maksimal 20 item.\n    \n- Hanya bahan yang memiliki informasi harga (estimatedCost) dari API eksternal yang akan ditampilkan dalam respons.\n    \n- Meskipun tidak ditampilkan dalam kode, pastikan pengguna telah terautentikasi untuk menghindari respons 401 Unauthorized jika middleware autentikasi diterapkan pada route ini."
 					},
 					"response": []
@@ -2176,14 +2447,29 @@
 				{
 					"name": "getIngredient",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/item/details",
+							"raw": "{{HOST}}/api/v1/transaction/item/details",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2236,34 +2522,56 @@
 				{
 					"name": "addToCart",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImIyYXNvemh4MHFAaWJvbGludmEuY29tIiwiaXNQcmVtaXVtIjp0cnVlLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MDc1Mzk2MSwiZXhwIjoxNzUwODQwMzYxfQ.bvY6r5suppeTiiakLZGg1glpq0DKfKczB6FWBCuNtVw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
 									"key": "userId",
 									"value": "685689f7ea12e46953291a46",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "itemId",
 									"value": "43479",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "quantity",
 									"value": "10",
 									"type": "text"
+								},
+								{
+									"key": "itemId",
+									"value": "20444",
+									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/cart/add",
+							"raw": "{{HOST}}/api/v1/transaction/cart/add",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2282,6 +2590,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
@@ -2305,17 +2623,16 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/item/buy",
+							"raw": "{{HOST}}/api/v1/transaction/cart/view",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
 								"transaction",
-								"item",
-								"buy"
+								"cart",
+								"view"
 							]
 						},
 						"description": "### **View Cart**\n\nEndpoint ini digunakan untuk melihat semua item yang ada di dalam keranjang belanja (cart) milik pengguna yang sedang terautentikasi.\n\n**HTTP Request**  \nGET http://localhost:3000/api/v1/transaction/item/buy\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi keranjang belanja yang akan ditampilkan.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan keranjang berhasil diambil. Respons akan berisi daftar item di keranjang atau pesan bahwa keranjang kosong.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid (token tidak ada atau tidak valid).\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server saat mengambil data.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (Cart has items)**\n\nSaat keranjang berhasil diambil dan berisi item, respons akan mencakup pesan sukses dan sebuah array cart.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Cart retrieved successfully.\",\n  \"cart\": [\n    {\n      \"item_name\": \"butter\",\n      \"quantity\": 2,\n      \"price\": 416.68\n    },\n    {\n      \"item_name\": \"salt\",\n      \"quantity\": 1,\n      \"price\": 29.28\n    }\n  ]\n}\n\n ```\n\n**2\\. Successful Response (Cart is empty)**\n\nJika keranjang pengguna kosong, server tetap akan merespons dengan status 200 OK tetapi dengan pesan yang berbeda.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Cart is empty.\"\n}\n\n ```\n\n**3\\. Error Response (Internal Server Error)**\n\nJika terjadi masalah pada server saat mengakses database.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Internal server error.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **URL Context**: Meskipun URL mengandung kata /buy, endpoint ini berfungsi untuk **melihat** isi keranjang, biasanya sebagai langkah sebelum melakukan proses checkout/pembelian.\n    \n- **Harga Total**: Nilai price di dalam cart adalah harga total untuk baris item tersebut (harga satuan dikalikan dengan quantity).\n    \n- **Respons Keranjang Kosong**: Respons untuk keranjang kosong tetap dianggap berhasil (Status 200 OK), jadi pastikan aplikasi klien Anda memeriksa isi dari cart atau message untuk menanganinya dengan benar."
@@ -2325,6 +2642,16 @@
 				{
 					"name": "removeItemCart",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -2332,17 +2659,16 @@
 							"urlencoded": [
 								{
 									"key": "item_name",
-									"value": "",
+									"value": "rice",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/cart/remove",
+							"raw": "{{HOST}}/api/v1/transaction/cart/remove",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2363,7 +2689,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6InBncXp0MWRld2NAb3N4b2Z1bGsuY29tIiwiaXNQcmVtaXVtIjp0cnVlLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MDU2NzEwMiwiZXhwIjoxNzUwNjUzNTAyfQ.3WmthEuNhLJV1d9xC8m6MQkON7ph7CYxD6zFY_3INcU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
 									"type": "string"
 								}
 							]
@@ -2391,11 +2717,10 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/cart/removeAll",
+							"raw": "{{HOST}}/api/v1/transaction/cart/removeAll",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2454,34 +2779,39 @@
 				{
 					"name": "PlaceSubcribe",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "username",
-									"value": "eggy2",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
+									"key": "userId",
+									"value": "685689f7ea12e46953291a46",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/subscribe",
+							"raw": "{{HOST}}/api/v1/transaction/subscribe",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2541,40 +2871,52 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "username",
-									"value": "eggy2",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
+									"key": "userId",
+									"value": "685689f7ea12e46953291a46",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/subscription/status",
+							"raw": "{{HOST}}/api/v1/transaction/subscription/status",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
 								"transaction",
 								"subscription",
 								"status"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "685689f7ea12e46953291a46",
+									"disabled": true
+								}
 							]
 						},
 						"description": "### **View Subscription Status**\n\nEndpoint ini digunakan untuk mengambil riwayat atau status langganan (subscription) milik pengguna yang sedang terautentikasi. Ini akan mengembalikan semua catatan langganan yang terasosiasi dengan pengguna tersebut.\n\n**HTTP Request**  \nGET http://localhost:3000/api/v1/transaction/subscription/status\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi pengguna yang status langganannya ingin dilihat.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan status langganan berhasil diambil. Respons akan berisi daftar langganan, yang bisa jadi kosong jika pengguna belum pernah berlangganan.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server saat mengambil data.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (User has a subscription)**\n\nSaat pengguna memiliki riwayat langganan, respons akan berisi pesan sukses dan sebuah array subscription yang berisi objek-objek langganan.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription status retrieved successfully.\",\n  \"subscription\": [\n    {\n      \"userId\": \"653b8a9b1c9d440000a1b2c3\",\n      \"startDate\": \"2023-10-27T11:00:00.000Z\",\n      \"endDate\": \"2024-10-27T11:00:00.000Z\",\n      \"paymentStatus\": \"completed\",\n      \"status\": \"active\",\n      \"_id\": \"653b9a1d1c9d440000a1b2e5\",\n      \"__v\": 1\n    }\n  ]\n}\n\n ```\n\n**2\\. Successful Response (User has no subscription)**\n\nJika pengguna belum pernah membuat permintaan langganan, server tetap akan merespons dengan status 200 OK, namun dengan array subscription yang kosong.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription status retrieved successfully.\",\n  \"subscription\": []\n}\n\n ```\n\n**3\\. Error Response (500 Internal Server Error)**\n\nJika terjadi kesalahan pada server saat mengakses database.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Internal server error.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Respons Selalu Array**: Perhatikan bahwa nilai dari subscription pada respons akan **selalu berupa array**, bahkan jika hanya ada satu catatan atau tidak ada sama sekali. Hal ini karena kode menggunakan find() yang mengembalikan banyak hasil.\n    \n- **Tidak Ada Status 404**: Berdasarkan kode yang diberikan, endpoint ini tidak akan mengembalikan status 404 Not Found jika langganan tidak ditemukan. Sebagai gantinya, ia akan mengembalikan 200 OK dengan array kosong. Aplikasi klien harus memeriksa panjang array subscription untuk menentukan apakah pengguna memiliki langganan."
@@ -2584,34 +2926,39 @@
 				{
 					"name": "unsubscribe",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "username",
-									"value": "eggy2",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
+									"key": "userId",
+									"value": "685689f7ea12e46953291a46",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/unsubscribe",
+							"raw": "{{HOST}}/api/v1/transaction/unsubscribe",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2629,34 +2976,39 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "username",
-									"value": "eggy2",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
+									"key": "userInput",
+									"value": "egg, tomato, cheese",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/recommendations",
+							"raw": "{{HOST}}/api/v1/transaction/recommendations",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -2674,6 +3026,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2686,28 +3048,17 @@
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "username",
-									"value": "eggy2",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
+									"key": "userInput",
+									"value": "Baked Rigatoni",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/ingredients/alternative",
+							"raw": "{{HOST}}/api/v1/transaction/ingredients/alternative",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -3038,6 +3389,541 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "createUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "eggy2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "5162nrnetq@bltiwd.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/register",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"register"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "identifier",
+									"value": "eggy1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/login",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyOTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "identifier",
+									"value": "eggy1",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "570831",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/verifyOtp",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"verifyOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "semua user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "eggy2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "5162nrnetq@bltiwd.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/getAllUsers",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"getAllUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updPP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profilePicture",
+									"type": "file",
+									"src": "/C:/Users/ebewa/Pictures/lupa.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/profile/upload",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProfile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/profile",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPPonly",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/profile/picture",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hapusPP",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/profile/picture",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile",
+								"picture"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshToken",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/token",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6InBncXp0MWRld2NAb3N4b2Z1bGsuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA1MjE0NzYsImV4cCI6MTc1MDYwNzg3Nn0.f33X04ee_RJBPTYE3OnAtoQdZU2zssYHC_B7rYmjZMI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/logout",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updPass",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "eggy2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "5162nrnetq@bltiwd.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/profile/password",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "identifier",
+									"value": "eggy1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/profile/email",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile",
+								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyEmailOTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "identifier",
+									"value": "eggy1",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/profile/verifyEmailOtp",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile",
+								"verifyEmailOtp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLogs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/logs/:userId",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"logs",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updRole",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/api/v1/user/role/:userId",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"role",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The `/me` endpoints let you manage information about the authenticated user."
 		}
 	],
 	"auth": {
