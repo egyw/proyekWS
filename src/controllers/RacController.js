@@ -1,5 +1,4 @@
 const axios = require("axios");
-const XLSX = require("xlsx");
 const PDFDocument = require("pdfkit");
 const fs = require("fs");
 const ExcelJS = require("exceljs");

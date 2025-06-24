@@ -10,6 +10,7 @@ const { logActivity } = require("../utils/logger/logger");
 const Log = require("../models/Log");
 const FailedLoginAttempt = require("../models/FailedLoginAttempt");
 const IpBan = require("../models/IpBan");
+const axios = require("axios");
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -503,9 +504,20 @@ const getUserProfilePicture = async (req, res) => {
       return res.status(404).json({ message: "Gambar profil tidak ditemukan." });
     }
 
-    const imagePath = `public/${user.profilePicture}`;
-    return res.status(200).sendFile(imagePath, { root: '.' });
-
+    // =================================================================================================
+    // multer
+    // const imagePath = `public/${user.profilePicture}`;
+    // return res.status(200).sendFile(imagePath, { root: '.' });
+    // =================================================================================================
+    // cloudinary
+    const imageUrl = user.profilePicture;
+    const response = await axios({
+      method: 'GET',
+      url: imageUrl,
+      responseType: 'stream'
+    });
+    res.setHeader('Content-Type', response.headers['content-type']);
+    response.data.pipe(res);
   } catch (error) {
     console.error("Gagal mendapatkan gambar profil:", error);
     return res.status(500).json({
@@ -561,7 +573,7 @@ const updateProfilePicture = async (req, res) => {
     }
     const newProfilePicturePath = req.file.path;
     // ===================================================================================================
-    
+
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { profilePicture: newProfilePicturePath },
