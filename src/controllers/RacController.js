@@ -226,6 +226,12 @@ const foodSugestion = async (req, res) => {
         }
       })
       .toString();
+    if (!found || found.length === 0) {
+      return res.status(404).json({
+        message:
+          "Mohon Maaf, ini diluar dari kemampuan AI kami, silahkan coba lagi dengan kata kunci lain",
+      });
+    }
     const query = found.replace(/,/g, "");
     const response = textResponse
       .replace(/\*\*/g, "")
