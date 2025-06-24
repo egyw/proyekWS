@@ -43,7 +43,6 @@ Berikut adalah gambaran koleksi (collections) utama dalam basis data:
 - `password`
 - `isPremium` 
 - `saldo` 
-- `cart` 
 - `createdAt` 
 
 ### `recipes`
@@ -115,6 +114,13 @@ Berikut adalah gambaran koleksi (collections) utama dalam basis data:
 - `quantity`
 - `price`
 
+### `cart`
+- `_id`
+- `user`
+- `item_name`
+- `price`
+- `quantity`
+
 
 ---
 
@@ -132,4 +138,5 @@ Berikut adalah gambaran koleksi (collections) utama dalam basis data:
 | POST   | `/api/subscribe`          | Berlangganan akun premium               |
 | GET    | `/api/chat`               | Fitur AI chatbot                        |
 | GET    | `/api/calories`           | Kalkulasi kalori dari bahan             |
+
 
