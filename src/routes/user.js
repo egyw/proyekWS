@@ -7,14 +7,17 @@ const {
   logoutUser,
   getUserProfile,
   verifyOTP,
-  updateProfilePicture,
-  getUserProfilePicture,
-  deleteProfilePicture,
   updatePassword,
   verifyEmailOTP,
   updateEmail,
   getUserLogs,
   updateUserRole,
+  getUserProfilePictureMulter,
+  getUserProfilePictureCloud,
+  updateProfilePictureMulter,
+  updateProfilePictureCloud,
+  deleteProfilePictureCloud,
+  deleteProfilePictureMulter,
 } = require("../controllers/userController");
 const verifyToken = require("../middlewares/authMiddleware");
 const { uploadSingleImage } = require("../utils/multer/multer");
@@ -36,12 +39,14 @@ router.get("/profile", [verifyToken], getUserProfile);
 router.patch("/profile/password", [verifyToken], updatePassword);
 router.post("/profile/email", [verifyToken], updateEmail);
 router.post("/profile/verifyEmailOtp", [verifyToken], verifyEmailOTP);
-router.get("/profile/picture", [verifyToken], getUserProfilePicture);
-router.delete("/profile/picture", [verifyToken], deleteProfilePicture);
+router.get("/profile/picture/multer", [verifyToken], getUserProfilePictureMulter);
+router.get("/profile/picture/cloud", [verifyToken], getUserProfilePictureCloud);
+router.delete("/profile/picture/cloud", [verifyToken], deleteProfilePictureCloud);
+router.delete("/profile/picture/multer", [verifyToken], deleteProfilePictureMulter);
 
 // multer
-// router.post("/profile/upload", [verifyToken, uploadSingleImage('profilePicture'), resizeImage], updateProfilePicture) 
+router.post("/profile/upload/multer", [verifyToken, uploadSingleImage('profilePicture'), resizeImage], updateProfilePictureMulter) 
 
 // cloudinary
-router.post("/profile/upload", [verifyToken, uploadProfileToCloud.single('profilePicture')], updateProfilePicture);
+router.post("/profile/upload/cloud", [verifyToken, uploadProfileToCloud.single('profilePicture')], updateProfilePictureCloud);
 module.exports = router;

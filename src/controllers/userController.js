@@ -490,7 +490,7 @@ const getUserProfile = async (req, res) => {
 };
 
 // ini cuman untuk metode gambar menggunakan multer (bukan CLOUDINARY)
-const getUserProfilePicture = async (req, res) => {
+const getUserProfilePictureCloud = async (req, res) => {
   try {
     const userId = req.user.id;
 
@@ -504,12 +504,6 @@ const getUserProfilePicture = async (req, res) => {
       return res.status(404).json({ message: "Gambar profil tidak ditemukan." });
     }
 
-    // =================================================================================================
-    // multer
-    // const imagePath = `public/${user.profilePicture}`;
-    // return res.status(200).sendFile(imagePath, { root: '.' });
-    // =================================================================================================
-    // cloudinary
     const imageUrl = user.profilePicture;
     const response = await axios({
       method: 'GET',
@@ -518,6 +512,7 @@ const getUserProfilePicture = async (req, res) => {
     });
     res.setHeader('Content-Type', response.headers['content-type']);
     response.data.pipe(res);
+
   } catch (error) {
     console.error("Gagal mendapatkan gambar profil:", error);
     return res.status(500).json({
@@ -527,7 +522,33 @@ const getUserProfilePicture = async (req, res) => {
   }
 }
 
-const updateProfilePicture = async (req, res) => {
+const getUserProfilePictureMulter = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId).select('profilePicture');
+
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    if (!user.profilePicture) {
+      return res.status(404).json({ message: "Gambar profil tidak ditemukan." });
+    }
+
+    const imagePath = `public/${user.profilePicture}`;
+    return res.status(200).sendFile(imagePath, { root: '.' });
+
+  } catch (error) {
+    console.error("Gagal mendapatkan gambar profil:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server saat mengambil gambar profil.",
+      error: error.message,
+    });
+  }
+}
+
+const updateProfilePictureCloud = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: "Tidak ada file yang diunggah atau format file tidak didukung." });
@@ -540,29 +561,7 @@ const updateProfilePicture = async (req, res) => {
       return res.status(404).json({ message: "Pengguna tidak ditemukan." });
     }
 
-    // ====================================================================================================
-    // menggunakan multer
-    // if (user && user.profilePicture) {
-    //   const oldPicturePath = path.join(__dirname, '..', '..', 'public', user.profilePicture);
-    //   console.log(oldPicturePath)
-    //   if (fs.existsSync(oldPicturePath)) {
-    //     fs.unlink(oldPicturePath, (err) => {
-    //       if (err) {
-    //         console.error("Gagal menghapus gambar lama:", err);
-    //       } else {
-    //         console.log("Gambar profil lama berhasil dihapus:", oldPicturePath);
-    //       }
-    //     });
-    //   }
-    // }
-
-    // const newProfilePicturePath = `/images/profiles/${req.user.id}/${req.file.filename}`;
-
-    // ===================================================================================================
-    // menggunakan cloudinary
     if (user.profilePicture) {
-        // Ekstrak public_id dari URL Cloudinary lama
-        // Contoh URL: http://res.cloudinary.com/demo/image/upload/v123/proyekWS/profiles/profile-123.jpg
         const urlParts = user.profilePicture.split('/');
         const publicIdWithFormat = urlParts.slice(urlParts.indexOf('proyekWS')).join('/');
         const publicId = publicIdWithFormat.substring(0, publicIdWithFormat.lastIndexOf('.'));
@@ -572,7 +571,6 @@ const updateProfilePicture = async (req, res) => {
         }
     }
     const newProfilePicturePath = req.file.path;
-    // ===================================================================================================
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
@@ -600,7 +598,62 @@ const updateProfilePicture = async (req, res) => {
   }
 };
 
-const deleteProfilePicture = async (req, res) => {
+const updateProfilePictureMulter = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "Tidak ada file yang diunggah atau format file tidak didukung." });
+    }
+
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    if (user && user.profilePicture) {
+      const oldPicturePath = path.join(__dirname, '..', '..', 'public', user.profilePicture);
+      console.log(oldPicturePath)
+      if (fs.existsSync(oldPicturePath)) {
+        fs.unlink(oldPicturePath, (err) => {
+          if (err) {
+            console.error("Gagal menghapus gambar lama:", err);
+          } else {
+            console.log("Gambar profil lama berhasil dihapus:", oldPicturePath);
+          }
+        });
+      }
+    }
+
+    const newProfilePicturePath = `/images/profiles/${req.user.id}/${req.file.filename}`;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { profilePicture: newProfilePicturePath },
+      { new: true } 
+    ).select('-password -otp -refreshToken -otpExpiresAt'); 
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    return res.status(200).json({
+      message: "Gambar profil berhasil diupdate!",
+      data: {
+        profilePicture: updatedUser.profilePicture
+      }
+    });
+
+  } catch (error) {
+    console.error("Gagal update gambar profil:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server saat mengupdate gambar profil.",
+      error: error.message,
+    });
+  }
+};
+
+const deleteProfilePictureCloud = async (req, res) => {
   try {
     const userId = req.user.id;
 
@@ -614,35 +667,57 @@ const deleteProfilePicture = async (req, res) => {
       return res.status(400).json({ message: "Tidak ada gambar profil untuk dihapus." });
     }
 
-
-    // =================================================================================================
-    // hapus pake multer
-    // const picturePath = path.join(process.cwd(), 'public', user.profilePicture);
-
-    // if (fs.existsSync(picturePath)) {
-    //   fs.unlink(picturePath, (err) => {
-    //     if (err) {
-    //       console.error("Gagal menghapus file fisik gambar profil:", err);
-    //     } else {
-    //       console.log("File gambar profil fisik berhasil dihapus:", picturePath);
-    //     }
-    //   });
-    // } else {
-    //   console.log("File fisik gambar profil tidak ditemukan, hanya akan mengupdate database.");
-    // }
-
-    // =================================================================================================
-    // hapus pake cloudinary
     const urlParts = user.profilePicture.split('/');
     const publicIdWithFormat = urlParts.slice(urlParts.indexOf('proyekWS')).join('/');
     const publicId = publicIdWithFormat.substring(0, publicIdWithFormat.lastIndexOf('.'));
     
-    // Hapus gambar dari Cloudinary
     if (publicId) {
         await cloudinary.uploader.destroy(publicId);
     }
-    // =================================================================================================
 
+    user.profilePicture = null;
+    await user.save();
+
+    return res.status(200).json({
+      message: "Gambar profil berhasil dihapus.",
+    });
+
+  } catch (error) {
+    console.error("Gagal menghapus gambar profil:", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server saat menghapus gambar profil.",
+      error: error.message,
+    });
+  }
+};
+
+const deleteProfilePictureMulter = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "Pengguna tidak ditemukan." });
+    }
+
+    if (!user.profilePicture) {
+      return res.status(400).json({ message: "Tidak ada gambar profil untuk dihapus." });
+    }
+
+    const picturePath = path.join(process.cwd(), 'public', user.profilePicture);
+
+    if (fs.existsSync(picturePath)) {
+      fs.unlink(picturePath, (err) => {
+        if (err) {
+          console.error("Gagal menghapus file fisik gambar profil:", err);
+        } else {
+          console.log("File gambar profil fisik berhasil dihapus:", picturePath);
+        }
+      });
+    } else {
+      console.log("File fisik gambar profil tidak ditemukan, hanya akan mengupdate database.");
+    }
 
     user.profilePicture = null;
     await user.save();
@@ -946,10 +1021,13 @@ module.exports = {
   refreshToken,
   logoutUser,
   getUserProfile,
-  getUserProfilePicture,
+  getUserProfilePictureCloud,
+  getUserProfilePictureMulter,
   verifyOTP,
-  updateProfilePicture,
-  deleteProfilePicture,
+  updateProfilePictureCloud,
+  updateProfilePictureMulter,
+  deleteProfilePictureCloud,
+  deleteProfilePictureMulter,
   updatePassword,
   updateEmail,
   verifyEmailOTP,
