@@ -1,6 +1,7 @@
 const { Subscriptions, Transaction, DetailTrans, User, aiQueries, Recipe, Cart } = require("../models");
 const axios = require('axios');
 const { query } = require("../utils/spoonacular/listFoodTypeSpoonacular");
+const jwt = require('jsonwebtoken');
 
 const getSubscription = async (req, res) => {
     const userId = req.user.id;
@@ -40,7 +41,6 @@ const buySubscription = async (req, res) => {
     }
 
     try {
-
         const user = await User.findById(userId);
 
         if (!user) {
@@ -80,9 +80,23 @@ const buySubscription = async (req, res) => {
 
         const userPremium = await User.findById(userId);
 
+        // Generate JWT baru dengan data user terbaru
+        const payload = {
+            id: userPremium._id,
+            username: userPremium.username,
+            email: userPremium.email,
+            isPremium: userPremium.isPremium,
+            saldo: userPremium.saldo
+        };
+        const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+
         req.user = userPremium;
 
-        return res.status(200).json({ message: "Subscription purchased successfully.", subscription });
+        return res.status(200).json({ 
+            message: "Subscription purchased successfully.", 
+            subscription,
+            token
+        });
     } catch (error) {
         console.error("Error processing payment:", error);
         return res.status(500).json({ message: "Internal server error." });
@@ -117,7 +131,6 @@ const cancelSubscription = async (req, res) => {
     }
 
     try {
-
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found." });
@@ -132,7 +145,7 @@ const cancelSubscription = async (req, res) => {
         if (subscription.paymentStatus == "completed") {
             subscription.status = "cancelled";
         }
-        if( subscription.paymentStatus == "pending") {
+        if (subscription.paymentStatus == "pending") {
             subscription.paymentStatus = "cancelled";
         }
         await subscription.save();
@@ -142,9 +155,22 @@ const cancelSubscription = async (req, res) => {
 
         const userNotPremium = await User.findById(userId);
 
+        const payload = {
+            id: userNotPremium._id,
+            username: userNotPremium.username,
+            email: userNotPremium.email,
+            isPremium: userNotPremium.isPremium,
+            saldo: userNotPremium.saldo
+        };
+        const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
+
         req.user = userNotPremium;
 
-        return res.status(200).json({ message: "Subscription cancelled successfully.", subscription });
+        return res.status(200).json({ 
+            message: "Subscription cancelled successfully.", 
+            subscription,
+            token
+        });
     } catch (error) {
         console.error("Error cancelling subscription:", error);
         return res.status(500).json({ message: "Internal server error." });
