@@ -37,5 +37,15 @@ router.put(
   [verifyToken, uploadRecipeMedia()],
   updateRecipeWithCloud
 );
+router.post(
+  "/insertRecipeWithMulter",
+  [verifyToken, uploadImageAndVideo()],
+  insertRecipeWithMulter,
+);
+router.put(
+  "/updateRecipeWithMulter/:id",
+  [verifyToken, uploadImageAndVideo()],
+  updateRecipeWithMulter,
+);
 router.delete("/deleteRecipe/:id", [verifyToken], deleteRecipe);
 module.exports = router;
