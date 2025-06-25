@@ -1132,41 +1132,98 @@ const insertRecipeWithCloud = async (req, res) => {
     req.body.image = null;
     req.body.video = null;
 
-    // ✅ DEBUG: Log file structure
-    console.log("🔍 CLOUDINARY DEBUG - req.files:", !!req.files);
-    if (req.files) {
-      console.log(
-        "🔍 CLOUDINARY DEBUG - req.files structure:",
-        JSON.stringify(req.files, null, 2)
-      );
-    }
+    // ✅ ENHANCED FILE HANDLING - Handle ALL possible scenarios
+    console.log("🔍 FILE PROCESSING START");
 
-    // ✅ CLOUDINARY FILE HANDLING - Super Simple!
-    if (req.files && typeof req.files === "object") {
-      console.log(
-        "📁 CLOUDINARY - Processing uploaded files:",
-        Object.keys(req.files)
-      );
+    // ✅ SCENARIO 1: Multiple files (req.files)
+    if (
+      req.files &&
+      typeof req.files === "object" &&
+      Object.keys(req.files).length > 0
+    ) {
+      console.log("📁 SCENARIO: Multiple files detected");
+      console.log("📁 Available fields:", Object.keys(req.files));
 
-      // Handle foodImage
-      if (req.files.foodImage && req.files.foodImage.length > 0) {
-        req.body.image = req.files.foodImage[0].path; // URL dari Cloudinary
-        console.log("✅ CLOUDINARY - Image uploaded successfully:");
-        console.log("📸 Image URL:", req.body.image);
-        console.log("📸 Image public_id:", req.files.foodImage[0].public_id);
+      // ✅ Process each field dynamically
+      for (const [fieldName, files] of Object.entries(req.files)) {
+        console.log(`📁 Processing field: ${fieldName}`, files);
+
+        if (Array.isArray(files) && files.length > 0) {
+          const file = files[0];
+
+          console.log(`📁 File details for '${fieldName}':`, {
+            fieldname: file.fieldname,
+            filename: file.filename,
+            mimetype: file.mimetype,
+            originalname: file.originalname,
+            path: file.path,
+          });
+
+          // ✅ Enhanced field detection
+          const isImageField =
+            fieldName.toLowerCase().includes("image") ||
+            file.fieldname?.toLowerCase().includes("image") ||
+            file.mimetype.startsWith("image/");
+
+          const isVideoField =
+            fieldName.toLowerCase().includes("video") ||
+            file.fieldname?.toLowerCase().includes("video") ||
+            file.mimetype.startsWith("video/");
+
+          if (isImageField) {
+            req.body.image = `/images/foodImages/${file.filename}`;
+            console.log("✅ MULTER - Image set:", req.body.image);
+          } else if (isVideoField) {
+            req.body.video = `/videos/foodVideos/${file.filename}`;
+            console.log("✅ MULTER - Video set:", req.body.video);
+          } else {
+            console.log("❌ MULTER - Unknown file type:", {
+              fieldName,
+              mimetype: file.mimetype,
+              filename: file.filename,
+            });
+          }
+        } else {
+          console.log(
+            `❌ Field '${fieldName}' has no files or not an array:`,
+            files
+          );
+        }
       }
-
-      // Handle foodVideo
-      if (req.files.foodVideo && req.files.foodVideo.length > 0) {
-        req.body.video = req.files.foodVideo[0].path; // URL dari Cloudinary
-        console.log("✅ CLOUDINARY - Video uploaded successfully:");
-        console.log("🎥 Video URL:", req.body.video);
-        console.log("🎥 Video public_id:", req.files.foodVideo[0].public_id);
-      }
-    } else {
-      console.log("❌ CLOUDINARY - No files detected");
     }
+    // ✅ SCENARIO 2: Single file (req.file)
+    else if (req.file) {
+      console.log("📁 SCENARIO: Single file detected");
+      console.log("📁 Single file details:", {
+        fieldname: req.file.fieldname,
+        filename: req.file.filename,
+        mimetype: req.file.mimetype,
+        originalname: req.file.originalname,
+        path: req.file.path,
+      });
 
+      // ✅ Enhanced single file detection
+      const isImageField =
+        req.file.fieldname?.toLowerCase().includes("image") ||
+        req.file.mimetype.startsWith("image/");
+
+      const isVideoField =
+        req.file.fieldname?.toLowerCase().includes("video") ||
+        req.file.mimetype.startsWith("video/");
+
+      if (isImageField) {
+        req.body.image = `/images/foodImages/${req.file.filename}`;
+        console.log("✅ MULTER - Single image set:", req.body.image);
+      } else if (isVideoField) {
+        req.body.video = `/videos/foodVideos/${req.file.filename}`;
+        console.log("✅ MULTER - Single video set:", req.body.video);
+      } else {
+        console.log("❌ MULTER - Unknown single file type:", {
+          fieldname: req.file.fieldname,
+          mimetype: req.file.mimetype,
+        });
+      }
+    }
     // ✅ DEBUG: Final check
     console.log("🔍 CLOUDINARY FINAL RESULT:");
     console.log("📸 Final Image URL:", req.body.image);
