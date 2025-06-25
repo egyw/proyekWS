@@ -1055,8 +1055,7 @@ const insertRecipeWithMulter = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Internal server error",
-      error: error.message,
+      message: error.message || "Internal server error",
     });
   }
 };
