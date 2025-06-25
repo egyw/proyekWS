@@ -85,7 +85,7 @@ const addComentar = async (req, res) => {
       const protocol = req.protocol; // http atau https
       const host = req.get("host"); // localhost:3000 atau namadomain.com
 
-      const imageUrl = `${protocol}://${host}/Public/foodImages/${dtRecipes.image}`;
+      const imageUrl = `${protocol}://${host}/Public/images/foodImages/${dtRecipes.image}`;
       return res.status(200).json({
         message: "Berhasil menampilkan resep",
         data: {
@@ -217,6 +217,7 @@ const foodSugestion = async (req, res) => {
 
     const geminiResult = await geminiResponse.json();
     const textResponse = geminiResult.candidates[0].content.parts[0].text;
+
     const found = cuisines
       .map((item) => {
         // console.log("Checking item:", item);
