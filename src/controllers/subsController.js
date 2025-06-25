@@ -78,6 +78,10 @@ const buySubscription = async (req, res) => {
         user.isPremium = true;
         await user.save();
 
+        const userPremium = await User.findById(userId);
+
+        req.user = userPremium;
+
         return res.status(200).json({ message: "Subscription purchased successfully.", subscription });
     } catch (error) {
         console.error("Error processing payment:", error);
@@ -135,6 +139,10 @@ const cancelSubscription = async (req, res) => {
 
         user.isPremium = false;
         await user.save();
+
+        const userNotPremium = await User.findById(userId);
+
+        req.user = userNotPremium;
 
         return res.status(200).json({ message: "Subscription cancelled successfully.", subscription });
     } catch (error) {
