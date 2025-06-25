@@ -1,11 +1,10 @@
 {
 	"info": {
-		"_postman_id": "86c00ee2-4379-44ec-bc89-e43487b65cab",
+		"_postman_id": "d68b63ed-b3cd-4205-bfe2-b69a0c98a128",
 		"name": "proyekWS_Final",
 		"description": "# 📄 Get started here\n\nThis template contains a boilerplate for documentation that you can quickly customize and reuse.\n\n## 🔖 How to use this template\n\n- Replace the content given brackets (()) with your API's details.\n    \n- Tips are formatted in `codespan` - feel free to read and remove them.\n    \n\n---\n\n`Start with a brief overview of what your API offers.`\n\nThe ((product name)) provides many API products, tools, and resources that enable you to ((add product value here)).\n\n`You can also list the APIs you offer, link to the relevant pages, or do both in this section.`\n\n## **Getting started guide**\n\n`List the steps or points required to start using your APIs. Make sure to cover everything required to reach success with your API as quickly as possible.`\n\nTo start using the ((add APIs here)), you need to -\n\n`The points given below are from The Postman API's documentation. You can reference it to write your own getting started guide.`\n\n- You must use a valid API Key to send requests to the API endpoints. You can get your API key from Postman's [integrations dashboard](https://go.postman.co/settings/me/api-keys).\n    \n- The API has [rate and usage limits](https://learning.postman.com/docs/developer/postman-api/postman-api-rate-limits/).\n    \n- The API only responds to HTTPS-secured communications. Any requests sent via HTTP return an HTTP 301 redirect to the corresponding HTTPS resources.\n    \n- The API returns request responses in JSON format. When an API request returns an error, it is sent in the JSON response as an error key.\n    \n\n## Authentication\n\n`Add details on the authorization keys/tokens required, steps that cover how to get them, and the relevant error codes.`\n\nThe ((product name)) API uses ((add your API's authorization type)) for authentication.\n\n`The details given below are from the Postman API's documentation. You can reference it to write your own authentication section.`\n\nPostman uses API keys for authentication. You can generate a Postman API key in the [API keys](https://postman.postman.co/settings/me/api-keys) section of your Postman account settings.\n\nYou must include an API key in each request to the Postman API with the X-Api-Key request header.\n\n### Authentication error response\n\nIf an API key is missing, malformed, or invalid, you will receive an HTTP 401 Unauthorized response code.\n\n## Rate and usage limits\n\n`Use this section to cover your APIs' terms of use. Include API limits, constraints, and relevant error codes, so consumers understand the permitted API usage and practices.`\n\n`The example given below is from The Postman API's documentation. Use it as a reference to write your APIs' terms of use.`\n\nAPI access rate limits apply at a per-API key basis in unit time. The limit is 300 requests per minute. Also, depending on your plan, you may have usage limits. If you exceed either limit, your request will return an HTTP 429 Too Many Requests status code.\n\nEach API response returns the following set of headers to help you identify your use status:\n\n| Header | Description |\n| --- | --- |\n| `X-RateLimit-Limit` | The maximum number of requests that the consumer is permitted to make per minute. |\n| `X-RateLimit-Remaining` | The number of requests remaining in the current rate limit window. |\n| `X-RateLimit-Reset` | The time at which the current rate limit window resets in UTC epoch seconds. |\n\n### 503 response\n\nAn HTTP `503` response from our servers indicates there is an unexpected spike in API access traffic. The server is usually operational within the next five minutes. If the outage persists or you receive any other form of an HTTP `5XX` error, [contact support](https://support.postman.com/hc/en-us/requests/new/).\n\n### **Need some help?**\n\n`Add links that customers can refer to whenever they need help.`\n\nIn case you have questions, go through our tutorials ((link to your video or help documentation here)). Or visit our FAQ page ((link to the relevant page)).\n\nOr you can check out our community forum, there’s a good chance our community has an answer for you. Visit our developer forum ((link to developer forum)) to review topics, ask questions, and learn from others.\n\n`You can also document or add links to libraries, code examples, and other resources needed to make a request.`",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "44265515",
-		"_collection_link": "https://yoshi-190373.postman.co/workspace/bc419ad9-0848-4f17-8d80-f0adae219a4d/collection/44265515-86c00ee2-4379-44ec-bc89-e43487b65cab?action=share&source=collection_link&creator=44265515"
+		"_exporter_id": "42839746"
 	},
 	"item": [
 		{
@@ -3415,12 +3414,12 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "eggy2",
+									"value": "tes123",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
+									"value": "5kdvl011xc@qejjyl.com",
 									"type": "text"
 								},
 								{
@@ -3442,9 +3441,319 @@
 								"register"
 							]
 						},
-						"description": "Gets information about the authenticated user."
+						"description": "\\### Register New User\n\nMendaftarkan pengguna baru ke dalam sistem.\n\n**Body Parameters (\\`x-www-form-urlencoded\\`):**  \n\\- \\`username\\` (string, required): Username unik untuk pengguna.  \n\\- \\`email\\` (string, required): Alamat email yang valid dan belum terdaftar.  \n\\- \\`password\\` (string, required): Password untuk akun pengguna (disarankan minimal 8 karakter).\n\n**Success Response (\\`201 Created\\`):**  \n\\- Mengembalikan objek JSON berisi data pengguna yang baru dibuat, termasuk \\`id\\`, \\`username\\`, \\`email\\`, \\`isPremium\\`, dan \\`role\\`.\n\n**Error Responses:**  \n\\- \\`400 Bad Request\\`: Jika validasi gagal (misalnya, format email salah, username sudah ada, atau password terlalu pendek).  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "tes123",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "5kdvl011xc@qejjyl.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/register",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 06:37:25 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "125"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"9f-+9nIRkw7zJu6L1GNGdxnpYB8214\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "53fdc673-a954-48e1"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "955274c5596dd9e4-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registrasi berhasil!\",\n    \"data\": {\n        \"id\": \"685b99250c7186edfd385cdf\",\n        \"username\": \"tes123\",\n        \"email\": \"5kdvl011xc@qejjyl.com\",\n        \"isPremium\": false,\n        \"role\": \"user\"\n    }\n}"
+						},
+						{
+							"name": "email duplicate",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "tes12345",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "5kdvl011xc@qejjyl.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/register",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 06:45:53 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "109"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"99-paKvHDNXTdOK0eZAloBMNIvZ6Lw\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "b024528c-21f7-42ad"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552812ebada9a10-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Terjadi kesalahan pada server!\",\n    \"error\": \"Terjadi kesalahan saat memeriksa email: Email sudah terdaftar, silakan gunakan email lain! (email)\"\n}"
+						},
+						{
+							"name": "username duplicate",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "tes123",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "tes@qejjyl.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/register",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"register"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 06:48:07 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "113"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"a5-WfF3x9nt7YGftXDWF7MYJosn9mc\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "b5dbcaf3-c90c-453d"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "955284790dd7ea8a-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Terjadi kesalahan pada server!\",\n    \"error\": \"Terjadi kesalahan saat memeriksa username: Username sudah terdaftar, silakan gunakan username lain! (username)\"\n}"
+						}
+					]
 				},
 				{
 					"name": "login",
@@ -3456,12 +3765,12 @@
 							"urlencoded": [
 								{
 									"key": "identifier",
-									"value": "eggy1",
+									"value": "eggy",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "123456",
+									"value": "654321",
 									"type": "text"
 								}
 							]
@@ -3477,9 +3786,402 @@
 								"user",
 								"login"
 							]
-						}
+						},
+						"description": "\\### Login (Step 1: Request OTP)  \n  \nMemulai proses login dengan memvalidasi kredensial pengguna. Endpoint ini adalah langkah pertama dari autentikasi dua faktor (2FA).  \n  \nJika \\`identifier\\` (username atau email) dan \\`password\\` cocok, server akan mengirimkan kode OTP (One-Time Password) 6 digit ke alamat email pengguna yang terdaftar. Kode ini diperlukan untuk menyelesaikan proses login pada endpoint \\`verify-otp\\`.  \n  \n**Body Parameters (\\`x-www-form-urlencoded\\`):**  \n\\- \\`identifier\\` (string, required): Username atau email pengguna yang terdaftar.  \n\\- \\`password\\` (string, required): Password akun pengguna.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan konfirmasi bahwa OTP telah berhasil dikirim.  \n\\`\\`\\`json  \n{  \n\"message\": \"Verifikasi berhasil. kode OTP telah dikirim ke email Anda.\",  \n\"data\": {  \n\"username\": \"eggy\",  \n\"email\": \"eggy@example.com\"  \n}  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`401 Unauthorized\\` / \\`404 Not Found\\`: Jika \\`identifier\\` atau \\`password\\` yang diberikan salah.  \n\\- \\`400 Bad Request\\`: Jika data yang dikirim tidak sesuai format yang diharapkan (validasi gagal).  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "identifier",
+											"value": "eggy",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "654321",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/login",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 06:51:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "108"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"83-f51ykwUR2hMxI92TdlOpuuQgD/o\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "82ba9760-fad8-4e1e"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "95528939ee92b5db-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Verifikasi berhasil. kode OTP telah dikirim ke email Anda.\",\n    \"data\": {\n        \"username\": \"eggy\",\n        \"email\": \"f4d6qti3hx@bltiwd.com\"\n    }\n}"
+						},
+						{
+							"name": "password/username wrong",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "identifier",
+											"value": "eggy",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/login",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:03:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "52"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"31-2eHOOYVsVSqTV8moM3mz6rfNp0I\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "26ef7fa8-5af4-4cea"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "95529a53aecb5844-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Username/Email atau Password salah!\"\n}"
+						},
+						{
+							"name": "time out",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "identifier",
+											"value": "eggy",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "111111",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/login",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "Too Many Requests",
+							"code": 429,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:04:23 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "68"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"49-o5J3PTiJpBjOUd4/u77C3P/JQ0o\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "83520435-ffd1-45b0"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "95529c491bb84ab6-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Terlalu banyak percobaan. Silakan coba lagi dalam 58 detik.\"\n}"
+						},
+						{
+							"name": "ip ban",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "identifier",
+											"value": "eggy",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "111111",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/login",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:07:20 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"52-ecPPRasUkrmEYebgqPWnpdaANqM\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "68749b00-b6a5-434f"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552a09eada74ac8-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Akses ditolak. IP Anda telah diblokir karena aktivitas mencurigakan.\"\n}"
+						}
+					]
 				},
 				{
 					"name": "verifyOTP",
@@ -3491,18 +4193,18 @@
 							"urlencoded": [
 								{
 									"key": "identifier",
-									"value": "eggy1",
+									"value": "eggy",
 									"type": "text"
 								},
 								{
 									"key": "otp",
-									"value": "570831",
+									"value": "565974",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/user/verifyOtp",
+							"raw": "{{HOST}}/api/v1/user/verifyLoginOtp",
 							"host": [
 								"{{HOST}}"
 							],
@@ -3510,39 +4212,236 @@
 								"api",
 								"v1",
 								"user",
-								"verifyOtp"
+								"verifyLoginOtp"
 							]
-						}
+						},
+						"description": "\\### Verify OTP (Step 2: Complete Login)  \n  \nIni adalah langkah kedua dan terakhir dari proses login. Endpoint ini digunakan untuk memverifikasi kode OTP (One-Time Password) yang telah dikirim ke email pengguna pada langkah sebelumnya.  \n  \nJika kode OTP yang dikirimkan valid dan belum kedaluwarsa, server akan mengautentikasi pengguna sepenuhnya. Sebagai hasilnya, server akan mengembalikan \\`accessToken\\` yang dapat digunakan untuk mengakses endpoint-endpoint yang terproteksi. Selain itu, sebuah \\`refreshToken\\` akan diatur dalam \\*cookie\\* (httpOnly) untuk menjaga sesi login tetap aktif.  \n  \n**Body Parameters (\\`x-www-form-urlencoded\\`):**  \n\\- \\`identifier\\` (string, required): Username atau email pengguna. Harus sama dengan yang digunakan pada saat meminta OTP.  \n\\- \\`otp\\` (string, required): Kode OTP 6 digit yang diterima pengguna melalui email.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan sukses, data lengkap profil pengguna, dan sebuah \\`accessToken\\`.  \n\\`\\`\\`json  \n{  \n\"message\": \"Login berhasil!\",  \n\"data\": {  \n\"id\": \"60d5f3f7e3e4a2b1c8f1e3a1\",  \n\"username\": \"eggy\",  \n\"email\": \"eggy@example.com\",  \n\"isPremium\": false,  \n\"role\": \"user\"  \n},  \n\"accessToken\": \"ey...\\[your-access-token\\]...\"  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`400 Bad Request\\`: Jika kode OTP yang diberikan salah, tidak valid, atau telah kedaluwarsa.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server saat proses verifikasi."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "identifier",
+											"value": "eggy",
+											"type": "text"
+										},
+										{
+											"key": "otp",
+											"value": "565974",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/verifyLoginOtp",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"verifyLoginOtp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:16:55 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "363"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"1c3-Bqb6TCzBRL/lHpVm9j0M7brG9fA\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "265198bf-0f38-40b7"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTM0Mjc4MTV9.kJGECzS0J56JlvzuHSdrH5-eI2R7Qrblag0Mgh9eDeg; Max-Age=2592000; Path=/; Expires=Fri, 25 Jul 2025 07:16:55 GMT; HttpOnly"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552aea39baeb5e4-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Login berhasil!\",\n    \"data\": {\n        \"id\": \"6842d1aed77a55645557e159\",\n        \"username\": \"eggy\",\n        \"email\": \"f4d6qti3hx@bltiwd.com\",\n        \"isPremium\": false,\n        \"role\": \"admin\"\n    },\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTA5MjIyMTV9.Mllz7tWaym--yixiaAiolBjncdhYdhGPfhnxeiHSNao\"\n}"
+						},
+						{
+							"name": "failed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "identifier",
+											"value": "eggy",
+											"type": "text"
+										},
+										{
+											"key": "otp",
+											"value": "333333",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/verifyLoginOtp",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"verifyLoginOtp"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:19:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "54"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"35-/XonULKiEXV/+73k1HK081BDp7M\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "c8d77e85-b95d-453a"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552b2ef4cf3ea81-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OTP tidak valid atau telah kedaluwarsa!\"\n}"
+						}
+					]
 				},
 				{
-					"name": "semua user",
+					"name": "get semua user (admin only)",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTA5MjIyMTV9.Mllz7tWaym--yixiaAiolBjncdhYdhGPfhnxeiHSNao",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "username",
-									"value": "eggy2",
-									"type": "text"
-								},
-								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text"
-								}
-							]
+							"urlencoded": []
 						},
 						"url": {
 							"raw": "{{HOST}}/api/v1/user/getAllUsers",
@@ -3555,19 +4454,199 @@
 								"user",
 								"getAllUsers"
 							]
-						}
+						},
+						"description": "\\### Get All Users (Admin Only)\n\nMengambil daftar lengkap semua pengguna yang terdaftar di dalam sistem. Endpoint ini bersifat terbatas dan hanya dapat diakses oleh pengguna dengan peran (role) 'admin'.\n\nUntuk menggunakan endpoint ini, Anda harus menyertakan \\`accessToken\\` dari akun admin pada \\*Authorization header\\* sebagai Bearer Token.\n\n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna yang memiliki peran 'admin'.\n\n**Body Parameters:**  \n\\- Tidak ada.\n\n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan sebuah objek JSON yang berisi array dari semua data pengguna yang ada di database.  \n\\`\\`\\`json  \n{  \n\"message\": \"Berhasil mendapatkan semua pengguna\",  \n\"data\": \\[  \n{  \n\"_id\": \"6842d1aed77a55645557e159\",  \n\"username\": \"eggy\",  \n\"email\": \"[f4d6qt13hx@bltiwd.com](https://mailto:f4d6qt13hx@bltiwd.com)\",  \n\"password\": \"$2b$10$IMSQLhyy92Act0EbqiqqT.F3PgxjufrgSue/rXGuLzLVmQhGBw5Ka\",  \n\"isPremium\": false,  \n\"role\": \"user\"  \n},  \n{  \n\"_id\": \"...\",  \n\"username\": \"adminUser\",  \n\"email\": \"[admin@example.com](https://mailto:admin@example.com)\",  \n\"isPremium\": false,  \n\"role\": \"admin\"  \n}  \n\\]  \n}  \n\\`\\`\\`\n\n**Error Responses:**  \n\\- \\`401 Unauthorized\\`: Jika \\`accessToken\\` tidak valid atau tidak disertakan dalam header.  \n\\- \\`403 Forbidden\\`: Jika pengguna yang terautentikasi tidak memiliki peran 'admin' dan mencoba mengakses endpoint ini.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di sisi server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/getAllUsers",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"getAllUsers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:21:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1922"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"1a0e-jDZz96xtRHcot7S5+OUSzxbomiU\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "c04435ec-3528-4473"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552b57f2c702c28-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Berhasil mendapatkan semua pengguna\",\n    \"data\": [\n        {\n            \"_id\": \"6842d1aed77a55645557e159\",\n            \"username\": \"eggy\",\n            \"email\": \"f4d6qti3hx@bltiwd.com\",\n            \"password\": \"$2b$10$IMSQLhyy92Act0EbqigqT.F3PgXjufrgSue/rXgUlzLVmQhGBw5Ka\",\n            \"isPremium\": false,\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTM0Mjc4MTV9.kJGECzS0J56JlvzuHSdrH5-eI2R7Qrblag0Mgh9eDeg\",\n            \"createdAt\": \"2025-06-06T11:31:58.642Z\",\n            \"updatedAt\": \"2025-06-25T07:16:55.045Z\",\n            \"__v\": 1,\n            \"profilePicture\": null,\n            \"role\": \"admin\",\n            \"saldo\": 0,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"pendingEmail\": null\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a1\",\n            \"profilePicture\": null,\n            \"username\": \"kenji2\",\n            \"email\": \"budi.santoso@example.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"admin\",\n            \"isPremium\": false,\n            \"saldo\": 150000,\n            \"refreshToken\": \"\",\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:00:00.000Z\",\n            \"updatedAt\": \"2025-06-25T06:24:39.677Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a2\",\n            \"profilePicture\": null,\n            \"username\": \"Ayano\",\n            \"email\": \"fg4utvgms1@xkxkud.com\",\n            \"password\": \"$2b$10$IMSQLhyy92Act0EbqigqT.F3PgXjufrgSue/rXgUlzLVmQhGBw5Ka\",\n            \"role\": \"user\",\n            \"isPremium\": true,\n            \"saldo\": 50000,\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YzBjMWI5YTNlNGIxZThhM2IwYzFhMiIsInVzZXJuYW1lIjoiQXlhbm8iLCJlbWFpbCI6ImZnNHV0dmdtczFAeGt4a3VkLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA4MzQwNzAsImV4cCI6MTc1MzQyNjA3MH0.OZqv9Xg4YRdnZpGjgXrlynxBW36_w5wxiuQhEvyEKVQ\",\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:01:00.000Z\",\n            \"updatedAt\": \"2025-06-25T06:47:50.385Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a3\",\n            \"profilePicture\": null,\n            \"username\": \"admin_web\",\n            \"email\": \"admin@myapp.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"admin\",\n            \"isPremium\": false,\n            \"saldo\": 1000000,\n            \"refreshToken\": \"\",\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:02:00.000Z\",\n            \"updatedAt\": \"2025-06-24T17:01:00.126Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a4\",\n            \"profilePicture\": \"null\",\n            \"username\": \"dewi_anjani\",\n            \"email\": \"dewi.anjani@example.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 0,\n            \"refreshToken\": null,\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:03:00.000Z\",\n            \"updatedAt\": \"2025-06-24T17:01:00.045Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a5\",\n            \"profilePicture\": null,\n            \"username\": \"eko_prasetyo\",\n            \"email\": \"eko.prasetyo@example.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 75000,\n            \"refreshToken\": \"\",\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:04:00.000Z\",\n            \"updatedAt\": \"2024-02-12T10:04:00.000Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a6\",\n            \"profilePicture\": null,\n            \"username\": \"fitri_rahayu\",\n            \"email\": \"fitri.rahayu@example.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 25000,\n            \"refreshToken\": null,\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:05:00.000Z\",\n            \"updatedAt\": \"2024-02-12T10:05:00.000Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a7\",\n            \"profilePicture\": \"null\",\n            \"username\": \"guntur_perkasa\",\n            \"email\": \"guntur.perkasa@example.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 200000,\n            \"refreshToken\": null,\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:06:00.000Z\",\n            \"updatedAt\": \"2025-06-24T17:01:00.116Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a8\",\n            \"profilePicture\": null,\n            \"username\": \"herlina_w\",\n            \"email\": \"herlina.w@example.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 0,\n            \"refreshToken\": \"\",\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:07:00.000Z\",\n            \"updatedAt\": \"2024-02-12T10:07:00.000Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1a9\",\n            \"profilePicture\": null,\n            \"username\": \"ivan_maulana\",\n            \"email\": \"ivan.maulana@example.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 10000,\n            \"refreshToken\": null,\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:08:00.000Z\",\n            \"updatedAt\": \"2024-02-12T10:08:00.000Z\"\n        },\n        {\n            \"_id\": \"65c0c1b9a3e4b1e8a3b0c1b0\",\n            \"profilePicture\": null,\n            \"username\": \"jane_doe\",\n            \"email\": \"jane.doe@example.com\",\n            \"password\": \"$2y$10$.VeddiMOwbziQj12H2yg8eidF6Gxm/0COJrrV0M1hCBrsq3UsA6jC\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 500000,\n            \"refreshToken\": \"\",\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2024-02-12T10:09:00.000Z\",\n            \"updatedAt\": \"2025-06-24T17:01:00.104Z\"\n        },\n        {\n            \"_id\": \"685a7dbf488ba3caedd6ba69\",\n            \"profilePicture\": \"https://res.cloudinary.com/dls3io1p0/image/upload/v1750779922/proyekWS/profiles/eggy99/profile-685a7dbf488ba3caedd6ba69-1750779921245-580871909.jpg\",\n            \"username\": \"eggy99\",\n            \"email\": \"l44uejwnwf@wywnxa.com\",\n            \"password\": \"$2b$10$jTAsQbPNUcjayAT0sEMagusUtN4Bg/5GOOLQ37/7rWhpS9XApQDzm\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 0,\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWE3ZGJmNDg4YmEzY2FlZGQ2YmE2OSIsInVzZXJuYW1lIjoiZWdneTk5IiwiZW1haWwiOiJsNDR1ZWp3bndmQHd5d254YS5jb20iLCJpc1ByZW1pdW0iOmZhbHNlLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MDc2MjkzMSwiZXhwIjoxNzUzMzU0OTMxfQ.rWj_hpYnEM2IVpTHnH-P7tJ-wlG32GEtHOd9BXen_54\",\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2025-06-24T10:28:15.193Z\",\n            \"updatedAt\": \"2025-06-24T15:45:24.065Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"685b938f0c7186edfd385c18\",\n            \"profilePicture\": \"null\",\n            \"username\": \"tes1\",\n            \"email\": \"9fdr49nfl7@illubd.com\",\n            \"password\": \"$2b$10$gDGoFJsp6CDvqDQk034bC.ZjiHqjGzymZvNa8mAVBkbMGr78TsmVG\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 0,\n            \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5MzhmMGM3MTg2ZWRmZDM4NWMxOCIsInVzZXJuYW1lIjoidGVzMSIsImVtYWlsIjoiOWZkcjQ5bmZsN0BpbGx1YmQuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA4MzIxNzAsImV4cCI6MTc1MzQyNDE3MH0.R5rHqTPmUSnfd-dq-EWMy1-hL9zoqce-OqnENRudiQg\",\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2025-06-25T06:13:35.274Z\",\n            \"updatedAt\": \"2025-06-25T06:16:10.768Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"685b99250c7186edfd385cdf\",\n            \"profilePicture\": \"null\",\n            \"username\": \"tes123\",\n            \"email\": \"5kdvl011xc@qejjyl.com\",\n            \"password\": \"$2b$10$oqzkkMIQvzXg8TRDR8dzX.rKjX5LEfAWy8weVXmaQVbU1BA9bLPjC\",\n            \"role\": \"user\",\n            \"isPremium\": false,\n            \"saldo\": 0,\n            \"refreshToken\": null,\n            \"pendingEmail\": null,\n            \"otp\": null,\n            \"otpExpiresAt\": null,\n            \"createdAt\": \"2025-06-25T06:37:25.068Z\",\n            \"updatedAt\": \"2025-06-25T06:37:25.068Z\",\n            \"__v\": 0\n        }\n    ]\n}"
+						},
+						{
+							"name": "bukan admin",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/getAllUsers",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"getAllUsers"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:25:53 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "71"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"53-AZb+HYmKLd7mGEZmUBJMhAxRgDI\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "3db6f6b3-b5da-4172"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552bbca0eed244a-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Akses ditolak. Anda tidak memiliki izin untuk mengakses endpoint ini.\"\n}"
+						}
+					]
 				},
 				{
-					"name": "updPP",
+					"name": "update profile picture",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5OTI1MGM3MTg2ZWRmZDM4NWNkZiIsInVzZXJuYW1lIjoidGVzMTIzIiwiZW1haWwiOiI1a2R2bDAxMXhjQHFlamp5bC5jb20iLCJpc1ByZW1pdW0iOmZhbHNlLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MDgzNjMxMCwiZXhwIjoxNzUwOTIyNzEwfQ.zuyw3OXlKsyx31EZ2MbJVepr4Tij6Yh6kJcqTA1Uds8",
 									"type": "string"
 								}
 							]
@@ -3580,12 +4659,12 @@
 								{
 									"key": "profilePicture",
 									"type": "file",
-									"src": "/C:/Users/ebewa/Pictures/lupa.jpg"
+									"src": "postman-cloud:///1f051962-4e6b-48d0-8734-da27efd987b7"
 								}
 							]
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/user/profile/upload",
+							"raw": "{{HOST}}/api/v1/user/profile/upload/multer",
 							"host": [
 								"{{HOST}}"
 							],
@@ -3594,14 +4673,309 @@
 								"v1",
 								"user",
 								"profile",
-								"upload"
+								"upload",
+								"multer"
 							]
-						}
+						},
+						"description": "\\### Update Profile Picture\n\nMemungkinkan pengguna yang terautentikasi untuk mengunggah atau mengganti gambar profil mereka. Jika pengguna sudah memiliki gambar profil sebelumnya, file gambar yang lama akan dihapus dari server dan digantikan dengan yang baru.\n\nRequest ini harus dikirim menggunakan \\`form-data\\` untuk dapat melampirkan file gambar.\n\n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna yang sedang login.\n\n**Body Parameters (\\`form-data\\`):**  \n\\- \\`profilePicture\\` (File, required): File gambar yang ingin diunggah sebagai foto profil baru (contoh: .jpg, .png).\n\n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan sukses beserta path atau URL dari gambar profil yang baru saja diunggah.  \n\\`\\`\\`json  \n{  \n\"message\": \"Gambar profil berhasil diupdate!\",  \n\"data\": {  \n\"profilePicture\": \"/images/profiles/60d5f3f7e3e4a2b1c8f1e3a1/new-image.jpg\"  \n}  \n}  \n\\`\\`\\`\n\n**Error Responses:**  \n\\- \\`400 Bad Request\\`: Jika tidak ada file yang dilampirkan dalam request, atau format file tidak didukung.  \n\\- \\`401 Unauthorized\\`: Jika \\`accessToken\\` tidak valid atau tidak disertakan.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kegagalan saat proses penyimpanan file atau pembaruan data di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "cloud success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "profilePicture",
+											"type": "file",
+											"src": "postman-cloud:///1f051962-4e6b-48d0-8734-da27efd987b7"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/upload/cloud",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"upload",
+										"cloud"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:54:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "173"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"de-8Qt0vik6c1RmbtXtQ7spwhl8kjE\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "0259947b-f990-4423"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552e5827d6eb5d0-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": "{\n    \"message\": \"Gambar profil berhasil diupdate!\",\n    \"data\": {\n        \"profilePicture\": \"https://res.cloudinary.com/dls3io1p0/image/upload/v1750838064/proyekWS/profiles/tes123/profile-685b99250c7186edfd385cdf-1750838062572-514291735.jpg\"\n    }\n}"
+						},
+						{
+							"name": "multer success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "profilePicture",
+											"type": "file",
+											"src": "postman-cloud:///1f051962-4e6b-48d0-8734-da27efd987b7"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/profile/upload/multer",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"upload",
+										"multer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:29:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "122"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"98-vjcEYh5ktmLeyUwOSnN0EghLkWI\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "082ef255-2a5e-4545"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552c1abaac36cf1-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Gambar profil berhasil diupdate!\",\n    \"data\": {\n        \"profilePicture\": \"/images/profiles/685b99250c7186edfd385cdf/tes123-1750836594612-730654762.jpeg\"\n    }\n}"
+						},
+						{
+							"name": "field tidak diisi",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "profilePicture",
+											"type": "file",
+											"src": []
+										}
+									]
+								},
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/profile/upload/multer",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"upload",
+										"multer"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:56:21 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "66"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"4b-WhxdzU4dToZwYW1QuVHDOxniZcw\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "188d7859-b5be-4db6"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552e867eedfb5ae-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tidak ada file yang diunggah atau format file tidak didukung.\"\n}"
+						}
+					]
 				},
 				{
-					"name": "getProfile",
+					"name": "get profile",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -3626,19 +5000,103 @@
 								"user",
 								"profile"
 							]
-						}
+						},
+						"description": "\\### Get User Profile  \n  \nMengambil data profil lengkap dari pengguna yang sedang terautentikasi (login). Informasi yang dikembalikan mencakup username, email, saldo, dan path/URL gambar profil, namun tidak termasuk data sensitif seperti password.  \n  \n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna yang sedang login.  \n  \n**Body Parameters:**  \n\\- Tidak ada.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan objek JSON yang berisi detail profil pengguna.  \n\\`\\`\\`json  \n{  \n\"message\": \"Berhasil mendapatkan profil pengguna\",  \n\"data\": {  \n\"id\": \"60d5f3f7e3e4a2b1c8f1e3a1\",  \n\"username\": \"johndoe\",  \n\"email\": \"john.doe@example.com\",  \n\"isPremium\": false,  \n\"profilePicture\": \"https://res.cloudinary.com/...\",  \n\"saldo\": 10000,  \n\"role\": \"user\"  \n}  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`401 Unauthorized\\`: Jika \\`accessToken\\` tidak valid atau tidak disertakan.  \n\\- \\`404 Not Found\\`: Jika pengguna dengan ID dari token tidak ditemukan di database.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:57:31 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "222"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"13a-ew/hTFzOO545F/TVz1txrkWLqXE\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "dac7d628-f1e1-49eb"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552ea1dea0f2567-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Berhasil mendapatkan profil pengguna\",\n    \"data\": {\n        \"id\": \"685b99250c7186edfd385cdf\",\n        \"username\": \"tes123\",\n        \"email\": \"5kdvl011xc@qejjyl.com\",\n        \"isPremium\": false,\n        \"profilePicture\": \"https://proyekws-api.onrender.com/images/profiles/685b99250c7186edfd385cdf/tes123-1750838130581-77959127.jpeg\",\n        \"saldo\": 0,\n        \"role\": \"user\"\n    }\n}"
+						}
+					]
 				},
 				{
-					"name": "getPPonly",
+					"name": "get profile picture",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5OTI1MGM3MTg2ZWRmZDM4NWNkZiIsInVzZXJuYW1lIjoidGVzMTIzIiwiZW1haWwiOiI1a2R2bDAxMXhjQHFlamp5bC5jb20iLCJpc1ByZW1pdW0iOmZhbHNlLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MDgzNjMxMCwiZXhwIjoxNzUwOTIyNzEwfQ.zuyw3OXlKsyx31EZ2MbJVepr4Tij6Yh6kJcqTA1Uds8",
 									"type": "string"
 								}
 							]
@@ -3646,7 +5104,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/user/profile/picture",
+							"raw": "{{HOST}}/api/v1/user/profile/picture/multer",
 							"host": [
 								"{{HOST}}"
 							],
@@ -3655,21 +5113,314 @@
 								"v1",
 								"user",
 								"profile",
-								"picture"
+								"picture",
+								"multer"
 							]
-						}
+						},
+						"description": "\\### Get Profile Picture  \n  \nMengambil dan menampilkan file gambar profil aktual dari pengguna yang terautentikasi. Berbeda dengan endpoint 'Get User Profile' yang hanya memberikan URL, endpoint ini akan mengembalikan data gambar mentah (\\`raw image data\\`).  \n  \n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna yang sedang login.  \n  \n**Body Parameters:**  \n\\- Tidak ada.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Endpoint ini tidak mengembalikan JSON. Sebaliknya, ia akan mengembalikan file gambar (\\`image/jpeg\\`, \\`image/png\\`, dll.) secara langsung. Di Postman, Anda akan melihat gambar ditampilkan di tab 'Preview' atau sebagai data biner di tab 'Body'.  \n  \n**Error Responses:**  \n\\- \\`401 Unauthorized\\`: Jika \\`accessToken\\` tidak valid atau tidak disertakan.  \n\\- \\`404 Not Found\\`: Jika pengguna tidak ditemukan atau jika pengguna tidak memiliki gambar profil.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan saat mengambil file gambar dari server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "get profile picture cloud (fail)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/profile/picture/cloud",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"picture",
+										"cloud"
+									]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:33:40 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "82"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"5f-b1YQGjYn4ZdMGCxQy9fgTPcoQtc\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "4540eb50-8f11-4552"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552c732a960b5ae-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Terjadi kesalahan pada server saat mengambil gambar profil.\",\n    \"error\": \"Invalid URL\"\n}"
+						},
+						{
+							"name": "get profile picture cloud",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/picture/multer",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"picture",
+										"multer"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "get profile picture multer (fail)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/picture/multer",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"picture",
+										"multer"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:42:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "48"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2c-OeF2JfEOWKevNh+bbZ8brXBywEM\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "c2d9cb9a-7c5c-40a3"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552d49b6995c6e4-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Gambar profil tidak ditemukan.\"\n}"
+						},
+						{
+							"name": "get profile picture multer",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/picture/multer",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"picture",
+										"multer"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:45:22 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "48"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2c-OeF2JfEOWKevNh+bbZ8brXBywEM\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "e1bb5a30-4916-4a49"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552d851ca07e794-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Gambar profil tidak ditemukan.\"\n}"
+						}
+					]
 				},
 				{
-					"name": "hapusPP",
+					"name": "hapus profile picture",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NGZkNmM1YzIyOTZiY2JkZDg1MmVmNCIsInVzZXJuYW1lIjoiZWdneTEiLCJlbWFpbCI6Imc1dXdhNmptc2lAZGFvdXNlLmNvbSIsImlzUHJlbWl1bSI6ZmFsc2UsImlhdCI6MTc1MDA3MjQ1OSwiZXhwIjoxNzUwMTA4NDU5fQ.J-YumLkpWflAUfKs1x6lSnKRAFxbW14Phwoc7rkZTbI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWI5OTI1MGM3MTg2ZWRmZDM4NWNkZiIsInVzZXJuYW1lIjoidGVzMTIzIiwiZW1haWwiOiI1a2R2bDAxMXhjQHFlamp5bC5jb20iLCJpc1ByZW1pdW0iOmZhbHNlLCJyb2xlIjoidXNlciIsImlhdCI6MTc1MDgzNjMxMCwiZXhwIjoxNzUwOTIyNzEwfQ.zuyw3OXlKsyx31EZ2MbJVepr4Tij6Yh6kJcqTA1Uds8",
 									"type": "string"
 								}
 							]
@@ -3677,7 +5428,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/user/profile/picture",
+							"raw": "{{HOST}}/api/v1/user/profile/picture/multer",
 							"host": [
 								"{{HOST}}"
 							],
@@ -3686,15 +5437,280 @@
 								"v1",
 								"user",
 								"profile",
-								"picture"
+								"picture",
+								"multer"
 							]
-						}
+						},
+						"description": "\\### Hapus Profile Picture  \n  \nMenghapus gambar profil milik pengguna yang sedang terautentikasi. Endpoint ini akan menghapus file fisik gambar dari server dan memperbarui data pengguna di database dengan mengatur path gambar profil menjadi null.  \n  \n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna yang sedang login.  \n  \n**Body Parameters:**  \n\\- Tidak ada.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan konfirmasi bahwa gambar profil telah berhasil dihapus.  \n\\`\\`\\`json  \n{  \n\"message\": \"Gambar profil berhasil dihapus.\"  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`401 Unauthorized\\`: Jika \\`accessToken\\` tidak valid atau tidak disertakan.  \n\\- \\`400 Bad Request\\`: Jika pengguna tidak memiliki gambar profil untuk dihapus.  \n\\- \\`404 Not Found\\`: Jika pengguna tidak ditemukan.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kegagalan saat proses penghapusan file di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "multer success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/picture/multer",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"picture",
+										"multer"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:39:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "48"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2d-lQXJ0FPU6HV95UrxsLLOV20j0rM\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "47e79563-8198-465a"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552cfda1be0b5b8-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Gambar profil berhasil dihapus.\"\n}"
+						},
+						{
+							"name": "ga ada profile picture",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/picture/multer",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"picture",
+										"multer"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:53:40 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "54"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"34-aaPflXoeD7/Fa9TqO61XMxgMek4\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "d4684717-ea5e-483a"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552e47cc9c7b5d0-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tidak ada gambar profil untuk dihapus.\"\n}"
+						},
+						{
+							"name": "cloud success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/picture/cloud",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"picture",
+										"cloud"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 07:50:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "48"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2d-lQXJ0FPU6HV95UrxsLLOV20j0rM\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "764d8ace-fcf7-49c5"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552dfb63dc16d06-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Gambar profil berhasil dihapus.\"\n}"
+						}
+					]
 				},
 				{
-					"name": "refreshToken",
+					"name": "refresh token",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTA5MjIyMTV9.Mllz7tWaym--yixiaAiolBjncdhYdhGPfhnxeiHSNao",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -3708,27 +5724,190 @@
 								"user",
 								"token"
 							]
-						}
+						},
+						"description": "\\### Refresh Access Token  \n  \nMemperbarui \\`accessToken\\` yang telah kedaluwarsa. Endpoint ini menggunakan \\`refreshToken\\` yang disimpan di cookie (httpOnly) untuk menghasilkan \\`accessToken\\` yang baru.  \n  \nIni memungkinkan pengguna untuk tetap login tanpa harus memasukkan kembali kredensial mereka setiap kali \\`accessToken\\` habis masa berlakunya.  \n  \n**Authorization:**  \n\\- Endpoint ini secara otomatis menggunakan \\`refreshToken\\` yang ada di \\*cookie\\* yang dikirim oleh browser. Anda tidak perlu mengatur \\`Authorization header\\` secara manual.  \n  \n**Body Parameters:**  \n\\- Tidak ada.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan \\`accessToken\\` yang baru dan valid.  \n\\`\\`\\`json  \n{  \n\"message\": \"Refresh token berhasil!\",  \n\"accessToken\": \"ey...\\[new-access-token\\]...\"  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`401 Unauthorized\\`: Jika \\`refreshToken\\` tidak ditemukan di cookie.  \n\\- \\`403 Forbidden\\`: Jika \\`refreshToken\\` tidak valid, telah kedaluwarsa, atau tidak cocok dengan data di database.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "tidak ada refresh token",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/token",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"token"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:27:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "47"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"2c-dr0oxSz/pMLJHYX1oLnGsdEMSCA\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "4f4a044f-6414-49e1"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "955315510818a19c-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Refresh token tidak ditemukan!\"\n}"
+						},
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/token",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"token"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:30:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "275"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"14f-ftWnMW1u4WOMKObjxb4XqtTCAmc\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "8ced3367-2bd6-4b7e"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "95531aead99bc753-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Refresh token berhasil!\",\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiY2txZHE4ajR3cUBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODQwMjUwLCJleHAiOjE3NTA4NDExNTB9.KVICloKHfeUGtOvvIEbP3z8sF0E5U40om5VwLcRzpd0\"\n}"
+						}
+					]
 				},
 				{
 					"name": "logout",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTA5MjIyMTV9.Mllz7tWaym--yixiaAiolBjncdhYdhGPfhnxeiHSNao",
 									"type": "string"
 								}
 							]
 						},
-						"method": "GET",
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "authorization",
@@ -3751,30 +5930,230 @@
 								"user",
 								"logout"
 							]
-						}
+						},
+						"description": "\\### Logout\n\nMengakhiri sesi pengguna (logout). Endpoint ini akan menghapus \\`refreshToken\\` dari database, membuatnya tidak valid untuk sesi mendatang. Selain itu, server juga akan memberikan instruksi kepada klien untuk menghapus cookie \\`refreshToken\\`.\n\n**Authorization:**  \n\\- Seperti endpoint \\`refresh token\\`, proses ini menggunakan \\`refreshToken\\` dari \\*cookie\\* untuk mengidentifikasi sesi yang akan diakhiri. Tidak diperlukan \\`Authorization header\\` manual.\n\n**Body Parameters:**  \n\\- Tidak ada.\n\n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan konfirmasi bahwa proses logout telah berhasil.  \n\\`\\`\\`json  \n{  \n\"message\": \"Logout berhasil!\"  \n}  \n\\`\\`\\`\n\n**Error Responses:**  \n\\- Tidak ada error spesifik. Jika tidak ada \\`refreshToken\\` yang ditemukan, endpoint akan tetap mengembalikan respons sukses karena pengguna sudah dalam keadaan logout."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "kalo udah logout",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6InBncXp0MWRld2NAb3N4b2Z1bGsuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA1MjE0NzYsImV4cCI6MTc1MDYwNzg3Nn0.f33X04ee_RJBPTYE3OnAtoQdZU2zssYHC_B7rYmjZMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/logout",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:28:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"40-XzYOAH4JNUKbtWOHg1ksH9HtyxM\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "9234faff-e2c7-4dfd"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "955317a80a53c753-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Pengguna sudah logout (tidak ada token ditemukan).\"\n}"
+						},
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6InBncXp0MWRld2NAb3N4b2Z1bGsuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA1MjE0NzYsImV4cCI6MTc1MDYwNzg3Nn0.f33X04ee_RJBPTYE3OnAtoQdZU2zssYHC_B7rYmjZMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/logout",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"logout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:31:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "34"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"1e-+wHqnrj3wHRB6zgZrDpsGET5KNc\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "0891799d-796b-4c19"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "95531bd8bf51c753-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Logout berhasil!\"\n}"
+						}
+					]
 				},
 				{
-					"name": "updPass",
+					"name": "update password",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTA5MjIyMTV9.Mllz7tWaym--yixiaAiolBjncdhYdhGPfhnxeiHSNao",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "username",
-									"value": "eggy2",
+									"key": "currentPassword",
+									"value": "654321",
 									"type": "text"
 								},
 								{
-									"key": "email",
-									"value": "5162nrnetq@bltiwd.com",
+									"key": "newPassword",
+									"value": "123456",
 									"type": "text"
 								},
 								{
-									"key": "password",
+									"key": "confirmNewPassword",
 									"value": "123456",
 									"type": "text"
 								}
@@ -3792,9 +6171,324 @@
 								"profile",
 								"password"
 							]
-						}
+						},
+						"description": "\\### Update Password  \n  \nMemungkinkan pengguna yang terautentikasi untuk memperbarui password akun mereka. Untuk alasan keamanan, pengguna harus memasukkan password mereka saat ini (\\`currentPassword\\`) untuk verifikasi.  \n  \nSetelah password berhasil diubah, semua sesi aktif pengguna (termasuk yang saat ini) akan diakhiri dengan menghapus \\`refreshToken\\`. Pengguna harus login kembali menggunakan password yang baru.  \n  \n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna yang sedang login.  \n  \n**Body Parameters (\\`x-www-form-urlencoded\\`):**  \n\\- \\`currentPassword\\` (string, required): Password yang saat ini digunakan oleh pengguna.  \n\\- \\`newPassword\\` (string, required): Password baru yang ingin digunakan.  \n\\- \\`confirmNewPassword\\` (string, required): Konfirmasi password baru, harus sama dengan \\`newPassword\\`.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan konfirmasi bahwa password telah berhasil diupdate.  \n\\`\\`\\`json  \n{  \n\"message\": \"Password berhasil diupdate!\"  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`401 Unauthorized\\`: Jika \\`currentPassword\\` yang diberikan salah.  \n\\- \\`400 Bad Request\\`: Jika validasi gagal (misalnya, \\`newPassword\\` dan \\`confirmNewPassword\\` tidak cocok).  \n\\- \\`401 Unauthorized\\`: Jika \\`accessToken\\` tidak valid atau tidak disertakan.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currentPassword",
+											"value": "654321",
+											"type": "text"
+										},
+										{
+											"key": "newPassword",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "confirmNewPassword",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/password",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:16:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "45"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"29-V+eChujayDVzXHcEb//APtosgbA\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "361438f3-2dc9-47fb"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "refreshToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9553067d28a64ad7-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Password berhasil diupdate!\"\n}"
+						},
+						{
+							"name": "current password salah",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currentPassword",
+											"value": "6543",
+											"type": "text"
+										},
+										{
+											"key": "newPassword",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "confirmNewPassword",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/password",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"password"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:18:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"26-G+Ia6bIRVQcQtoJAZ9oTgJ8T5jA\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "493840b9-3308-4d3a"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "955308c089617d66-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Password saat ini salah!\"\n}"
+						},
+						{
+							"name": "new password doesnt match",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "currentPassword",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "newPassword",
+											"value": "12345",
+											"type": "text"
+										},
+										{
+											"key": "confirmNewPassword",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/password",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"password"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:19:33 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "124"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"ae-KdyQj1O2YA6X4t2+I9Sr2texXPY\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "d20eed55-9eed-47a5"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "95530a68dfaddf20-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Validasi gagal!\",\n    \"error\": {\n        \"newPassword\": \"Panjang password baru minimal 6 karakter!\",\n        \"confirmNewPassword\": \"Konfirmasi password tidak cocok dengan password baru!\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "updEmail",
@@ -3828,26 +6522,126 @@
 								"profile",
 								"email"
 							]
-						}
+						},
+						"description": "\\### Update Email (Step 1: Request Change)  \n  \nMemulai proses pembaruan alamat email pengguna. Ini adalah langkah pertama dari proses verifikasi dua langkah. Endpoint ini tidak langsung mengubah email, melainkan mengirimkan kode OTP ke alamat email baru yang diajukan.  \n  \nUntuk menyelesaikan perubahan, pengguna harus memverifikasi OTP tersebut melalui endpoint \\`verifyEmailOTP\\`.  \n  \n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna yang sedang login.  \n  \n**Body Parameters (\\`x-www-form-urlencoded\\`):**  \n\\- \\`newEmail\\` (string, required): Alamat email baru yang ingin digunakan.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan konfirmasi bahwa OTP telah dikirim ke alamat email baru.  \n\\`\\`\\`json  \n{  \n\"message\": \"Verifikasi berhasil. Kode OTP telah dikirim ke email baru Anda.\",  \n\"data\": {  \n\"newEmail\": \"email.baru@example.com\"  \n}  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`400 Bad Request\\`: Jika format email yang dimasukkan tidak valid atau jika email tersebut sudah terdaftar.  \n\\- \\`401 Unauthorized\\`: Jika \\`accessToken\\` tidak valid atau tidak disertakan.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan saat mengirim email OTP."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success send otp",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "newEmail",
+											"value": "ckqdq8j4wq@bltiwd.com",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/email",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"email"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:21:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "102"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"79-0O0Gf0yLQsdEiGavlzRa6Jq4yX0\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "7a6c2c08-1ed2-49db"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "95530d6a5ea0e77a-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Verifikasi berhasil. Kode OTP telah dikirim ke email baru Anda.\",\n    \"data\": {\n        \"newEmail\": \"ckqdq8j4wq@bltiwd.com\"\n    }\n}"
+						}
+					]
 				},
 				{
 					"name": "verifyEmailOTP",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTA5MjIyMTV9.Mllz7tWaym--yixiaAiolBjncdhYdhGPfhnxeiHSNao",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "urlencoded",
 							"urlencoded": [
 								{
-									"key": "identifier",
-									"value": "eggy1",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456",
+									"key": "otp",
+									"value": "433732",
 									"type": "text"
 								}
 							]
@@ -3864,17 +6658,215 @@
 								"profile",
 								"verifyEmailOtp"
 							]
-						}
+						},
+						"description": "\\### Verify Email OTP (Step 2: Confirm Change)  \n  \nIni adalah langkah kedua dan terakhir untuk menyelesaikan proses pembaruan email. Endpoint ini memverifikasi kode OTP yang telah dikirim ke alamat email baru pengguna.  \n  \nJika kode OTP yang dikirimkan valid dan belum kedaluwarsa, alamat email pengguna akan diperbarui secara permanen di database.  \n  \n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna yang sedang login.  \n  \n**Body Parameters (\\`x-www-form-urlencoded\\`):**  \n\\- \\`otp\\` (string, required): Kode OTP 6 digit yang diterima pengguna di alamat email baru mereka.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan konfirmasi beserta data email yang baru saja diperbarui.  \n\\`\\`\\`json  \n{  \n\"message\": \"Email berhasil diperbarui!\",  \n\"data\": {  \n\"email\": \"email.baru.terverifikasi@example.com\"  \n}  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`400 Bad Request\\`: Jika kode OTP yang diberikan salah, tidak valid, atau telah kedaluwarsa.  \n\\- \\`401 Unauthorized\\`: Jika \\`accessToken\\` tidak valid atau tidak disertakan.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success, email changed",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "otp",
+											"value": "433732",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/verifyEmailOtp",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"verifyEmailOtp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:23:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"51-YYRwErdPoVjduzeMUa/LE6HGbUA\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "f6630639-547b-4d45"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9553101bd89ce783-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Email berhasil diperbarui!\",\n    \"data\": {\n        \"email\": \"ckqdq8j4wq@bltiwd.com\"\n    }\n}"
+						},
+						{
+							"name": "otp wrong",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "otp",
+											"value": "433732",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/profile/verifyEmailOtp",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"profile",
+										"verifyEmailOtp"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:25:48 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "54"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"35-/XonULKiEXV/+73k1HK081BDp7M\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "d72d798a-262b-4f9b"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "95531390ca8bf46d-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OTP tidak valid atau telah kedaluwarsa!\"\n}"
+						}
+					]
 				},
 				{
 					"name": "getLogs",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTA5MjIyMTV9.Mllz7tWaym--yixiaAiolBjncdhYdhGPfhnxeiHSNao",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{HOST}}/api/v1/user/logs/:userId",
+							"raw": "{{HOST}}/api/v1/user/logs/65c0c1b9a3e4b1e8a3b0c1a1",
 							"host": [
 								"{{HOST}}"
 							],
@@ -3883,25 +6875,210 @@
 								"v1",
 								"user",
 								"logs",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
+								"65c0c1b9a3e4b1e8a3b0c1a1"
 							]
-						}
+						},
+						"description": "\\### Get User Logs (Admin Only)  \n  \nMengambil riwayat lengkap aktivitas (log) dari seorang pengguna tertentu berdasarkan ID-nya. Endpoint ini bersifat terbatas dan hanya dapat diakses oleh pengguna dengan peran (role) 'admin'.  \n  \n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna dengan peran 'admin'.  \n  \n**Path Parameters:**  \n\\- \\`userId\\` (string, required): ID unik dari pengguna yang log-nya ingin dilihat. Contoh: \\`65c0c1b9a3e4b1e8a3b0c1a1\\`.  \n  \n**Body Parameters:**  \n\\- Tidak ada.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan array dari semua log aktivitas milik pengguna tersebut, diurutkan dari yang terbaru.  \n\\`\\`\\`json  \n{  \n\"message\": \"Berhasil mendapatkan log aktivitas untuk pengguna \\[username\\]\",  \n\"data\": \\[  \n{  \n\"userId\": \"65c0c1b9a3e4b1e8a3b0c1a1\",  \n\"action\": \"LOGIN_BERHASIL\",  \n\"status\": \"BERHASIL\",  \n\"ipAddress\": \"::1\",  \n\"details\": \"Login berhasil untuk pengguna \\[username\\].\",  \n\"createdAt\": \"2023-10-28T10:00:00.000Z\"  \n},  \n{  \n\"userId\": \"65c0c1b9a3e4b1e8a3b0c1a1\",  \n\"action\": \"GANTI_PASSWORD\",  \n\"status\": \"BERHASIL\",  \n\"ipAddress\": \"::1\",  \n\"details\": \"Password untuk pengguna \\[username\\] berhasil diupdate.\",  \n\"createdAt\": \"2023-10-28T09:30:00.000Z\"  \n}  \n\\]  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`401 Unauthorized\\` / \\`403 Forbidden\\`: Jika pengguna yang mengakses bukan admin.  \n\\- \\`404 Not Found\\`: Jika pengguna dengan ID tersebut tidak ditemukan, atau jika pengguna tersebut belum memiliki log aktivitas.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/logs/65c0c1b9a3e4b1e8a3b0c1a1",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"logs",
+										"65c0c1b9a3e4b1e8a3b0c1a1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:11:24 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "272"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"23f-eSrlsCHX/wCcFDhIvpKaGG7jjr0\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "f01e24d0-c096-4d38"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552fe744b084e67-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Berhasil mendapatkan log aktivitas untuk pengguna kenji2\",\n    \"data\": [\n        {\n            \"_id\": \"65c0c7bfa3e4b1e8a3b0c7a7\",\n            \"userId\": \"65c0c1b9a3e4b1e8a3b0c1a1\",\n            \"action\": \"REFRESH_TOKEN\",\n            \"status\": \"BERHASIL\",\n            \"ipAddress\": \"192.168.1.1\",\n            \"details\": \"Token diperbarui\",\n            \"createdAt\": \"2024-02-12T14:07:00.000Z\",\n            \"updatedAt\": \"2024-02-12T14:07:00.000Z\"\n        },\n        {\n            \"_id\": \"65c0c7bfa3e4b1e8a3b0c7a1\",\n            \"userId\": \"65c0c1b9a3e4b1e8a3b0c1a1\",\n            \"action\": \"LOGIN_BERHASIL\",\n            \"status\": \"BERHASIL\",\n            \"ipAddress\": \"192.168.1.1\",\n            \"details\": \"Login via web\",\n            \"createdAt\": \"2024-02-12T14:01:00.000Z\",\n            \"updatedAt\": \"2024-02-12T14:01:00.000Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "ga ada log",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/logs/65c0c1b9a3e4b1e8a3b0c1b0",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"logs",
+										"65c0c1b9a3e4b1e8a3b0c1b0"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:14:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "56"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"39-U+Zh75qlTLxX/QEAmGOZRaGcz+4\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "b23dc0ff-ec5c-4aab"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "955302e4ed61f46d-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tidak ada log aktivitas untuk pengguna ini.\"\n}"
+						}
+					]
 				},
 				{
-					"name": "updRole",
+					"name": "update role (admin only)",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NDJkMWFlZDc3YTU1NjQ1NTU3ZTE1OSIsInVzZXJuYW1lIjoiZWdneSIsImVtYWlsIjoiZjRkNnF0aTNoeEBibHRpd2QuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzUwODM1ODE1LCJleHAiOjE3NTA5MjIyMTV9.Mllz7tWaym--yixiaAiolBjncdhYdhGPfhnxeiHSNao",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
 						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "role",
+									"value": "user",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/user/role/:userId",
+							"raw": "{{HOST}}/api/v1/user/role/65c0c1b9a3e4b1e8a3b0c1a1",
 							"host": [
 								"{{HOST}}"
 							],
@@ -3910,20 +7087,298 @@
 								"v1",
 								"user",
 								"role",
-								":userId"
-							],
-							"variable": [
-								{
-									"key": "userId",
-									"value": ""
-								}
+								"65c0c1b9a3e4b1e8a3b0c1a1"
 							]
-						}
+						},
+						"description": "\\### Update User Role (Admin Only)  \n  \nMemperbarui peran (role) dari seorang pengguna tertentu. Endpoint ini hanya dapat diakses oleh pengguna dengan peran 'admin'. Admin dapat mengubah peran pengguna lain menjadi 'user' atau 'admin'.  \n  \n**Penting:** Seorang admin tidak dapat mengubah perannya sendiri melalui endpoint ini untuk mencegah penguncian akses.  \n  \n**Authorization:**  \n\\- **Type:** Bearer Token  \n\\- **Token:** Diperlukan \\`accessToken\\` dari pengguna dengan peran 'admin'.  \n  \n**Path Parameters:**  \n\\- \\`userId\\` (string, required): ID unik dari pengguna yang perannya akan diubah.  \n  \n**Body Parameters (\\`x-www-form-urlencoded\\`):**  \n\\- \\`role\\` (string, required): Peran baru untuk pengguna. Nilai yang valid adalah \\`'user'\\` atau \\`'admin'\\`.  \n  \n**Success Response (\\`200 OK\\`):**  \n\\- Mengembalikan pesan konfirmasi beserta data pengguna yang telah diperbarui.  \n\\`\\`\\`json  \n{  \n\"message\": \"Role untuk pengguna johndoe berhasil diubah menjadi user.\",  \n\"data\": {  \n\"id\": \"65c0c1b9a3e4b1e8a3b0c1a1\",  \n\"username\": \"johndoe\",  \n\"email\": \"johndoe@example.com\",  \n\"role\": \"user\"  \n}  \n}  \n\\`\\`\\`  \n  \n**Error Responses:**  \n\\- \\`401 Unauthorized\\` / \\`403 Forbidden\\`: Jika pengguna yang mengakses bukan admin.  \n\\- \\`404 Not Found\\`: Jika pengguna dengan ID yang diberikan di path tidak ditemukan.  \n\\- \\`400 Bad Request\\`: Jika nilai \\`role\\` yang dikirim tidak valid (bukan 'user' atau 'admin'), atau jika admin mencoba mengubah perannya sendiri.  \n\\- \\`500 Internal Server Error\\`: Jika terjadi kesalahan tak terduga di server."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "role",
+											"value": "user",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://proyekws-api.onrender.com/api/v1/user/role/65c0c1b9a3e4b1e8a3b0c1a1",
+									"protocol": "https",
+									"host": [
+										"proyekws-api",
+										"onrender",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"role",
+										"65c0c1b9a3e4b1e8a3b0c1a1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:04:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "136"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"b4-163JIN2QPAhrAGFtO6t7by6K0iA\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "f4b29e13-e833-45ae"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552f4a128031982-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Role untuk pengguna kenji2 berhasil diubah menjadi user.\",\n    \"data\": {\n        \"id\": \"65c0c1b9a3e4b1e8a3b0c1a1\",\n        \"username\": \"kenji2\",\n        \"email\": \"budi.santoso@example.com\",\n        \"role\": \"user\"\n    }\n}"
+						},
+						{
+							"name": "invalid input",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "role",
+											"value": "us",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/role/65c0c1b9a3e4b1e8a3b0c1a1",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"role",
+										"65c0c1b9a3e4b1e8a3b0c1a1"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:05:40 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "69"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"48-Fma7nPfb0EH0Zey9N9IpXNgmXlk\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "cf6c3d66-1cf0-44c6"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552f610ae0c1982-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Input tidak valid. Harap berikan role 'user' atau 'admin'.\"\n}"
+						},
+						{
+							"name": "gagal, karna update diri sendiri",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "role",
+											"value": "user",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/user/role/6842d1aed77a55645557e159",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"role",
+										"6842d1aed77a55645557e159"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 25 Jun 2025 08:08:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "72"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								},
+								{
+									"key": "etag",
+									"value": "W/\"4f-nLBnUnTlaryj29f1YV6PC28nJ7I\""
+								},
+								{
+									"key": "rndr-id",
+									"value": "b03c8f4a-5805-4f45"
+								},
+								{
+									"key": "vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "x-powered-by",
+									"value": "Express"
+								},
+								{
+									"key": "x-render-origin-server",
+									"value": "Render"
+								},
+								{
+									"key": "cf-cache-status",
+									"value": "DYNAMIC"
+								},
+								{
+									"key": "Server",
+									"value": "cloudflare"
+								},
+								{
+									"key": "CF-RAY",
+									"value": "9552fa1a7b3b71ba-CGK"
+								},
+								{
+									"key": "alt-svc",
+									"value": "h3=\":443\"; ma=86400"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Anda tidak dapat mengubah role Anda sendiri melalui endpoint ini.\"\n}"
+						}
+					]
 				}
 			],
-			"description": "The `/me` endpoints let you manage information about the authenticated user."
+			"description": "Koleksi User API ini menyediakan serangkaian endpoint lengkap untuk mengelola seluruh siklus hidup pengguna dalam aplikasi Anda. Fungsionalitas utamanya terbagi menjadi tiga area: **Otentikasi**, **Manajemen Profil**, dan **Administrasi**.\n\nPada bagian **Otentikasi**, tersedia endpoint untuk registrasi pengguna baru, proses login yang aman dengan verifikasi dua langkah melalui OTP (One-Time Password) yang dikirim via email, serta mekanisme perpanjangan sesi menggunakan refresh token dan proses logout.\n\nSetelah terautentikasi, pengguna dapat mengelola akun mereka melalui endpoint **Manajemen Profil**. Ini mencakup kemampuan untuk melihat detail profil, mengunggah atau menghapus gambar profil, serta memperbarui informasi krusial seperti password dan alamat email, di mana perubahan data sensitif juga diamankan dengan verifikasi OTP.\n\nTerakhir, terdapat endpoint khusus untuk **Admin** yang memberikan hak akses lebih tinggi untuk mengelola seluruh basis data pengguna, seperti melihat daftar semua pengguna, mengubah peran (role) mereka, dan memantau aktivitas sistem melalui log pengguna. Setiap endpoint dirancang dengan validasi input yang ketat dan mekanisme keamanan untuk menjamin integritas data."
 		}
 	],
 	"auth": {
