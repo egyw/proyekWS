@@ -136,7 +136,7 @@ const getListReview = async (req, res) => {
     // }
     const count = await Review.aggregate([
       {
-        $match: { recipeId: id },
+        $match: { recipeId: new mongoose.Types.ObjectId(id) },
       },
       {
         $group: {
@@ -153,7 +153,7 @@ const getListReview = async (req, res) => {
     ]);
     const reviews = await Review.aggregate([
       {
-        $match: { recipeId: id },
+        $match: { recipeId: new mongoose.Types.ObjectId(id) },
       },
       {
         $project: {
