@@ -80,7 +80,6 @@ const buySubscription = async (req, res) => {
 
         const userPremium = await User.findById(userId);
 
-        // Generate JWT baru dengan data user terbaru
         const payload = {
             id: userPremium._id,
             username: userPremium.username,
