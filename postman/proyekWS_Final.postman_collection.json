@@ -1,10 +1,11 @@
 {
 	"info": {
-		"_postman_id": "d68b63ed-b3cd-4205-bfe2-b69a0c98a128",
+		"_postman_id": "d75ea11c-0229-4829-a8b1-b1a48f865ff2",
 		"name": "proyekWS_Final",
 		"description": "# 📄 Get started here\n\nThis template contains a boilerplate for documentation that you can quickly customize and reuse.\n\n## 🔖 How to use this template\n\n- Replace the content given brackets (()) with your API's details.\n    \n- Tips are formatted in `codespan` - feel free to read and remove them.\n    \n\n---\n\n`Start with a brief overview of what your API offers.`\n\nThe ((product name)) provides many API products, tools, and resources that enable you to ((add product value here)).\n\n`You can also list the APIs you offer, link to the relevant pages, or do both in this section.`\n\n## **Getting started guide**\n\n`List the steps or points required to start using your APIs. Make sure to cover everything required to reach success with your API as quickly as possible.`\n\nTo start using the ((add APIs here)), you need to -\n\n`The points given below are from The Postman API's documentation. You can reference it to write your own getting started guide.`\n\n- You must use a valid API Key to send requests to the API endpoints. You can get your API key from Postman's [integrations dashboard](https://go.postman.co/settings/me/api-keys).\n    \n- The API has [rate and usage limits](https://learning.postman.com/docs/developer/postman-api/postman-api-rate-limits/).\n    \n- The API only responds to HTTPS-secured communications. Any requests sent via HTTP return an HTTP 301 redirect to the corresponding HTTPS resources.\n    \n- The API returns request responses in JSON format. When an API request returns an error, it is sent in the JSON response as an error key.\n    \n\n## Authentication\n\n`Add details on the authorization keys/tokens required, steps that cover how to get them, and the relevant error codes.`\n\nThe ((product name)) API uses ((add your API's authorization type)) for authentication.\n\n`The details given below are from the Postman API's documentation. You can reference it to write your own authentication section.`\n\nPostman uses API keys for authentication. You can generate a Postman API key in the [API keys](https://postman.postman.co/settings/me/api-keys) section of your Postman account settings.\n\nYou must include an API key in each request to the Postman API with the X-Api-Key request header.\n\n### Authentication error response\n\nIf an API key is missing, malformed, or invalid, you will receive an HTTP 401 Unauthorized response code.\n\n## Rate and usage limits\n\n`Use this section to cover your APIs' terms of use. Include API limits, constraints, and relevant error codes, so consumers understand the permitted API usage and practices.`\n\n`The example given below is from The Postman API's documentation. Use it as a reference to write your APIs' terms of use.`\n\nAPI access rate limits apply at a per-API key basis in unit time. The limit is 300 requests per minute. Also, depending on your plan, you may have usage limits. If you exceed either limit, your request will return an HTTP 429 Too Many Requests status code.\n\nEach API response returns the following set of headers to help you identify your use status:\n\n| Header | Description |\n| --- | --- |\n| `X-RateLimit-Limit` | The maximum number of requests that the consumer is permitted to make per minute. |\n| `X-RateLimit-Remaining` | The number of requests remaining in the current rate limit window. |\n| `X-RateLimit-Reset` | The time at which the current rate limit window resets in UTC epoch seconds. |\n\n### 503 response\n\nAn HTTP `503` response from our servers indicates there is an unexpected spike in API access traffic. The server is usually operational within the next five minutes. If the outage persists or you receive any other form of an HTTP `5XX` error, [contact support](https://support.postman.com/hc/en-us/requests/new/).\n\n### **Need some help?**\n\n`Add links that customers can refer to whenever they need help.`\n\nIn case you have questions, go through our tutorials ((link to your video or help documentation here)). Or visit our FAQ page ((link to the relevant page)).\n\nOr you can check out our community forum, there’s a good chance our community has an answer for you. Visit our developer forum ((link to developer forum)) to review topics, ask questions, and learn from others.\n\n`You can also document or add links to libraries, code examples, and other resources needed to make a request.`",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "42839746"
+		"_exporter_id": "44265515",
+		"_collection_link": "https://yoshi-190373.postman.co/workspace/bc419ad9-0848-4f17-8d80-f0adae219a4d/collection/44265515-d75ea11c-0229-4829-a8b1-b1a48f865ff2?action=share&source=collection_link&creator=44265515"
 	},
 	"item": [
 		{
@@ -2441,7 +2442,78 @@
 						},
 						"description": "### **Get Ingredient Details by Name**\n\nEndpoint ini digunakan untuk mencari dan mengambil detail bahan makanan berdasarkan namanya. Pencarian dilakukan melalui API eksternal (Spoonacular) untuk mendapatkan daftar bahan yang relevan beserta harganya.\n\n**HTTP Request**  \nGET [http://localhost:3000/api/v1/transaction/item/details/:name](http://localhost:3000/api/v1/transaction/item/details/:name)\n\n**Path Parameter**\n\n- name (string, **wajib**): Nama bahan yang ingin dicari. Contoh: milk, flour, sugar.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan bahwa pencarian berhasil dan daftar bahan ditemukan.\n    \n- 400 Bad Request: Menandakan bahwa parameter name tidak disertakan dalam URL.\n    \n- 404 Not Found: Menandakan bahwa tidak ada bahan yang ditemukan dengan nama yang diberikan, atau bahan yang ditemukan tidak memiliki informasi harga.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan pada server, misalnya gagal terhubung ke API eksternal.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat bahan berhasil ditemukan, respons akan berisi sebuah array dari objek items.\n\nGenerated json\n\n``` json\n{\n  \"items\": [\n    {\n      \"id\": 1077,\n      \"name\": \"milk\",\n      \"price\": 63.36\n    },\n    {\n      \"id\": 1102,\n      \"name\": \"whole milk\",\n      \"price\": 82.26\n    },\n    {\n      \"id\": 98976,\n      \"name\": \"condensed milk\",\n      \"price\": 38.64\n    }\n  ]\n}\n\n ```\n\n**2\\. Error Response (404 Not Found)**\n\nJika tidak ada bahan yang cocok dengan nama \"xyzabc\".\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item not found.\"\n}\n\n ```\n\n**3\\. Error Response (400 Bad Request)**\n\nJika path parameter name tidak diisi.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item name is required.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- Endpoint ini bergantung pada API eksternal Spoonacular. Ketersediaan dan konten data bergantung pada layanan tersebut.\n    \n- Hasil pencarian dibatasi hingga maksimal 20 item.\n    \n- Hanya bahan yang memiliki informasi harga (estimatedCost) dari API eksternal yang akan ditampilkan dalam respons.\n    \n- Meskipun tidak ditampilkan dalam kode, pastikan pengguna telah terautentikasi untuk menghindari respons 401 Unauthorized jika middleware autentikasi diterapkan pada route ini."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6InBncXp0MWRld2NAb3N4b2Z1bGsuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA1MjE0NzYsImV4cCI6MTc1MDYwNzg3Nn0.f33X04ee_RJBPTYE3OnAtoQdZU2zssYHC_B7rYmjZMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/item/details/milk",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"item",
+										"details",
+										"milk"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "Fail",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6InBncXp0MWRld2NAb3N4b2Z1bGsuY29tIiwiaXNQcmVtaXVtIjpmYWxzZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA1MjE0NzYsImV4cCI6MTc1MDYwNzg3Nn0.f33X04ee_RJBPTYE3OnAtoQdZU2zssYHC_B7rYmjZMI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/item/details/fdjuasydg",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"item",
+										"details",
+										"fdjuasydg"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "getIngredient",
@@ -2479,7 +2551,51 @@
 						},
 						"description": "### **Get All Ingredient Details**\n\nEndpoint ini digunakan untuk mengambil daftar acak bahan makanan dari database eksternal. Endpoint ini dirancang untuk menampilkan pilihan item yang bervariasi, misalnya untuk halaman utama atau fitur \"Lihat Item Lainnya\".\n\n**HTTP Request**  \nGET http://localhost:3000/api/v1/transaction/item/details\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan bahwa daftar bahan berhasil diambil. Respons akan berisi array bahan, yang mungkin kosong jika tidak ada item dengan harga yang ditemukan.\n    \n- 4xx/5xx (dari Spoonacular): Jika terjadi error dari API eksternal (misalnya, 402 Payment Required jika kuota harian habis), status code dan pesan error dari API tersebut akan diteruskan.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server saat memproses permintaan.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat daftar bahan berhasil diambil, respons akan berisi sebuah objek dengan key ingredients yang nilainya adalah sebuah array.\n\nGenerated json\n\n``` json\n{\n  \"ingredients\": [\n    {\n      \"id\": 1001,\n      \"name\": \"butter\",\n      \"price\": 208.34\n    },\n    {\n      \"id\": 2047,\n      \"name\": \"salt\",\n      \"price\": 29.28\n    },\n    {\n      \"id\": 18371,\n      \"name\": \"baking powder\",\n      \"price\": 33.74\n    },\n    {\n      \"id\": 1123,\n      \"name\": \"egg\",\n      \"price\": 47.33\n    }\n  ]\n}\n\n ```\n\n**2\\. Error Response (500 Internal Server Error)**\n\nJika terjadi kesalahan tak terduga di server.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Terjadi kesalahan pada server.\"\n}\n\n ```\n\n**3\\. Error Response (dari API Eksternal)**\n\nContoh jika kuota harian pada API Spoonacular telah habis.\n\nGenerated json\n\n``` json\n// Status Code: 402 Payment Required\n{\n  \"message\": \"Your daily points limit has been reached. Please upgrade your plan.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Hasil Acak**: Setiap kali endpoint ini dipanggil, daftar bahan yang ditampilkan akan berbeda karena proses pencarian dan pengacakan di sisi server.\n    \n- **Ketergantungan Eksternal**: Endpoint ini bergantung sepenuhnya pada ketersediaan dan data dari API Spoonacular.\n    \n- **Filter Harga**: Hanya bahan yang memiliki informasi harga (estimatedCost) dari API eksternal yang akan disertakan dalam respons.\n    \n- **Batas Jumlah**: Respons akan mengembalikan maksimal 20 item bahan makanan.\n    \n- **Autentikasi**: Pastikan pengguna telah terautentikasi sebelum membuat permintaan ini untuk menghindari respons 401 Unauthorized (jika middleware autentikasi diterapkan pada route ini)."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "getIngredient",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/item/details",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"item",
+										"details"
+									]
+								}
+							},
+							"_postman_previewlanguage": "",
+							"header": [],
+							"cookie": [
+								{
+									"expires": "Invalid Date"
+								}
+							],
+							"body": ""
+						}
+					]
 				},
 				{
 					"name": "topup",
@@ -2516,7 +2632,104 @@
 						},
 						"description": "### **Top Up Saldo**\n\nEndpoint ini digunakan untuk menambahkan sejumlah saldo ke akun pengguna yang sedang terautentikasi.\n\n**HTTP Request**  \nPOST http://localhost:3000/api/v1/transaction/topup\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi pengguna mana yang akan menerima top-up.\n    \n\n---\n\n**Request Body**\n\nRequest ini memerlukan body dalam format JSON untuk menentukan jumlah top-up.\n\n| Parameter | Tipe | Deskripsi | Wajib |\n| amount | number | Jumlah saldo yang ingin ditambahkan ke akun. | Ya |\n\n**Contoh Request Body:**\n\nGenerated json\n\n``` json\n{\n  \"amount\": 50000\n}\n\n ```\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan bahwa proses top-up berhasil.\n    \n- 400 Bad Request: Menandakan bahwa amount tidak disertakan dalam request body.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid (token tidak ada atau tidak valid).\n    \n- 404 Not Found: Menandakan bahwa pengguna yang terasosiasi dengan token autentikasi tidak ditemukan di database.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat top-up berhasil, respons akan berisi pesan sukses dan total saldo terbaru pengguna.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Top-up successful.\",\n  \"balance\": 150000\n}\n\n ```\n\n**2\\. Error Response (400 Bad Request)**\n\nJika field amount tidak ada dalam body request.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"User ID and amount are required.\"\n}\n\n ```\n\n**3\\. Error Response (404 Not Found)**\n\nJika ID pengguna dari token tidak ditemukan di database.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"User not found.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Saldo Terbaru**: Respons yang berhasil akan langsung mengembalikan total saldo terbaru pengguna setelah penambahan.\n    \n- Nilai amount akan diproses sebagai angka (number)."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "amount",
+											"value": "100",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:3000/api/v1/transaction/topup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"topup"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail amount",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "amount",
+											"value": "-1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:3000/api/v1/transaction/topup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"topup"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail missing data",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "localhost:3000/api/v1/transaction/topup",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"topup"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "addToCart",
@@ -2581,7 +2794,149 @@
 						},
 						"description": "### **Add Item to Cart**\n\nEndpoint ini digunakan untuk menambahkan sebuah item ke dalam keranjang belanja (cart) milik pengguna yang sedang terautentikasi. Jika item tersebut sudah ada di keranjang, maka jumlahnya (quantity) akan diperbarui. Jika belum ada, item baru akan ditambahkan.\n\n**HTTP Request**  \nPOST http://localhost:3000/api/v1/transaction/cart/add\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi keranjang belanja milik pengguna.\n    \n\n---\n\n**Request Body**\n\nRequest ini memerlukan body dalam format JSON untuk menentukan item dan jumlah yang akan ditambahkan.\n\n| Parameter | Tipe | Deskripsi | Wajib |\n| itemId | string | ID unik dari item yang ingin ditambahkan. | Ya |\n| quantity | number | Jumlah item yang ingin ditambahkan (harus > 0). | Ya |\n\n**Contoh Request Body:**\n\nGenerated json\n\n``` json\n{\n  \"itemId\": \"1001\",\n  \"quantity\": 2\n}\n\n ```\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan item berhasil ditambahkan atau diperbarui di keranjang.\n    \n- 400 Bad Request: Menandakan ada parameter yang kurang (itemId atau quantity) atau nilai quantity tidak valid (kurang dari atau sama dengan 0).\n    \n- 401 Unauthorized: Menandakan request tidak memiliki kredensial autentikasi yang valid.\n    \n- 404 Not Found: Menandakan userId tidak ditemukan, atau itemId yang diberikan tidak ada atau tidak memiliki informasi harga.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat item berhasil ditambahkan, respons akan berisi pesan sukses dan kondisi terbaru dari seluruh keranjang belanja pengguna.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item added to cart successfully.\",\n  \"cart\": [\n    {\n      \"item_name\": \"butter\",\n      \"quantity\": 2,\n      \"price\": 416.68\n    },\n    {\n      \"item_name\": \"salt\",\n      \"quantity\": 1,\n      \"price\": 29.28\n    }\n  ]\n}\n\n ```\n\n**2\\. Error Response (400 Bad Request)**\n\nJika field quantity diisi dengan angka 0 atau negatif.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Quantity must be greater than zero.\"\n}\n\n ```\n\n**3\\. Error Response (404 Not Found)**\n\nJika itemId yang dikirim tidak ditemukan di database eksternal.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item not found or price unavailable.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Penggabungan Item**: Jika item yang ditambahkan sudah ada di keranjang, sistem tidak akan membuat entri baru, melainkan akan menambahkan quantity dan price pada entri yang sudah ada.\n    \n- **Respons Berisi Seluruh Keranjang**: Respons yang berhasil akan mengembalikan seluruh isi keranjang belanja pengguna yang telah diperbarui, bukan hanya item yang baru saja ditambahkan.\n    \n- **Harga Total**: Perhatikan bahwa price di dalam cart pada respons adalah harga total untuk item tersebut (harga satuan × kuantitas)"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "itemId",
+											"value": "43479",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "itemId",
+											"value": "20444",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/add",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail no item",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "itemId",
+											"value": "00000",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/add",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail amount",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "itemId",
+											"value": "20444",
+											"type": "text"
+										},
+										{
+											"key": "quantity",
+											"value": "0",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/add",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"add"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "viewcart",
@@ -2636,7 +2991,36 @@
 						},
 						"description": "### **View Cart**\n\nEndpoint ini digunakan untuk melihat semua item yang ada di dalam keranjang belanja (cart) milik pengguna yang sedang terautentikasi.\n\n**HTTP Request**  \nGET http://localhost:3000/api/v1/transaction/item/buy\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi keranjang belanja yang akan ditampilkan.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan keranjang berhasil diambil. Respons akan berisi daftar item di keranjang atau pesan bahwa keranjang kosong.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid (token tidak ada atau tidak valid).\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server saat mengambil data.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (Cart has items)**\n\nSaat keranjang berhasil diambil dan berisi item, respons akan mencakup pesan sukses dan sebuah array cart.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Cart retrieved successfully.\",\n  \"cart\": [\n    {\n      \"item_name\": \"butter\",\n      \"quantity\": 2,\n      \"price\": 416.68\n    },\n    {\n      \"item_name\": \"salt\",\n      \"quantity\": 1,\n      \"price\": 29.28\n    }\n  ]\n}\n\n ```\n\n**2\\. Successful Response (Cart is empty)**\n\nJika keranjang pengguna kosong, server tetap akan merespons dengan status 200 OK tetapi dengan pesan yang berbeda.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Cart is empty.\"\n}\n\n ```\n\n**3\\. Error Response (Internal Server Error)**\n\nJika terjadi masalah pada server saat mengakses database.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Internal server error.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **URL Context**: Meskipun URL mengandung kata /buy, endpoint ini berfungsi untuk **melihat** isi keranjang, biasanya sebagai langkah sebelum melakukan proses checkout/pembelian.\n    \n- **Harga Total**: Nilai price di dalam cart adalah harga total untuk baris item tersebut (harga satuan dikalikan dengan quantity).\n    \n- **Respons Keranjang Kosong**: Respons untuk keranjang kosong tetap dianggap berhasil (Status 200 OK), jadi pastikan aplikasi klien Anda memeriksa isi dari cart atau message untuk menanganinya dengan benar."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/view",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"view"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "removeItemCart",
@@ -2678,7 +3062,110 @@
 						},
 						"description": "### **Remove Item from Cart**\n\nEndpoint ini digunakan untuk menghapus sebuah item secara keseluruhan (berapapun jumlahnya) dari keranjang belanja (cart) milik pengguna yang sedang terautentikasi. Penghapusan dilakukan berdasarkan nama item.\n\n**HTTP Request**  \nDELETE http://localhost:3000/api/v1/transaction/cart/remove\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi pengguna dan keranjang belanjanya.\n    \n\n---\n\n**Request Body**\n\nRequest ini memerlukan body dalam format JSON untuk menentukan item mana yang akan dihapus.\n\n| Parameter | Tipe | Deskripsi | Wajib |\n| item_name | string | Nama unik dari item yang ingin dihapus dari keranjang. | Ya |\n\n**Contoh Request Body:**\n\nGenerated json\n\n``` json\n{\n  \"item_name\": \"butter\"\n}\n\n ```\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan item berhasil dihapus dari keranjang.\n    \n- 400 Bad Request: Menandakan bahwa item_name tidak disertakan dalam request body.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid.\n    \n- 404 Not Found: Menandakan userId tidak ditemukan, atau item_name yang diberikan tidak ada di dalam keranjang pengguna.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat item berhasil dihapus, respons akan berisi pesan sukses dan kondisi terbaru dari keranjang belanja pengguna.\n\nGenerated json\n\n``` json\n// Asumsi keranjang sebelumnya berisi \"butter\" dan \"salt\"\n{\n  \"message\": \"Item removed from cart successfully.\",\n  \"cart\": [\n    {\n      \"item_name\": \"salt\",\n      \"quantity\": 1,\n      \"price\": 29.28\n    }\n  ]\n}\n\n ```\n\n**2\\. Error Response (404 Not Found)**\n\nJika item dengan nama \"sugar\" tidak ada di dalam keranjang.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item not found in cart.\"\n}\n\n ```\n\n**3\\. Error Response (400 Bad Request)**\n\nJika field item_name tidak disertakan dalam body request.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"User ID and item name are required.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Identifier adalah Nama Item**: Penghapusan item didasarkan pada item_name, bukan itemId.\n    \n- **Menghapus Seluruh Item**: Endpoint ini akan menghapus seluruh entri item dari keranjang, tidak peduli berapapun quantity-nya.\n    \n- **Respons Berisi Sisa Keranjang**: Respons yang berhasil akan mengembalikan sisa isi keranjang belanja pengguna yang telah diperbarui. Jika keranjang menjadi kosong setelah penghapusan, array cart akan menjadi kosong."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "item_name",
+											"value": "rice",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/remove",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"remove"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail no item",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "item_name",
+											"value": "dafsfd",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/remove",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"remove"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail cart empty",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "item_name",
+											"value": "rice",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/remove",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"remove"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "removeAllItemCart",
@@ -2730,7 +3217,64 @@
 						},
 						"description": "### **Remove All Items from Cart**\n\nEndpoint ini digunakan untuk mengosongkan seluruh keranjang belanja (cart) milik pengguna yang sedang terautentikasi. Semua item di dalam keranjang akan dihapus.\n\n**HTTP Request**  \nDELETE http://localhost:3000/api/v1/transaction/cart/removeAll\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi keranjang belanja mana yang akan dikosongkan.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan semua item berhasil dihapus dari keranjang.\n    \n- 400 Bad Request: Menandakan bahwa keranjang pengguna sudah kosong sebelum permintaan dibuat.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid.\n    \n- 404 Not Found: Menandakan bahwa pengguna yang terasosiasi dengan token autentikasi tidak ditemukan di database.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat semua item berhasil dihapus, respons akan berisi pesan sukses dan sebuah array cart yang kosong.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"All items removed from cart successfully.\",\n  \"cart\": []\n}\n\n ```\n\n**2\\. Error Response (400 Bad Request)**\n\nJika pengguna mencoba mengosongkan keranjang yang memang sudah kosong.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Cart is already empty.\"\n}\n\n ```\n\n**3\\. Error Response (404 Not Found)**\n\nJika ID pengguna dari token tidak ditemukan di database.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"User not found.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Tindakan Destruktif**: Aksi ini bersifat permanen dan akan menghapus semua item dari keranjang pengguna tanpa bisa dikembalikan.\n    \n- **Respons Keranjang Kosong**: Respons yang berhasil (200 OK) akan secara eksplisit mengembalikan cart sebagai array kosong untuk mengonfirmasi status terbaru keranjang."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/removeAll",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"removeAll"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail cartempty",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/cart/removeAll",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"cart",
+										"removeAll"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "buyCart",
@@ -2773,7 +3317,66 @@
 						},
 						"description": "### **Buy Items from Cart (Checkout)**\n\nEndpoint ini digunakan untuk memproses pembelian semua item yang ada di dalam keranjang belanja (cart) pengguna. Proses ini akan memvalidasi saldo pengguna, membuat catatan transaksi, mengurangi saldo pengguna, dan mengosongkan keranjang jika berhasil.\n\n**HTTP Request**  \nPOST http://localhost:3000/api/v1/transaction/item/buy\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi pengguna, saldo, dan keranjang belanjanya.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body. Aksi pembelian dipicu berdasarkan seluruh isi keranjang pengguna saat ini.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan pembelian berhasil.\n    \n- 400 Bad Request: Menandakan ada masalah dengan kondisi pembelian. Ini bisa terjadi karena:\n    \n    - Keranjang belanja kosong (Cart is empty.).\n        \n    - Saldo pengguna tidak mencukupi (Insufficient balance for purchase.).\n        \n- 401 Unauthorized: Menandakan request tidak memiliki kredensial autentikasi yang valid.\n    \n- 404 Not Found: Menandakan pengguna yang terasosiasi dengan token autentikasi tidak ditemukan di database.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server saat memproses transaksi.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat pembelian berhasil, respons akan berisi pesan sukses dan objek detail transaksi yang baru saja dibuat.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Items purchased successfully.\",\n  \"transaction\": {\n    \"date\": \"2023-10-27T10:30:00.000Z\",\n    \"user_id\": \"653b8a9b1c9d440000a1b2c3\",\n    \"type\": \"item\",\n    \"total_amount\": 445.96,\n    \"_id\": \"653b8f0c1c9d440000a1b2d4\",\n    \"__v\": 0\n  }\n}\n\n ```\n\n**2\\. Error Response (400 Bad Request - Insufficient Balance)**\n\nJika total harga item di keranjang melebihi saldo pengguna.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Insufficient balance for purchase.\"\n}\n\n ```\n\n**3\\. Error Response (400 Bad Request - Cart is Empty)**\n\nJika pengguna mencoba melakukan pembelian dengan keranjang yang kosong.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Cart is empty.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Proses Transaksi**: Jika berhasil, endpoint ini akan:\n    \n    1. Membuat entri baru di koleksi Transaction.\n        \n    2. Membuat entri detail untuk setiap item di koleksi DetailTrans.\n        \n    3. Mengurangi saldo pengguna.\n        \n    4. **Menghapus semua item** dari Cart pengguna.\n        \n- **Tindakan Atomik**: Idealnya, serangkaian operasi ini harus dibungkus dalam sebuah transaksi database untuk memastikan konsistensi data. Kode yang diberikan melakukan operasi secara berurutan.\n    \n- **URL Overloading**: Perhatikan bahwa POST ke endpoint ini (/buy) memicu pembelian, sementara GET ke endpoint yang sama (/buy) digunakan untuk melihat keranjang."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "localhost:3000/api/v1/transaction/item/buy",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"item",
+										"buy"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail cart empty",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "localhost:3000/api/v1/transaction/item/buy",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"item",
+										"buy"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "PlaceSubcribe",
@@ -2820,7 +3423,80 @@
 						},
 						"description": "### **Create Subscription Request**\n\nEndpoint ini digunakan untuk memulai proses berlangganan (subscription) untuk pengguna yang sedang terautentikasi. Jika pengguna belum memiliki langganan yang aktif atau tertunda, endpoint ini akan membuat catatan langganan baru dengan status \"pending\", yang menandakan bahwa pembayaran perlu dilakukan.\n\n**HTTP Request**  \nPOST http://localhost:3000/api/v1/transaction/subscribe\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi pengguna yang akan berlangganan.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 201 Created: Menandakan bahwa catatan permintaan langganan berhasil dibuat dan menunggu pembayaran.\n    \n- 400 Bad Request: Menandakan bahwa pengguna sudah memiliki langganan yang aktif atau sedang dalam proses pembayaran (pending).\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (201 Created)**\n\nSaat permintaan langganan berhasil dibuat, respons akan berisi pesan sukses dan detail objek langganan yang baru dibuat dengan status pending.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription created successfully. Please pay $9.99\",\n  \"subscription\": {\n    \"userId\": \"653b8a9b1c9d440000a1b2c3\",\n    \"startDate\": null,\n    \"endDate\": null,\n    \"paymentStatus\": \"pending\",\n    \"status\": null,\n    \"_id\": \"653b9a1d1c9d440000a1b2e5\",\n    \"__v\": 0\n  }\n}\n\n ```\n\n**2\\. Error Response (400 Bad Request)**\n\nJika pengguna yang sama mencoba membuat langganan lagi padahal sudah ada yang aktif atau pending.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"User already has a subscription.\"\n}\n\n ```\n\n**3\\. Error Response (500 Internal Server Error)**\n\nJika terjadi kesalahan saat menyimpan data ke database.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Internal server error.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Status Awal**: Endpoint ini hanya **membuat permintaan** langganan. Langganan belum aktif. Status awalnya adalah paymentStatus: \"pending\" dan status: null.\n    \n- **Pencegahan Duplikasi**: Sistem secara otomatis mencegah pengguna membuat lebih dari satu langganan aktif atau tertunda pada satu waktu.\n    \n- **Langkah Selanjutnya**: Setelah mendapatkan respons ini, langkah selanjutnya bagi pengguna adalah melakukan pembayaran untuk mengaktifkan langganan."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/subscribe",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"subscribe"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail user have subs",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "userId",
+											"value": "685689f7ea12e46953291a46",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/subscribe",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"subscribe"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "PaySubcription",
@@ -2862,7 +3538,92 @@
 						},
 						"description": "### **Pay for Subscription**\n\nEndpoint ini digunakan untuk memproses pembayaran dan mengaktifkan langganan (subscription) yang sebelumnya telah dibuat dan berstatus \"pending\". Endpoint ini akan memvalidasi saldo pengguna, memotong biaya langganan, mengaktifkan status premium pengguna, dan mencatat transaksi.\n\n**HTTP Request**  \nPOST http://localhost:3000/api/v1/transaction/paySubscription\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi pengguna dan langganan yang akan dibayar.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan pembayaran langganan berhasil dan langganan telah aktif.\n    \n- 400 Bad Request: Menandakan bahwa saldo pengguna tidak mencukupi untuk membayar biaya langganan.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid.\n    \n- 404 Not Found: Menandakan bahwa pengguna tidak ditemukan, atau tidak ada langganan dengan status \"pending\" yang ditemukan untuk pengguna tersebut.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat pembayaran berhasil, respons akan berisi pesan sukses dan detail objek langganan yang telah diperbarui dan diaktifkan.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription purchased successfully.\",\n  \"subscription\": {\n    \"userId\": \"653b8a9b1c9d440000a1b2c3\",\n    \"startDate\": \"2023-10-27T11:00:00.000Z\",\n    \"endDate\": \"2024-10-27T11:00:00.000Z\",\n    \"paymentStatus\": \"completed\",\n    \"status\": \"active\",\n    \"_id\": \"653b9a1d1c9d440000a1b2e5\",\n    \"__v\": 1\n  }\n}\n\n ```\n\n**2\\. Error Response (400 Bad Request)**\n\nJika saldo pengguna tidak cukup untuk membayar biaya langganan ($9.99).\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Insufficient balance for subscription.\"\n}\n\n ```\n\n**3\\. Error Response (404 Not Found)**\n\nJika pengguna mencoba membayar tetapi tidak memiliki langganan yang berstatus \"pending\".\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription not found.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Prasyarat**: Pengguna harus memiliki permintaan langganan yang tertunda. Endpoint ini idealnya dipanggil setelah pengguna berhasil memanggil POST /api/v1/transaction/subscribe.\n    \n- **Efek Transaksi**: Jika berhasil, endpoint ini akan:\n    \n    1. Mengurangi saldo pengguna sebesar 9.99.\n        \n    2. Mengubah status isPremium pengguna menjadi true.\n        \n    3. Mengaktifkan langganan dengan mengatur startDate, endDate, paymentStatus, dan status.\n        \n    4. Membuat catatan transaksi baru dengan tipe premium.\n        \n- **Masa Aktif**: Langganan yang berhasil dibayar akan aktif selama satu tahun sejak tanggal pembayaran. Setiap Pergantian hari akan di cek masa aktif dan jika masa aktif berlalu maka Subcription expired"
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "localhost:3000/api/v1/transaction/paySubscription",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"paySubscription"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail no money",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "localhost:3000/api/v1/transaction/paySubscription",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"paySubscription"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail no subs now",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "localhost:3000/api/v1/transaction/paySubscription",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"paySubscription"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "ViewSubStatus",
@@ -2920,7 +3681,90 @@
 						},
 						"description": "### **View Subscription Status**\n\nEndpoint ini digunakan untuk mengambil riwayat atau status langganan (subscription) milik pengguna yang sedang terautentikasi. Ini akan mengembalikan semua catatan langganan yang terasosiasi dengan pengguna tersebut.\n\n**HTTP Request**  \nGET http://localhost:3000/api/v1/transaction/subscription/status\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi pengguna yang status langganannya ingin dilihat.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan status langganan berhasil diambil. Respons akan berisi daftar langganan, yang bisa jadi kosong jika pengguna belum pernah berlangganan.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server saat mengambil data.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (User has a subscription)**\n\nSaat pengguna memiliki riwayat langganan, respons akan berisi pesan sukses dan sebuah array subscription yang berisi objek-objek langganan.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription status retrieved successfully.\",\n  \"subscription\": [\n    {\n      \"userId\": \"653b8a9b1c9d440000a1b2c3\",\n      \"startDate\": \"2023-10-27T11:00:00.000Z\",\n      \"endDate\": \"2024-10-27T11:00:00.000Z\",\n      \"paymentStatus\": \"completed\",\n      \"status\": \"active\",\n      \"_id\": \"653b9a1d1c9d440000a1b2e5\",\n      \"__v\": 1\n    }\n  ]\n}\n\n ```\n\n**2\\. Successful Response (User has no subscription)**\n\nJika pengguna belum pernah membuat permintaan langganan, server tetap akan merespons dengan status 200 OK, namun dengan array subscription yang kosong.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription status retrieved successfully.\",\n  \"subscription\": []\n}\n\n ```\n\n**3\\. Error Response (500 Internal Server Error)**\n\nJika terjadi kesalahan pada server saat mengakses database.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Internal server error.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Respons Selalu Array**: Perhatikan bahwa nilai dari subscription pada respons akan **selalu berupa array**, bahkan jika hanya ada satu catatan atau tidak ada sama sekali. Hal ini karena kode menggunakan find() yang mengembalikan banyak hasil.\n    \n- **Tidak Ada Status 404**: Berdasarkan kode yang diberikan, endpoint ini tidak akan mengembalikan status 404 Not Found jika langganan tidak ditemukan. Sebagai gantinya, ia akan mengembalikan 200 OK dengan array kosong. Aplikasi klien harus memeriksa panjang array subscription untuk menentukan apakah pengguna memiliki langganan."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/subscription/status",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"subscription",
+										"status"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "685689f7ea12e46953291a46",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail no subs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/subscription/status",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"subscription",
+										"status"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "685689f7ea12e46953291a46",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "unsubscribe",
@@ -2930,7 +3774,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NTY4OWY3ZWExMmU0Njk1MzI5MWE0NiIsInVzZXJuYW1lIjoiZWdneTIiLCJlbWFpbCI6ImI4Z3g4b25ncG9Ad3l3bnhhLmNvbSIsImlzUHJlbWl1bSI6dHJ1ZSwicm9sZSI6InVzZXIiLCJpYXQiOjE3NTA2ODUxMjMsImV4cCI6MTc1MDc3MTUyM30.umvUGjodTLgDUP0ScThHUZqwD820oVR1pMxf6MHOwnw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4NWJhOGY0MDMyY2Q2ZTBkMDMyYTI2OSIsInVzZXJuYW1lIjoiTWFsdWsiLCJlbWFpbCI6Ims3eHlsMnQ5ZmRAd3lveGFmcC5jb20iLCJpc1ByZW1pdW0iOnRydWUsInNhbGRvIjoxMDAuODc5OTk5OTk5OTk5OTgsImlhdCI6MTc1MDg0NDkxMCwiZXhwIjoxNzUwOTMxMzEwfQ.yyNFUJzCnzNNb-KNB34dt8SW-pP9l0MDA6cf8irfezo",
 									"type": "string"
 								}
 							]
@@ -2967,7 +3811,74 @@
 						},
 						"description": "StartFragment\n\n### **Cancel Subscription**\n\nEndpoint ini digunakan untuk membatalkan langganan (subscription) yang sedang aktif atau yang sedang menunggu pembayaran (pending) milik pengguna yang terautentikasi.\n\n**HTTP Request**  \nDELETE http://localhost:3000/api/v1/transaction/unsubscribe\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi pengguna dan langganan yang akan dibatalkan.\n    \n\n**Request Body**\n\nRequest ini tidak memerlukan body.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan langganan berhasil dibatalkan.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid.\n    \n- 404 Not Found: Menandakan bahwa pengguna tidak ditemukan, atau tidak ada langganan aktif/pending yang bisa dibatalkan untuk pengguna tersebut.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat langganan berhasil dibatalkan, respons akan berisi pesan sukses dan detail objek langganan yang statusnya telah diperbarui.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription cancelled successfully.\",\n  \"subscription\": {\n    \"userId\": \"653b8a9b1c9d440000a1b2c3\",\n    \"startDate\": \"2023-10-27T11:00:00.000Z\",\n    \"endDate\": \"2024-10-27T11:00:00.000Z\",\n    \"paymentStatus\": \"completed\",\n    \"status\": \"cancelled\",\n    \"_id\": \"653b9a1d1c9d440000a1b2e5\",\n    \"__v\": 2\n  }\n}\n\n ```\n\n**2\\. Error Response (404 Not Found)**\n\nJika pengguna tidak memiliki langganan yang aktif atau tertunda yang bisa dibatalkan.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Subscription not found.\"\n}\n\n ```\n\n**3\\. Error Response (404 Not Found)**\n\nJika ID pengguna dari token tidak ditemukan di database.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"User not found.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Logika Pembatalan**:\n    \n    - Jika langganan **sudah dibayar** (paymentStatus: \"completed\"), maka status langganan akan diubah menjadi \"cancelled\".\n        \n    - Jika langganan **belum dibayar** (paymentStatus: \"pending\"), maka paymentStatus itu sendiri yang akan diubah menjadi \"cancelled\", secara efektif membatalkan permintaan langganan.\n        \n- **Status Premium Dicabut**: Penting untuk dicatat bahwa pembatalan ini akan **langsung** mengubah status isPremium pengguna menjadi false, mencabut akses premium dengan segera.\n    \n- **Target Spesifik**: Endpoint ini hanya akan menargetkan langganan yang sedang aktif (status: \"active\") atau menunggu pembayaran (status: null dan paymentStatus: \"pending\"). Langganan yang sudah kedaluwarsa atau sudah dibatalkan sebelumnya tidak akan terpengaruh."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/unsubscribe",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"unsubscribe"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail no subs",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/unsubscribe",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"unsubscribe"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "getReccomendation",
@@ -3017,7 +3928,80 @@
 						},
 						"description": "### **Get Recipe Recommendations (Premium)**\n\nEndpoint ini digunakan untuk mendapatkan rekomendasi resep berdasarkan daftar bahan yang dimiliki pengguna. Fitur ini merupakan **fitur premium** dan hanya dapat diakses oleh pengguna yang telah berlangganan. Pencarian dilakukan dengan menggabungkan hasil dari database lokal dan API eksternal (Spoonacular).\n\n**HTTP Request**  \nGET [http://localhost:3000/api/v1/transaction/recommendations](http://localhost:3000/api/v1/transaction/recommendations)\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ).\n    \n\n**Query Parameter**\n\n| Parameter | Tipe | Deskripsi | Wajib |  \n| userInput | string | Daftar bahan yang dipisahkan dengan koma. Contoh: chicken,rice,tomato | Ya |\n\n**Contoh URL dengan Query Parameter:**  \n[http://localhost:3000/api/v1/transaction/recommendations?userInput=chicken,rice](http://localhost:3000/api/v1/transaction/recommendations?userInput=chicken,rice)\n\n**Request Body**\n\nRequest ini tidak memerlukan body. Parameter dikirim melalui query string.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan rekomendasi berhasil dibuat.\n    \n- 400 Bad Request: Menandakan bahwa userInput tidak disertakan dalam request.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid (token tidak ada atau tidak valid).\n    \n- 403 Forbidden: Menandakan bahwa pengguna telah terautentikasi tetapi **bukan pengguna premium**, sehingga tidak diizinkan mengakses fitur ini.\n    \n- 404 Not Found: Menandakan bahwa pengguna yang terasosiasi dengan token tidak ditemukan di database.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat rekomendasi berhasil dibuat, respons akan berisi daftar resep dari berbagai sumber.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Recommendation generated successfully.\",\n  \"recommendations\": [\n    {\n      \"title\": \"Classic Chicken Curry\",\n      \"image\": \"path/to/local/image.jpg\",\n      \"cuisine\": [\"Indian\"],\n      \"source\": \"local\"\n    },\n    {\n      \"title\": \"One-Pan Lemon Herb Chicken and Rice\",\n      \"image\": \"https://spoonacular.com/recipeImages/12345-312x231.jpg\",\n      \"cuisine\": [\"Mediterranean\"],\n      \"sourceUrl\": \"http://example.com/recipe-url\",\n      \"source\": \"spoonacular\"\n    }\n  ]\n}\n\n ```\n\n**2\\. Error Response (403 Forbidden)**\n\nJika pengguna yang mengakses bukan pengguna premium.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"AI Food Suggestion is available for premium users only. Please upgrade your account.\"\n}\n\n ```\n\n**3\\. Error Response (400 Bad Request)**\n\nJika parameter userInput tidak disertakan.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"User input (ingredients) is required.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Fitur Premium**: Ini adalah endpoint yang dilindungi dan hanya untuk pengguna premium. Pastikan middleware autentikasi dan otorisasi (isPremium) telah diterapkan pada route ini.\n    \n- **Sumber Ganda**: Hasil rekomendasi merupakan gabungan dari resep yang ada di database **lokal** aplikasi dan resep dari API **Spoonacular**. Field source menunjukkan asal dari setiap resep.\n    \n- **Input dari req.body vs. req.query**: Meskipun metode request adalah GET, kode yang diberikan memproses userInput dari req.body. Praktik standar untuk GET adalah mengirim parameter melalui query string seperti yang didokumentasikan di atas (?userInput=...). Pastikan implementasi klien sesuai dengan cara server memprosesnya. Untuk kejelasan, dokumentasi ini mengikuti praktik standar API GET.\n    \n- **Format Input**: userInput dapat berupa string tunggal yang dipisahkan koma (misal: \"chicken,rice,tomato\")."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "userInput",
+											"value": "egg, tomato, cheese",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/recommendations",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"recommendations"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail no input",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/recommendations",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"recommendations"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "getAlternativeIngredient",
@@ -3068,7 +4052,82 @@
 						},
 						"description": "### **Get Alternative Ingredients (Premium)**\n\nEndpoint ini menggunakan AI untuk menyarankan bahan-bahan alternatif untuk resep makanan tertentu. Prosesnya melibatkan pencarian bahan-bahan dari database lokal dan Spoonacular, lalu mengirimkannya ke AI untuk menghasilkan alternatif. Fitur ini merupakan **fitur premium** dan hanya dapat diakses oleh pengguna yang telah berlangganan.\n\n**HTTP Request**  \nGET http://localhost:3000/api/v1/transaction/ingredients/alternative\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ).\n    \n\n**Query Parameter**\n\n| Parameter | Tipe | Deskripsi | Wajib |\n| userInput | string | Nama makanan atau resep yang ingin dicari alternatif bahan-bahannya. Contoh: pancakes, carbonara pasta | Ya |\n\n**Contoh URL dengan Query Parameter:**  \nhttp://localhost:3000/api/v1/transaction/ingredients/alternative?userInput=pancakes\n\n**Request Body**\n\nRequest ini tidak memerlukan body. Parameter dikirim melalui query string.\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan saran alternatif bahan berhasil dibuat oleh AI.\n    \n- 400 Bad Request: Menandakan bahwa userInput tidak disertakan dalam request.\n    \n- 401 Unauthorized: Menandakan bahwa request tidak memiliki kredensial autentikasi yang valid.\n    \n- 403 Forbidden: Menandakan bahwa pengguna terautentikasi tetapi **bukan pengguna premium**.\n    \n- 404 Not Found: Menandakan salah satu dari kondisi berikut:\n    \n    - Pengguna yang terasosiasi dengan token tidak ditemukan.\n        \n    - Tidak ada bahan yang ditemukan untuk makanan yang diberikan (baik dari database lokal maupun Spoonacular).\n        \n    - AI berhasil dihubungi tetapi tidak dapat menghasilkan alternatif apa pun.\n        \n- 500 Internal Server Error: Menandakan terjadi kesalahan, yang bisa disebabkan oleh:\n    \n    - Kegagalan komunikasi dengan API eksternal (Spoonacular atau Gemini AI).\n        \n    - AI memberikan respons yang tidak valid (bukan format JSON yang diharapkan).\n        \n    - Kesalahan server lainnya.\n        \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nGenerated json\n\n``` json\n{\n  \"food\": \"pancakes\",\n  \"ingredient\": [\n    {\n      \"original\": \"all-purpose flour\",\n      \"alternative\": \"whole wheat flour\"\n    },\n    {\n      \"original\": \"milk\",\n      \"alternative\": \"almond milk\"\n    },\n    {\n      \"original\": \"egg\",\n      \"alternative\": \"flax egg\"\n    },\n    {\n      \"original\": \"butter\",\n      \"alternative\": \"coconut oil\"\n    }\n  ]\n}\n\n ```\n\n**2\\. Error Response (403 Forbidden)**\n\nJika pengguna yang mengakses bukan pengguna premium.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"AI Food Suggestion is available for premium users only. Please upgrade your account.\"\n}\n\n ```\n\n**3\\. Error Response (404 Not Found)**\n\nJika tidak ada bahan yang ditemukan untuk makanan \"asdfghjkl\".\n\nGenerated json\n\n``` json\n{\n  \"message\": \"No ingredients found for this food.\"\n}\n\n ```\n\n**4\\. Error Response (500 Internal Server Error - Invalid AI Response)**\n\nJika AI memberikan respons teks yang tidak dapat di-parse sebagai JSON.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"AI generated a response, but it was not in a valid JSON format.\",\n  \"rawResponse\": \"I am sorry, I cannot fulfill this request right now.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Fitur Premium**: Endpoint ini dilindungi dan hanya untuk pengguna premium. Pastikan middleware autentikasi dan otorisasi (isPremium) telah diterapkan pada route ini.\n    \n- **Ketergantungan Eksternal**: Kualitas dan ketersediaan respons sangat bergantung pada layanan eksternal: **Spoonacular API** untuk mengumpulkan bahan dan **Google Gemini AI** untuk menghasilkan alternatif.\n    \n- **Input dari req.body vs. req.query**: Kode yang diberikan memproses userInput dari req.body. Namun, praktik standar untuk metode GET adalah mengirim parameter melalui query string. Dokumentasi ini mengikuti standar tersebut. Pastikan implementasi klien dan server sinkron.\n    \n- **Logging**: Setiap permintaan yang berhasil ke AI akan dicatat di database untuk keperluan audit dan analisis."
 					},
-					"response": []
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "userInput",
+											"value": "Baked Rigatoni",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/ingredients/alternative",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"ingredients",
+										"alternative"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "fail no input",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{HOST}}/api/v1/transaction/ingredients/alternative",
+									"host": [
+										"{{HOST}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"transaction",
+										"ingredients",
+										"alternative"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
 				}
 			],
 			"description": "Collection ini berisi melihat dan membeli bahan makanan, membeli premium, plus beberapa fitur untuk user premium contoh rekomendasi makanan sesuai bahan input user dan alternatif bahan sesuai makanan input user"
@@ -3180,7 +4239,7 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": "",
+							"_postman_previewlanguage": "Text",
 							"header": [],
 							"cookie": [
 								{
@@ -3235,7 +4294,7 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": "",
+							"_postman_previewlanguage": "Text",
 							"header": [],
 							"cookie": [
 								{
@@ -3290,7 +4349,7 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": "",
+							"_postman_previewlanguage": "Text",
 							"header": [],
 							"cookie": [
 								{
@@ -3345,10 +4404,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -3400,10 +4459,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/reviews/:id",
 									"host": [
@@ -3423,7 +4478,7 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": "",
+							"_postman_previewlanguage": "Text",
 							"header": [],
 							"cookie": [
 								{
@@ -3437,10 +4492,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/reviews/:id",
 									"host": [
@@ -3460,10 +4511,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -3537,7 +4588,7 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": "",
+							"_postman_previewlanguage": "Text",
 							"header": [],
 							"cookie": [
 								{
@@ -3575,10 +4626,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -3632,10 +4683,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -3703,10 +4754,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						},
 						{
 							"name": "NotFoundTitle",
@@ -3734,10 +4785,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						},
 						{
 							"name": "Berhasil",
@@ -3765,10 +4816,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -3816,10 +4867,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/reviews/ai/history/export",
 									"host": [
@@ -3835,10 +4882,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -3901,26 +4948,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "query",
-											"value": "",
-											"type": "text"
-										},
-										{
-											"key": "number",
-											"value": "5",
-											"type": "text"
-										},
-										{
-											"key": "type",
-											"value": "excel",
-											"type": "text"
-										}
-									]
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/reviews/spoonExcel/information",
 									"host": [
@@ -3935,36 +4962,16 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						},
 						{
 							"name": "NumberKosong",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "query",
-											"value": "sushi",
-											"type": "text"
-										},
-										{
-											"key": "number",
-											"value": "",
-											"type": "text"
-										},
-										{
-											"key": "type",
-											"value": "excel",
-											"type": "text"
-										}
-									]
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/reviews/spoonExcel/information",
 									"host": [
@@ -3979,36 +4986,16 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						},
 						{
 							"name": "TypeKosong",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "query",
-											"value": "sushi",
-											"type": "text"
-										},
-										{
-											"key": "number",
-											"value": "5",
-											"type": "text"
-										},
-										{
-											"key": "type",
-											"value": "",
-											"type": "text"
-										}
-									]
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/reviews/spoonExcel/information",
 									"host": [
@@ -4023,36 +5010,16 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						},
 						{
 							"name": "Berhasil",
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "query",
-											"value": "sushi",
-											"type": "text"
-										},
-										{
-											"key": "number",
-											"value": "5",
-											"type": "text"
-										},
-										{
-											"key": "type",
-											"value": "excel",
-											"type": "text"
-										}
-									]
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/reviews/spoonExcel/information",
 									"host": [
@@ -4067,10 +5034,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				}
@@ -5150,10 +6117,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
 								"url": {
 									"raw": "https://proyekws-api.onrender.com/api/v1/user/getAllUsers",
 									"protocol": "https",
@@ -5239,10 +6202,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
 								"url": {
 									"raw": "https://proyekws-api.onrender.com/api/v1/user/getAllUsers",
 									"protocol": "https",
@@ -5914,10 +6873,10 @@
 									]
 								}
 							},
-							"_postman_previewlanguage": null,
-							"header": null,
+							"_postman_previewlanguage": "Text",
+							"header": [],
 							"cookie": [],
-							"body": null
+							"body": ""
 						},
 						{
 							"name": "get profile picture multer (fail)",
@@ -6014,10 +6973,6 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": []
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/user/profile/picture/multer",
 									"host": [
