@@ -5,7 +5,7 @@ const ExcelJS = require("exceljs");
 const { ChartJSNodeCanvas } = require("chartjs-node-canvas");
 const { Review, aiQueries, Recipe, User } = require("../models");
 const { $where } = require("../models/User");
-const { ObjectId } = require("mongoose").Types;
+const mongoose = require("mongoose");
 const {
   cuisines,
   diet,
@@ -125,6 +125,13 @@ const getListReview = async (req, res) => {
       message: "Id tidak boleh kosong!",
     });
   }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({
+      message: "Id tidak valid!",
+    });
+  }
+
   try {
     // const dtRecipes = await Recipe.findOne({
     //   title: new RegExp(`^${title}$`, "i"),
@@ -226,6 +233,8 @@ const foodSugestion = async (req, res) => {
         }
       })
       .toString();
+    console.log("Found cuisines:", found);
+
     if (!found || found.length === 0) {
       return res.status(404).json({
         message:
@@ -300,16 +309,23 @@ const aiHistory = async (req, res) => {
 };
 const countCalory = async (req, res) => {
   const { title } = req.params;
-  if (!title) {
+  if (title == ":title") {
     return res.status(400).json({
       message: "Title tidak boleh kosong!",
     });
   }
+  console.log("Title:", title);
+
   try {
     const dtFood = await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?query=${title}&number=1&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
-    console.log(dtFood.data);
+
+    if (dtFood.data.results.length === 0) {
+      return res.status(404).json({
+        message: "Resep tidak ditemukan",
+      });
+    }
 
     const idFood = dtFood.data.results[0].id;
     const infFood = await axios.get(
