@@ -97,69 +97,69 @@ const recipeValidation = Joi.object({
     "string.empty": "Instruksi tidak boleh kosong!",
   }),
 
-  // image: Joi.string()
-  //   .allow(null, "")
-  //   .default(null)
-  //   .optional()
-  //   .custom((value, helpers) => {
-  //     // Allow empty/null values
-  //     if (!value) return value;
+  image: Joi.string()
+    .allow(null, "")
+    .default(null)
+    .optional()
+    .custom((value, helpers) => {
+      // Allow empty/null values
+      if (!value) return value;
 
-  //     // ✅ Accept Cloudinary URLs
-  //     if (value.includes("cloudinary.com")) {
-  //       return value;
-  //     }
+      // ✅ Accept Cloudinary URLs
+      if (value.includes("cloudinary.com")) {
+        return value;
+      }
 
-  //     // ✅ Accept local image paths
-  //     const localImagePattern =
-  //       /^\/?(images|public)\/.*\.(jpg|jpeg|png|gif|webp)$/i;
-  //     if (localImagePattern.test(value)) {
-  //       return value;
-  //     }
+      // ✅ Accept local image paths
+      const localImagePattern =
+        /^\/?(images|public)\/.*\.(jpg|jpeg|png|gif|webp)$/i;
+      if (localImagePattern.test(value)) {
+        return value;
+      }
 
-  //     // ✅ Accept any HTTPS URL (for other CDNs)
-  //     if (value.match(/^https:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i)) {
-  //       return value;
-  //     }
+      // ✅ Accept any HTTPS URL (for other CDNs)
+      if (value.match(/^https:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i)) {
+        return value;
+      }
 
-  //     return helpers.error("string.pattern.base");
-  //   })
-  //   .messages({
-  //     "string.pattern.base":
-  //       "Format gambar tidak valid! Harus berupa URL valid atau path gambar lokal.",
-  //   }),
+      return helpers.error("string.pattern.base");
+    })
+    .messages({
+      "string.pattern.base":
+        "Format gambar tidak valid! Harus berupa URL valid atau path gambar lokal.",
+    }),
 
-  // video: Joi.string()
-  //   .allow(null, "")
-  //   .default(null)
-  //   .optional()
-  //   .custom((value, helpers) => {
-  //     // Allow empty/null values
-  //     if (!value) return value;
+  video: Joi.string()
+    .allow(null, "")
+    .default(null)
+    .optional()
+    .custom((value, helpers) => {
+      // Allow empty/null values
+      if (!value) return value;
 
-  //     // ✅ Accept Cloudinary URLs
-  //     if (value.includes("cloudinary.com")) {
-  //       return value;
-  //     }
+      // ✅ Accept Cloudinary URLs
+      if (value.includes("cloudinary.com")) {
+        return value;
+      }
 
-  //     // ✅ Accept local video paths
-  //     const localVideoPattern =
-  //       /^\/?(videos|public)\/.*\.(mp4|avi|mov|wmv|flv|webm|mkv|gif)$/i;
-  //     if (localVideoPattern.test(value)) {
-  //       return value;
-  //     }
+      // ✅ Accept local video paths
+      const localVideoPattern =
+        /^\/?(videos|public)\/.*\.(mp4|avi|mov|wmv|flv|webm|mkv|gif)$/i;
+      if (localVideoPattern.test(value)) {
+        return value;
+      }
 
-  //     // ✅ Accept any HTTPS URL (for other CDNs)
-  //     if (value.match(/^https:\/\/.+\.(mp4|avi|mov|wmv|flv|webm|mkv)$/i)) {
-  //       return value;
-  //     }
+      // ✅ Accept any HTTPS URL (for other CDNs)
+      if (value.match(/^https:\/\/.+\.(mp4|avi|mov|wmv|flv|webm|mkv)$/i)) {
+        return value;
+      }
 
-  //     return helpers.error("string.pattern.base");
-  //   })
-  //   .messages({
-  //     "string.pattern.base":
-  //       "Format video tidak valid! Harus berupa URL valid atau path video lokal.",
-  //   }),
+      return helpers.error("string.pattern.base");
+    })
+    .messages({
+      "string.pattern.base":
+        "Format video tidak valid! Harus berupa URL valid atau path video lokal.",
+    }),
 
   createdByUser: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
