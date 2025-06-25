@@ -1,10 +1,11 @@
 {
 	"info": {
-		"_postman_id": "29ead8df-5a84-4eea-821e-85c3fc8a17aa",
+		"_postman_id": "d69a1c36-7555-4e12-93fc-0b334afd235d",
 		"name": "proyekWS_Final",
 		"description": "# Dokumentasi API ProyekWS\n\nSelamat datang di Dokumentasi API ProyekWS, sebuah layanan RESTful yang komprehensif dan kaya fitur, dirancang untuk menjadi tulang punggung aplikasi kuliner generasi berikutnya.\n\nAPI kami bukan hanya sekadar database resep. Ini adalah platform lengkap yang memungkinkan Anda membangun aplikasi yang kompleks dan interaktif. Bayangkan Anda dapat membuat media sosial untuk para koki, aplikasi perencana makanan cerdas yang terintegrasi dengan data nutrisi, atau bahkan asisten dapur virtual yang memberikan rekomendasi _real-time_. ProyekWS API menyediakan semua alat yang Anda butuhkan untuk mewujudkan ide-ide tersebut.\n\n## Filosofi Desain\n\nAPI ini dibangun dengan tiga pilar utama:\n\n1. **Kekayaan Data**: Kami menggabungkan dua sumber data utama: resep orisinal yang dibuat dan dikontribusikan oleh komunitas pengguna Anda, serta puluhan ribu resep dari database eksternal (Spoonacular) untuk memastikan cakupan yang luas sejak hari pertama.\n    \n2. **Interaktivitas Pengguna**: Fungsionalitas tidak terbatas pada pengambilan data. Pengguna dapat mendaftar, mengelola profil, mengunggah resep mereka sendiri, memberikan ulasan, dan bahkan melakukan simulasi transaksi untuk bahan makanan.\n    \n3. **Kecerdasan Buatan (AI)**: Untuk pengguna premium, kami menawarkan fitur-fitur canggih yang didukung oleh Google Gemini AI, seperti rekomendasi resep yang dipersonalisasi, saran bahan alternatif, dan analisis nutrisi dalam bahasa yang mudah dipahami.\n    \n\n## Konsep Inti\n\nSebelum Anda mulai, pahami beberapa konsep fundamental berikut:\n\n#### **Model Data Ganda**\n\nResep di dalam API kami berasal dari dua sumber:\n\n- **`local`**: Resep yang dibuat oleh pengguna aplikasi Anda. Resep ini memiliki fleksibilitas penuh untuk dimodifikasi melalui endpoint `update` dan `delete`.\n    \n- **`spoonacular`**: Resep yang diambil dari API eksternal untuk memperkaya konten. Resep ini bersifat _read-only_ dari sisi API kami.\n    \n\n#### **Alur Autentikasi**\n\nUntuk mengakses endpoint yang memerlukan data spesifik pengguna (seperti profil, membuat resep, atau transaksi), aplikasi Anda harus mengikuti alur autentikasi berbasis **JWT (JSON Web Token)**:\n\n1. **Registrasi (****`/user/register`****)**: Pengguna membuat akun baru.\n    \n2. **Login (****`/user/login`****)**: Pengguna masuk dengan kredensial mereka. Server akan mengirimkan kode OTP (One-Time Password) ke email terdaftar.\n    \n3. **Verifikasi OTP (****`/user/verifyOtp`****)**: Pengguna mengirimkan OTP yang diterima untuk memverifikasi sesi mereka.\n    \n4. **Dapatkan Token**: Setelah verifikasi berhasil, server akan memberikan `accessToken` dan `refreshToken`.\n    \n5. **Akses Terotorisasi**: Gunakan `accessToken` sebagai **Bearer Token** di dalam _header_ `Authorization` untuk setiap permintaan ke endpoint yang dilindungi.\n    \n    - Contoh Header: `Authorization: Bearer`\n        \n\n#### **Tingkatan Akses: Publik vs. Premium**\n\n- **Akses Publik (Tanpa Token)**: Anda dapat dengan bebas mengakses data resep publik, seperti mencari resep (`/recipes/getAllRecipes`) atau melihat detail resep (`/recipes/getDetailRecipe/:id`).\n    \n- **Akses Terautentikasi (Memerlukan Token)**: Untuk fitur yang berhubungan dengan pengguna seperti membuat resep atau memberi ulasan.\n    \n- **Akses Premium (Memerlukan Token & Status Premium)**: Fitur-fitur AI yang canggih hanya bisa diakses oleh pengguna yang telah berlangganan dan memiliki status `isPremium: true`.\n    \n\n### Memulai: Permintaan Pertama Anda\n\nMari kita lakukan permintaan \"Hello, World!\" versi API kuliner. Anda tidak memerlukan token untuk ini. Cukup lakukan permintaan `GET` untuk mengambil detail resep dengan ID `715415`:\n\n**Permintaan:**`GET http://localhost:3000/api/v1/recipes/getDetailRecipe/715415`\n\n**Respons Sukses (200 OK):**\n\n```\n{\n    \"_id\": 715415,\n    \"title\": \"Red Lentil Soup with Chicken and Turnips\",\n    \"servings\": 8,\n    \"readyInMinutes\": 55,\n    \"image\": \"https://img.spoonacular.com/recipes/715415-556x370.jpg\",\n    \"healthScore\": 100,\n    \"summary\": \"Red Lentil Soup with Chicken and Turnips might be a good recipe to expand your main course repertoire...\",\n    \"calories\": 477.24,\n    \"carbs\": \"51.78 g\",\n    \"fat\": \"20.34 g\",\n    \"protein\": \"26.93 g\"\n}\n\n ```\n\nSelamat! Anda baru saja berhasil berinteraksi dengan ProyekWS API. Sekarang, mari jelajahi endpoint lainnya untuk membangun sesuatu yang luar biasa.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "43309759"
+		"_exporter_id": "44265515",
+		"_collection_link": "https://yoshi-190373.postman.co/workspace/Yoshi's-Workspace~bc419ad9-0848-4f17-8d80-f0adae219a4d/collection/44265515-d69a1c36-7555-4e12-93fc-0b334afd235d?action=share&source=collection_link&creator=44265515"
 	},
 	"item": [
 		{
@@ -387,16 +388,6 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "username",
-											"value": "",
-											"type": "text"
-										}
-									]
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/recipes/getRecipeByUser",
 									"host": [
@@ -479,16 +470,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "username",
-											"value": "wjdbuai",
-											"type": "text"
-										}
-									]
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/recipes/getRecipeByUser",
 									"host": [
@@ -577,16 +558,6 @@
 										"type": "text"
 									}
 								],
-								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
-										{
-											"key": "username",
-											"value": "kenji2",
-											"type": "text"
-										}
-									]
-								},
 								"url": {
 									"raw": "{{HOST}}/api/v1/recipes/getRecipeByUser",
 									"host": [
@@ -3378,11 +3349,10 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:3000/api/v1/transaction/topup",
+									"raw": "{{HOST}}/api/v1/transaction/topup",
 									"host": [
-										"localhost"
+										"{{HOST}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -3412,11 +3382,10 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:3000/api/v1/transaction/topup",
+									"raw": "{{HOST}}/api/v1/transaction/topup",
 									"host": [
-										"localhost"
+										"{{HOST}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -3440,11 +3409,10 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "localhost:3000/api/v1/transaction/topup",
+									"raw": "{{HOST}}/api/v1/transaction/topup",
 									"host": [
-										"localhost"
+										"{{HOST}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -3509,7 +3477,7 @@
 							]
 						},
 						"url": {
-							"raw": "{{HOST}}/api/v1/transaction/cart/add",
+							"raw": "{{HOST}}/api/v1/transaction/topup",
 							"host": [
 								"{{HOST}}"
 							],
@@ -3517,8 +3485,7 @@
 								"api",
 								"v1",
 								"transaction",
-								"cart",
-								"add"
+								"topup"
 							]
 						},
 						"description": "### **Add Item to Cart**\n\nEndpoint ini digunakan untuk menambahkan sebuah item ke dalam keranjang belanja (cart) milik pengguna yang sedang terautentikasi. Jika item tersebut sudah ada di keranjang, maka jumlahnya (quantity) akan diperbarui. Jika belum ada, item baru akan ditambahkan.\n\n**HTTP Request**  \nPOST http://localhost:3000/api/v1/transaction/cart/add\n\n**Path Parameter**\n\nEndpoint ini tidak memerlukan path parameter.\n\n**Headers**\n\n- Authorization (string, **wajib**): Token autentikasi pengguna (misalnya, Bearer ). Diperlukan untuk mengidentifikasi keranjang belanja milik pengguna.\n    \n\n---\n\n**Request Body**\n\nRequest ini memerlukan body dalam format JSON untuk menentukan item dan jumlah yang akan ditambahkan.\n\n| Parameter | Tipe | Deskripsi | Wajib |\n| itemId | string | ID unik dari item yang ingin ditambahkan. | Ya |\n| quantity | number | Jumlah item yang ingin ditambahkan (harus > 0). | Ya |\n\n**Contoh Request Body:**\n\nGenerated json\n\n``` json\n{\n  \"itemId\": \"1001\",\n  \"quantity\": 2\n}\n\n ```\n\n---\n\n**Response**\n\n**Status Codes:**\n\n- 200 OK: Menandakan item berhasil ditambahkan atau diperbarui di keranjang.\n    \n- 400 Bad Request: Menandakan ada parameter yang kurang (itemId atau quantity) atau nilai quantity tidak valid (kurang dari atau sama dengan 0).\n    \n- 401 Unauthorized: Menandakan request tidak memiliki kredensial autentikasi yang valid.\n    \n- 404 Not Found: Menandakan userId tidak ditemukan, atau itemId yang diberikan tidak ada atau tidak memiliki informasi harga.\n    \n- 500 Internal Server Error: Menandakan terjadi kesalahan internal pada server.\n    \n\n---\n\n**Example Response**\n\n**1\\. Successful Response (200 OK)**\n\nSaat item berhasil ditambahkan, respons akan berisi pesan sukses dan kondisi terbaru dari seluruh keranjang belanja pengguna.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item added to cart successfully.\",\n  \"cart\": [\n    {\n      \"item_name\": \"butter\",\n      \"quantity\": 2,\n      \"price\": 416.68\n    },\n    {\n      \"item_name\": \"salt\",\n      \"quantity\": 1,\n      \"price\": 29.28\n    }\n  ]\n}\n\n ```\n\n**2\\. Error Response (400 Bad Request)**\n\nJika field quantity diisi dengan angka 0 atau negatif.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Quantity must be greater than zero.\"\n}\n\n ```\n\n**3\\. Error Response (404 Not Found)**\n\nJika itemId yang dikirim tidak ditemukan di database eksternal.\n\nGenerated json\n\n``` json\n{\n  \"message\": \"Item not found or price unavailable.\"\n}\n\n ```\n\n---\n\n**Notes**\n\n- **Autentikasi Wajib**: Endpoint ini memerlukan pengguna untuk login. Pastikan Authorization header dengan token yang valid disertakan dalam setiap request.\n    \n- **Penggabungan Item**: Jika item yang ditambahkan sudah ada di keranjang, sistem tidak akan membuat entri baru, melainkan akan menambahkan quantity dan price pada entri yang sudah ada.\n    \n- **Respons Berisi Seluruh Keranjang**: Respons yang berhasil akan mengembalikan seluruh isi keranjang belanja pengguna yang telah diperbarui, bukan hanya item yang baru saja ditambahkan.\n    \n- **Harga Total**: Perhatikan bahwa price di dalam cart pada respons adalah harga total untuk item tersebut (harga satuan × kuantitas)"
@@ -4027,11 +3994,10 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/item/buy",
+							"raw": "{{HOST}}/api/v1/transaction/item/buy",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -4053,11 +4019,10 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "localhost:3000/api/v1/transaction/item/buy",
+									"raw": "{{HOST}}/api/v1/transaction/item/buy",
 									"host": [
-										"localhost"
+										"{{HOST}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -4082,11 +4047,10 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "localhost:3000/api/v1/transaction/item/buy",
+									"raw": "{{HOST}}/api/v1/transaction/item/buy",
 									"host": [
-										"localhost"
+										"{{HOST}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -4249,11 +4213,10 @@
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/v1/transaction/paySubscription",
+							"raw": "{{HOST}}/api/v1/transaction/paySubscription",
 							"host": [
-								"localhost"
+								"{{HOST}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"v1",
@@ -4274,11 +4237,10 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "localhost:3000/api/v1/transaction/paySubscription",
+									"raw": "{{HOST}}/api/v1/transaction/paySubscription",
 									"host": [
-										"localhost"
+										"{{HOST}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -4302,11 +4264,10 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "localhost:3000/api/v1/transaction/paySubscription",
+									"raw": "{{HOST}}/api/v1/transaction/paySubscription",
 									"host": [
-										"localhost"
+										"{{HOST}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
@@ -4330,11 +4291,10 @@
 									"urlencoded": []
 								},
 								"url": {
-									"raw": "localhost:3000/api/v1/transaction/paySubscription",
+									"raw": "{{HOST}}/api/v1/transaction/paySubscription",
 									"host": [
-										"localhost"
+										"{{HOST}}"
 									],
-									"port": "3000",
 									"path": [
 										"api",
 										"v1",
