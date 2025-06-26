@@ -304,7 +304,7 @@ const verifyOTP = async (req, res) => {
     };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "24h",
+      expiresIn: "2h",
     });
 
     const refreshToken = jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
