@@ -249,7 +249,7 @@ const foodSugestion = async (req, res) => {
     // console.log("Found cuisine:", query);
     console.log(response);
     const spoonacularResponse = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?cuisine=${query}&number=5&apiKey=${process.env.SPOONACULAR_API_KEY}`
+      `https://api.spoonacular.com/recipes/complexSearch?cuisine=${query}&number=20&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
     console.log(spoonacularResponse.data);
     const userId = await User.findOne({
@@ -318,7 +318,7 @@ const countCalory = async (req, res) => {
 
   try {
     const dtFood = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?query=${title}&number=1&apiKey=${process.env.SPOONACULAR_API_KEY}`
+      `https://api.spoonacular.com/recipes/complexSearch?query=${title}&number=20&apiKey=${process.env.SPOONACULAR_API_KEY}`
     );
 
     if (dtFood.data.results.length === 0) {
