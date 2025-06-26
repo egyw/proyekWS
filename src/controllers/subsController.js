@@ -374,6 +374,10 @@ const topup = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User not found." });
         }
+        
+        if(amount <= 0) {
+            return res.status(400).json({ message: "Amount must be above 0." });
+        }
 
         user.saldo += amount;
 

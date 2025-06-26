@@ -1004,6 +1004,7 @@ const insertRecipeWithMulter = async (req, res) => {
 
     const validated = await recipeValidation.validateAsync(req.body, {
       abortEarly: false,
+      allowUnknown: true,
     });
 
     if (!validated) {
@@ -1055,8 +1056,7 @@ const insertRecipeWithMulter = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Internal server error",
-      error: error.message,
+      message: error.message || "Internal server error",
     });
   }
 };
@@ -1175,6 +1175,7 @@ const insertRecipeWithCloud = async (req, res) => {
 
     const validated = await recipeValidation.validateAsync(req.body, {
       abortEarly: false,
+      allowUnknown: true,
     });
 
     if (!validated) {
